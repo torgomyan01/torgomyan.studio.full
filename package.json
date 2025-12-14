@@ -20,7 +20,6 @@
     "@heroui/react": "^2.8.2",
     "@heroui/theme": "^2.4.20",
     "@mui/material": "^7.3.2",
-    "@next/third-parties": "^15.3.4",
     "@photo-sphere-viewer/core": "^5.13.2",
     "@prisma/client": "^6.19.0",
     "@react-input/mask": "^2.0.4",
