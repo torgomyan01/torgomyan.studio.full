@@ -1,0 +1,229 @@
+.all-works {
+  margin: 60px 0;
+  padding: 40px 0;
+
+  @media (max-width: 767px) {
+    margin: 40px 0;
+    padding: 20px 0;
+  }
+
+  .all-works-items {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+
+    @media (max-width: 767px) {
+      gap: 30px;
+    }
+  }
+
+  .all-works-item {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    overflow: hidden;
+    background: linear-gradient(
+      148deg,
+      rgba(196, 68, 255, 0.1) 1.27%,
+      rgba(86, 41, 153, 0.1) 100.15%
+    );
+    transition: all 0.3s ease;
+
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(196, 68, 255, 0.2);
+    }
+
+    .work-preview {
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      gap: 30px;
+      padding: 30px;
+      cursor: pointer;
+      align-items: center;
+
+      @media (max-width: 1024px) {
+        grid-template-columns: 300px 1fr;
+        gap: 20px;
+        padding: 20px;
+      }
+
+      @media (max-width: 767px) {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .img-wrap {
+        display: flex;
+        border-radius: 15px;
+        overflow: hidden;
+        height: 300px;
+        width: 100%;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+
+        @media (max-width: 767px) {
+          height: 250px;
+        }
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: top;
+          transition: transform 0.3s ease;
+        }
+
+        &:hover img {
+          transform: scale(1.05);
+        }
+      }
+
+      .work-info {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        .work-name {
+          font-size: 48px;
+          font-weight: 600;
+          color: white;
+          margin: 0;
+
+          @media (max-width: 1200px) {
+            font-size: 36px;
+          }
+
+          @media (max-width: 767px) {
+            font-size: 28px;
+          }
+        }
+
+        .work-tech {
+          font-size: 18px;
+          color: rgba(255, 255, 255, 0.7);
+          margin: 0;
+
+          @media (max-width: 767px) {
+            font-size: 16px;
+          }
+        }
+
+        .work-description {
+          font-size: 16px;
+          color: rgba(255, 255, 255, 0.85);
+          margin: 10px 0 0 0;
+          line-height: 1.6;
+
+          @media (max-width: 767px) {
+            font-size: 14px;
+            line-height: 1.5;
+          }
+        }
+
+        .work-toggle {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-size: 18px;
+          color: rgba(255, 255, 255, 0.9);
+          cursor: pointer;
+          margin-top: 10px;
+          transition: color 0.3s ease;
+
+          &:hover {
+            color: white;
+          }
+
+          i {
+            font-size: 14px;
+            transition: transform 0.3s ease;
+          }
+
+          @media (max-width: 767px) {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+
+    .work-links {
+      padding: 30px;
+      padding-top: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 20px;
+      animation: slideDown 0.3s ease;
+
+      @media (max-width: 767px) {
+        padding: 20px;
+        padding-top: 0;
+      }
+
+      h4 {
+        font-size: 24px;
+        color: white;
+        margin-bottom: 20px;
+        font-weight: 500;
+
+        @media (max-width: 767px) {
+          font-size: 20px;
+          margin-bottom: 15px;
+        }
+      }
+
+      .links-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+
+        @media (max-width: 767px) {
+          grid-template-columns: 1fr;
+        }
+
+        .work-link {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 15px 20px;
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 10px;
+          color: white;
+          text-decoration: none;
+          transition: all 0.3s ease;
+          font-size: 16px;
+
+          &:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateX(5px);
+
+            i {
+              transform: translateX(3px);
+            }
+          }
+
+          span {
+            font-weight: 500;
+          }
+
+          i {
+            font-size: 14px;
+            transition: transform 0.3s ease;
+            opacity: 0.7;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

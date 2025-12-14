@@ -1,0 +1,38 @@
+.video-block {
+  margin-bottom: 30px;
+  margin-top: 60px;
+
+  @media (max-width: 767px) {
+    margin-top: 50px;
+  }
+
+  .main-title {
+    margin-bottom: 15px;
+    @media (max-width: 767px) {
+      margin-bottom: 10px;
+    }
+  }
+
+  .video {
+    display: flex;
+    position: relative;
+
+    img {
+      width: 100%;
+    }
+
+    iframe {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: none;
+      border-radius: 8px;
+    }
+
+    .video-placeholder {
+      width: 100%;
+      img {
+        width: 100%;
+      }
+    }
+  }
+}
