@@ -55,6 +55,7 @@ function VideoBlock({ videoId = 'dQw4w9WgXcQ' }: VideoBlockProps) {
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
+              className="h-[300px] md:h-[600px]"
             ></iframe>
           ) : (
             <div className="video-placeholder">

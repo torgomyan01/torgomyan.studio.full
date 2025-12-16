@@ -2,6 +2,10 @@ import { useState, useRef, useEffect } from 'react';
 import { Message, ChatData, ChatStep } from '../types';
 import { useServiceQuestions } from './use-service-questions';
 import {
+  useAISalesEngine,
+  createConversationContext,
+} from './use-ai-sales-engine';
+import {
   saveAnswerToChatData,
   saveChatInquiry,
 } from '../utils/chat-data-handler';
@@ -41,6 +45,11 @@ export function useChatLogic() {
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   const { getServiceQuestions } = useServiceQuestions();
+  const {
+    analyzeUserAnswer,
+    generateAdaptiveResponse,
+    generateUpsellProposal,
+  } = useAISalesEngine();
 
   const scrollToBottom = () => {
     if (messagesContainerRef.current && messagesEndRef.current) {
@@ -131,20 +140,56 @@ export function useChatLogic() {
           chatData
         );
 
+        const currentQuestion = questions[currentQuestionStep];
+
+        // Создаем контекст разговора для более умного анализа
+        const context = createConversationContext(messages);
+        const analysis = analyzeUserAnswer(currentInput, context);
+
+        // AI анализ ответа и генерация адаптивного ответа с учетом контекста
+        const adaptiveResponse = generateAdaptiveResponse(
+          currentQuestion,
+          currentInput,
+          service,
+          updatedData,
+          context
+        );
+
+        // Проверяем, был ли это ответ на убеждение (повторный ответ на тот же вопрос)
+        const isConvincingResponse =
+          chatData.questionStep === currentQuestionStep &&
+          updatedData.questionStep === currentQuestionStep;
+
         const nextStep = currentQuestionStep + 1;
-        updatedData.questionStep = nextStep;
-        setChatData(updatedData);
-        setQuestionStep(nextStep);
 
         simulateTyping(() => {
-          if (nextStep < questions.length) {
-            addMessage(questions[nextStep], 'bot');
+          // Если нужна убеждение или upsell, показываем адаптивный ответ
+          if (
+            adaptiveResponse &&
+            (analysis.needsConvincing || analysis.needsUpsell) &&
+            !isConvincingResponse
+          ) {
+            addMessage(adaptiveResponse, 'bot');
+            // Не переходим к следующему вопросу, ждем ответа пользователя
+            updatedData.questionStep = currentQuestionStep;
+            setChatData(updatedData);
+            setQuestionStep(currentQuestionStep);
           } else {
-            // All service questions answered, ask timeline
-            addMessage(
-              'Хорошо! В какие сроки вы хотите завершить проект?',
-              'bot'
-            );
+            // Переходим к следующему вопросу или завершаем
+            updatedData.questionStep = nextStep;
+            setChatData(updatedData);
+            setQuestionStep(nextStep);
+
+            if (nextStep < questions.length) {
+              // Стандартный переход к следующему вопросу
+              addMessage(questions[nextStep], 'bot');
+            } else {
+              // All service questions answered, ask timeline
+              addMessage(
+                'Хорошо! В какие сроки вы хотите завершить проект?',
+                'bot'
+              );
+            }
           }
         });
       }

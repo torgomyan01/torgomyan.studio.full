@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { RefObject, useRef } from 'react';
 import './_ai-block.scss';
 import { useChatLogic } from './hooks/use-chat-logic';
 import { useScrollDetection } from './hooks/use-scroll-detection';
@@ -9,6 +10,7 @@ import SpeechBubble from './speech-bubble';
 import ChatContent from './chat-content';
 
 function AiBlock() {
+  const blockRef = useRef<HTMLDivElement>(null);
   const {
     messages,
     currentStep,
@@ -29,8 +31,10 @@ function AiBlock() {
     timelineOptions,
   } = useChatLogic();
 
-  const isScrolled = useScrollDetection(200);
-  const isFloatingMode = isScrolled && !showChat;
+  const isScrolled = useScrollDetection(
+    200,
+    blockRef as RefObject<HTMLElement>
+  );
   const showBackdrop = isScrolled && showChat;
 
   // Check if all service-specific questions are answered
@@ -42,6 +46,7 @@ function AiBlock() {
 
   return (
     <>
+      {isScrolled && <div className="block sm:hidden h-[500px]" />}
       {showBackdrop && (
         <motion.div
           className="chat-backdrop"
@@ -73,7 +78,10 @@ function AiBlock() {
           onClose={() => setShowChat(false)}
         />
       ) : (
-        <div className={`ai-block ${isScrolled ? 'floating-mode' : ''}`}>
+        <div
+          ref={blockRef}
+          className={`ai-block ${isScrolled ? 'floating-mode' : ''}`}
+        >
           {!showChat ? (
             <div className="chat-toggle-wrapper">
               {!isScrolled && <SpeechBubble />}

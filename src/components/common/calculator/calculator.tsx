@@ -32,6 +32,7 @@ export default function Calculator() {
   const { getServiceQuestions } = useServiceQuestions();
   const [step, setStep] = useState<'calculator' | 'contact'>('calculator');
   const [estimatedPrice, setEstimatedPrice] = useState<number | null>(null);
+  const [showPrice, setShowPrice] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState<{
     type: 'success' | 'error';
@@ -63,6 +64,7 @@ export default function Calculator() {
   useEffect(() => {
     setStep('calculator');
     setEstimatedPrice(null);
+    setShowPrice(false);
     setSubmitMessage(null);
     setCurrentQuestionIndex(0);
     setFormData({
@@ -220,8 +222,10 @@ export default function Calculator() {
 
     const price = calculatePrice();
     setEstimatedPrice(price);
+    setShowPrice(false); // Не показываем цену до отправки формы
     setStep('contact');
     setSubmitMessage(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleSubmit = async () => {
@@ -281,6 +285,7 @@ export default function Calculator() {
       });
 
       if (result.success) {
+        setShowPrice(true); // Показываем цену после успешной отправки
         setSubmitMessage({
           type: 'success',
           text: 'Спасибо! Мы свяжемся с вами в ближайшее время.',
@@ -289,6 +294,7 @@ export default function Calculator() {
           // Reset form after success
           setStep('calculator');
           setEstimatedPrice(null);
+          setShowPrice(false);
           setFormData({
             selectedService: '',
             websiteType: '',
@@ -308,7 +314,7 @@ export default function Calculator() {
             email: '',
             phone: '',
           });
-        }, 3000);
+        }, 15000);
       } else {
         setSubmitMessage({
           type: 'error',
@@ -322,6 +328,7 @@ export default function Calculator() {
       });
     } finally {
       setIsSubmitting(false);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -625,7 +632,7 @@ export default function Calculator() {
             </div>
           ) : (
             <div className="contact-form">
-              {estimatedPrice !== null && (
+              {showPrice && estimatedPrice !== null && (
                 <div className="estimated-price">
                   <h3>Примерная стоимость</h3>
                   <div className="price-value">
@@ -684,7 +691,10 @@ export default function Calculator() {
                   <button
                     type="button"
                     className="back-button"
-                    onClick={() => setStep('calculator')}
+                    onClick={() => {
+                      setStep('calculator');
+                      setShowPrice(false);
+                    }}
                   >
                     Назад
                   </button>

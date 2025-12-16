@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getRecentSubmissionsAction } from '@/app/actions/notifications';
 import './_recent-notifications.scss';
@@ -9,17 +9,22 @@ const STORAGE_KEY = 'shown-notifications';
 const CHECK_INTERVAL = 30000; // Check every 30 seconds
 const MIN_TIME_BETWEEN_NOTIFICATIONS = 60000; // Minimum 1 minute between notifications
 const NOTIFICATION_DISPLAY_TIME = 8000; // Show notification for 8 seconds
+const INITIAL_LOAD_DELAY = 3000; // Delay before showing initial notifications
+const DELAY_BETWEEN_OLD_NOTIFICATIONS = 5000; // Delay between showing old notifications
 
 interface Notification {
   id: string;
   message: string;
   timestamp: number;
-  type: 'single' | 'count';
+  type: 'single' | 'count' | 'old';
 }
 
 export default function RecentNotifications() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [shownIds, setShownIds] = useState<Set<string>>(new Set());
+  const [isInitialLoadDone, setIsInitialLoadDone] = useState(false);
+  const lastNotificationTimeRef = useRef<number>(0);
+  const shownIdsRef = useRef<Set<string>>(new Set());
 
   // Load shown notification IDs from localStorage
   useEffect(() => {
@@ -37,7 +42,9 @@ export default function RecentNotifications() {
           const timestamp = parseInt(parts[parts.length - 1], 10);
           return now - timestamp < 24 * 60 * 60 * 1000;
         });
-        setShownIds(new Set(validIds as string[]));
+        const validSet = new Set(validIds as string[]);
+        setShownIds(validSet);
+        shownIdsRef.current = validSet;
       } catch (e) {
         console.error('Error loading shown notifications:', e);
       }
@@ -64,6 +71,25 @@ export default function RecentNotifications() {
     if (diffMins < 60) return `${diffMins} ${getMinutesWord(diffMins)} назад`;
     if (diffHours < 24) return `${diffHours} ${getHoursWord(diffHours)} назад`;
     return 'сегодня';
+  };
+
+  // Format time for old notifications (shows exact time)
+  const formatOldTime = (date: Date): string => {
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    const now = new Date();
+    const isToday =
+      day === now.getDate() &&
+      month === now.getMonth() + 1 &&
+      year === now.getFullYear();
+
+    if (isToday) {
+      return `сегодня в ${hours}:${minutes}`;
+    }
+    return `${day}.${month}.${year} в ${hours}:${minutes}`;
   };
 
   const getMinutesWord = (num: number): string => {
@@ -114,7 +140,7 @@ export default function RecentNotifications() {
     }-${mostRecent.created_at.getTime()}`;
 
     // Check if we've already shown this notification
-    if (shownIds.has(notificationId)) return null;
+    if (shownIdsRef.current.has(notificationId)) return null;
 
     // Single notification
     if (newSubmissions.length === 1) {
@@ -171,9 +197,111 @@ export default function RecentNotifications() {
     return femaleEndings.includes(lastName) ? 'а' : '';
   };
 
-  // Check for new submissions
+  // Generate notification for old submission (shown on initial load)
+  const generateOldNotification = (
+    submission: any,
+    currentShownIds: Set<string>
+  ): Notification | null => {
+    const notificationId = `${submission.type}-${submission.id}-${submission.created_at.getTime()}`;
+
+    // Check if we've already shown this notification
+    if (currentShownIds.has(notificationId)) return null;
+
+    const firstName = submission.name.split(' ')[0];
+    const timeStr = formatOldTime(submission.created_at);
+
+    // Determine service type
+    let serviceType = 'сайт';
+    if (submission.website_type) {
+      const wt = submission.website_type.toLowerCase();
+      if (wt.includes('лендинг')) serviceType = 'лендинг';
+      else if (wt.includes('корпоратив')) serviceType = 'корпоративный сайт';
+      else if (wt.includes('магазин') || wt.includes('ecommerce'))
+        serviceType = 'интернет-магазин';
+      else if (wt.includes('визитка')) serviceType = 'сайт-визитку';
+      else if (wt.includes('звонок')) serviceType = 'звонок';
+    }
+
+    return {
+      id: notificationId,
+      message: `Посмотрите, ${timeStr} ${firstName} заказал${getGenderEnding(firstName)} ${serviceType}`,
+      timestamp: Date.now(),
+      type: 'old',
+    };
+  };
+
+  // Show old submissions on initial load
+  const showOldSubmissions = async () => {
+    try {
+      const result = await getRecentSubmissionsAction();
+      if (result.success && result.data && result.data.length > 0) {
+        // Get current shownIds
+        const currentShownIds = shownIdsRef.current;
+
+        // Filter out already shown notifications
+        const oldSubmissions = result.data.filter((sub) => {
+          const notificationId = `${sub.type}-${sub.id}-${sub.created_at.getTime()}`;
+          return !currentShownIds.has(notificationId);
+        });
+
+        // Show old submissions one by one with delays (show only last 4)
+        oldSubmissions.slice(0, 4).forEach((submission, index) => {
+          setTimeout(
+            () => {
+              // Get latest shownIds at the time of showing
+              setShownIds((prev) => {
+                const notification = generateOldNotification(submission, prev);
+                if (notification) {
+                  lastNotificationTimeRef.current = Date.now();
+                  const newSet = new Set(prev);
+                  newSet.add(notification.id);
+                  shownIdsRef.current = newSet;
+                  saveShownIds(newSet);
+
+                  setNotifications((prevNotifications) => [
+                    notification,
+                    ...prevNotifications.slice(0, 2),
+                  ]);
+
+                  // Auto-remove notification after display time
+                  setTimeout(() => {
+                    setNotifications((prevNotifications) =>
+                      prevNotifications.filter((n) => n.id !== notification.id)
+                    );
+                  }, NOTIFICATION_DISPLAY_TIME);
+
+                  return newSet;
+                }
+                return prev;
+              });
+            },
+            INITIAL_LOAD_DELAY + index * DELAY_BETWEEN_OLD_NOTIFICATIONS
+          );
+        });
+      }
+    } catch (error) {
+      console.error('Error loading old submissions:', error);
+    } finally {
+      setIsInitialLoadDone(true);
+    }
+  };
+
+  // Initial load - show old submissions
   useEffect(() => {
-    let lastCheckTime = Date.now() - CHECK_INTERVAL; // Start checking immediately
+    // Wait 1 minute after page load before showing old submissions
+    // This ensures user has engaged with the site
+    const timer = setTimeout(() => {
+      showOldSubmissions();
+    }, 60000); // 1 minute = 60000 milliseconds
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Check for new submissions (after initial load)
+  useEffect(() => {
+    if (!isInitialLoadDone) return;
+
+    let lastCheckTime = Date.now() - CHECK_INTERVAL;
     let intervalId: NodeJS.Timeout;
 
     const checkSubmissions = async () => {
@@ -184,14 +312,16 @@ export default function RecentNotifications() {
 
           if (notification) {
             // Check if enough time has passed since last notification
-            const lastNotificationTime = notifications[0]?.timestamp || 0;
-            const timeSinceLastNotification = Date.now() - lastNotificationTime;
+            const timeSinceLastNotification =
+              Date.now() - lastNotificationTimeRef.current;
 
             if (timeSinceLastNotification >= MIN_TIME_BETWEEN_NOTIFICATIONS) {
+              lastNotificationTimeRef.current = Date.now();
               setNotifications((prev) => [notification, ...prev.slice(0, 2)]);
               setShownIds((prev) => {
                 const newSet = new Set(prev);
                 newSet.add(notification.id);
+                shownIdsRef.current = newSet;
                 saveShownIds(newSet);
                 return newSet;
               });
@@ -212,7 +342,7 @@ export default function RecentNotifications() {
       }
     };
 
-    // Initial check
+    // Initial check for new submissions
     checkSubmissions();
 
     // Set up interval
@@ -221,7 +351,7 @@ export default function RecentNotifications() {
     return () => {
       if (intervalId) clearInterval(intervalId);
     };
-  }, []);
+  }, [isInitialLoadDone]);
 
   return (
     <div className="recent-notifications-container">

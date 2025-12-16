@@ -379,18 +379,19 @@
   &.floating-mode {
     margin: 0;
     position: fixed;
-    bottom: 30px;
+    top: 50%;
+    transform: translateY(-50%);
     right: 30px;
     width: auto;
     z-index: 9999;
     transition: all 0.3s ease;
-    height: 300px;
-    top: 50%;
+    height: auto;
 
     @media (max-width: 767px) {
       bottom: 20px;
       left: 20px;
       right: auto;
+      top: auto;
     }
 
     .chat-toggle-wrapper {
@@ -399,6 +400,14 @@
       background: transparent;
       width: auto;
       height: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      @media (max-width: 767px) {
+        width: auto;
+        height: auto;
+      }
     }
 
     .speech-bubble {
@@ -413,12 +422,8 @@
       transition: all 0.3s ease;
 
       @media (max-width: 767px) {
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
         width: 60px;
         height: 60px;
-        z-index: 9999;
       }
 
       .smiley-svg {
@@ -471,7 +476,9 @@
       font-size: 16px;
       font-weight: 500;
       cursor: pointer;
-      transition: opacity 0.3s ease, transform 0.3s ease;
+      transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
       box-shadow: 0 4px 15px rgba(196, 68, 255, 0.3);
       transform: translateY(-10px);
       position: relative;
