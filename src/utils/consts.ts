@@ -16,6 +16,7 @@ export const SITE_URL = {
   OUR_WORKS: '/our-works',
   PRIVACY_POLICY: '/privacy-policy',
   CALCULATOR: '/calculator',
+  CONTACT: '/contact',
 };
 
 export const fileHost = 'https://2410924f2b33.hosting.myjino.ru/';
@@ -741,7 +742,7 @@ export const Works = [
     links: [
       {
         name: 'Home',
-        url: 'www.ytsmp3.org',
+        url: 'https://www.ytsmp3.org',
       },
     ],
     created: 'Next.js',

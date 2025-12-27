@@ -49,8 +49,8 @@ function OurWorks() {
                 <Image
                   src={`/${work.imgUrl}`}
                   alt={work.name}
-                  width={300}
-                  height={300}
+                  width={200}
+                  height={200}
                 />
               </span>
               <div className="work-content">

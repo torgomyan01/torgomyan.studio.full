@@ -96,33 +96,33 @@ export default function Calculator() {
     let basePrice = 0;
     const service = formData.selectedService;
 
-    // Base price by service type (в рублях, согласно российскому рынку)
+    // Base price by service type (в рублях, оптимизировано согласно рыночным ценам 2024)
     if (service.includes('Лендинг')) {
-      basePrice = 25000;
+      basePrice = 40000; // Оптимизировано: рынок 25,000-60,000₽ (базовый), 60,000-150,000₽ (премиум)
     } else if (service.includes('Корпоративный сайт')) {
-      basePrice = 80000;
+      basePrice = 120000; // Оптимизировано: рынок 100,000-300,000₽ (стандартный)
     } else if (service.includes('Сайт-визитка')) {
-      basePrice = 30000;
+      basePrice = 50000; // Оптимизировано: конкурентная цена для малого бизнеса
     } else if (service.includes('Интернет-магазин')) {
-      basePrice = 150000;
+      basePrice = 200000; // Оптимизировано: рынок 60,000-150,000₽ (базовый), 250,000-600,000₽ (расширенный)
     } else if (service.includes('Веб-приложения')) {
-      basePrice = 200000;
+      basePrice = 300000; // Оптимизировано: конкурентная входная цена для сложных приложений
     } else if (service.includes('SEO') || service.includes('Продвижение')) {
-      basePrice = 30000;
+      basePrice = 40000; // Оптимизировано: рынок 74,500-79,500₽/месяц, мы предлагаем конкурентную цену
     } else if (service.includes('UI/UX') || service.includes('Дизайн')) {
-      basePrice = 50000;
+      basePrice = 80000; // Оптимизировано: рынок ~60,000-95,000₽, конкурентная цена
     } else if (service.includes('Техническая поддержка')) {
-      basePrice = 15000;
+      basePrice = 15000; // Оптимально: соответствует рынку
     } else if (service.includes('Хостинг') || service.includes('домен')) {
-      basePrice = 5000;
+      basePrice = 1000; // Оптимизировано: более реалистичная месячная цена вместо 5,000₽
     } else if (service.includes('Интеграция платежных')) {
-      basePrice = 40000;
+      basePrice = 45000; // Оптимизировано: средняя конкурентная цена
     } else if (service.includes('Автоматизация')) {
-      basePrice = 100000;
+      basePrice = 150000; // Оптимизировано: конкурентная цена для автоматизации бизнеса
     } else if (service.includes('Разработка Сайтов')) {
-      basePrice = 60000;
+      basePrice = 80000; // Оптимизировано: общая разработка сайтов
     } else {
-      basePrice = 50000;
+      basePrice = 60000; // Оптимизировано: базовая цена по умолчанию
     }
 
     // Pages count multiplier (если применимо)
@@ -149,22 +149,22 @@ export default function Calculator() {
       }
     }
 
-    // Features (в рублях)
-    if (formData.cmsRequired) basePrice += 15000;
-    if (formData.ecommerce) basePrice += 50000;
+    // Features (в рублях, оптимизировано согласно рыночным ценам)
+    if (formData.cmsRequired) basePrice += 20000; // Оптимизировано: CMS интеграция
+    if (formData.ecommerce) basePrice += 60000; // Оптимизировано: e-commerce функционал
     if (formData.paymentSystems && formData.paymentSystems !== 'none') {
       if (formData.paymentSystems === 'single') {
-        basePrice += 20000;
+        basePrice += 25000; // Оптимизировано: одна платежная система
       } else if (formData.paymentSystems === 'multiple') {
-        basePrice += 35000;
+        basePrice += 40000; // Оптимизировано: несколько платежных систем
       }
     }
-    if (formData.mobileApp) basePrice += 100000;
-    if (formData.seoOptimization) basePrice += 20000;
-    if (formData.contentManagement) basePrice += 12000;
+    if (formData.mobileApp) basePrice += 120000; // Оптимизировано: мобильное приложение
+    if (formData.seoOptimization) basePrice += 25000; // Оптимизировано: SEO оптимизация
+    if (formData.contentManagement) basePrice += 15000; // Оптимизировано: управление контентом
 
     // Additional features
-    basePrice += formData.features.length * 8000;
+    basePrice += formData.features.length * 10000; // Оптимизировано: дополнительные функции
 
     return Math.round(basePrice);
   };

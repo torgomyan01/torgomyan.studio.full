@@ -20,6 +20,9 @@ import FloatingCallButton from '@/components/common/floating-call-button/floatin
 import ExitIntentPopup from '@/components/common/exit-intent-popup/exit-intent-popup';
 import ScrollTriggeredPopup from '@/components/common/scroll-triggered-popup/scroll-triggered-popup';
 import RecentNotifications from '@/components/common/recent-notifications/recent-notifications';
+import { NotificationProvider } from '@/components/common/recent-notifications/notification-context';
+import { ToastNotifications } from '@/components/common/recent-notifications/toast-notifications';
+import CookieConsent from '@/components/common/cookie-consent/cookie-consent';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -52,11 +55,15 @@ export default async function RootLayout({
             <NextTopLoader />
             <Providers>
               <UiProviders>
-                {children}
-                <FloatingCallButton />
-                <ExitIntentPopup />
-                <ScrollTriggeredPopup />
-                <RecentNotifications />
+                <NotificationProvider>
+                  {children}
+                  <FloatingCallButton />
+                  <ExitIntentPopup />
+                  <ScrollTriggeredPopup />
+                  <RecentNotifications />
+                  <ToastNotifications />
+                  <CookieConsent />
+                </NotificationProvider>
               </UiProviders>
             </Providers>
           </SesProviders>

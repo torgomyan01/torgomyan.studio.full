@@ -74,9 +74,13 @@ function Navbar() {
             </Link>
           </li>
           <li>
-            <a href="#" className="menu-link" onClick={closeMenu}>
+            <Link
+              href={SITE_URL.CONTACT}
+              className="menu-link"
+              onClick={closeMenu}
+            >
               Связь
-            </a>
+            </Link>
           </li>
         </ul>
         <Link href={SITE_URL.HOME} className="logo">

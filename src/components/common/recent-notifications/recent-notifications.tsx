@@ -370,12 +370,16 @@ export default function RecentNotifications() {
               <p className="notification-message">{notification.message}</p>
             </div>
             <button
+              type="button"
               className="notification-close"
-              onClick={() =>
-                setNotifications((prev) =>
-                  prev.filter((n) => n.id !== notification.id)
-                )
-              }
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setNotifications((prev) => {
+                  return prev.filter((n) => n.id !== notification.id);
+                });
+              }}
+              aria-label="Close notification"
             >
               ✕
             </button>

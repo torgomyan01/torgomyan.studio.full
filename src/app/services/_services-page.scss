@@ -2,7 +2,7 @@
   padding-top: 50px;
 
   @media (max-width: 767px) {
-    padding-top: 90px;
+    padding-top: 20px;
   }
 
   .services-hero {
@@ -203,7 +203,9 @@
         border-radius: 20px;
         padding: 40px 30px;
         text-align: center;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
 
         @media (max-width: 767px) {
           padding: 30px 20px;

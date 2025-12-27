@@ -27,6 +27,8 @@ const routeLabels: Record<string, string> = {
   '/our-works': 'Наши работы',
   '/blog': 'Блог',
   '/privacy-policy': 'Политика конфиденциальности',
+  '/calculator': 'Калькулятор',
+  '/contact': 'Контакты',
 };
 
 const blogArticleLabels: Record<string, string> = {
