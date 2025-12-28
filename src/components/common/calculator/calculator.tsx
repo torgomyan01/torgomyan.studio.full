@@ -32,6 +32,10 @@ export default function Calculator() {
   const { getServiceQuestions } = useServiceQuestions();
   const [step, setStep] = useState<'calculator' | 'contact'>('calculator');
   const [estimatedPrice, setEstimatedPrice] = useState<number | null>(null);
+  const [priceRange, setPriceRange] = useState<{
+    min: number;
+    max: number;
+  } | null>(null);
   const [showPrice, setShowPrice] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState<{
@@ -95,78 +99,203 @@ export default function Calculator() {
   const calculatePrice = () => {
     let basePrice = 0;
     const service = formData.selectedService;
+    let complexityMultiplier = 1;
+    let isOngoingService = false; // Для услуг с ежемесячной оплатой
+
+    // Определение базовой цены и типа услуги
+    const serviceConfig = {
+      isWebsite: false,
+      isEcommerce: false,
+      isApp: false,
+      isDesign: false,
+      isOngoing: false,
+    };
 
     // Base price by service type (в рублях, оптимизировано согласно рыночным ценам 2024)
     if (service.includes('Лендинг')) {
-      basePrice = 40000; // Оптимизировано: рынок 25,000-60,000₽ (базовый), 60,000-150,000₽ (премиум)
+      basePrice = 45000;
+      serviceConfig.isWebsite = true;
+      complexityMultiplier = 0.8; // Проще чем корпоративный сайт
     } else if (service.includes('Корпоративный сайт')) {
-      basePrice = 120000; // Оптимизировано: рынок 100,000-300,000₽ (стандартный)
+      basePrice = 130000;
+      serviceConfig.isWebsite = true;
+      complexityMultiplier = 1.2;
     } else if (service.includes('Сайт-визитка')) {
-      basePrice = 50000; // Оптимизировано: конкурентная цена для малого бизнеса
+      basePrice = 55000;
+      serviceConfig.isWebsite = true;
+      complexityMultiplier = 0.7;
     } else if (service.includes('Интернет-магазин')) {
-      basePrice = 200000; // Оптимизировано: рынок 60,000-150,000₽ (базовый), 250,000-600,000₽ (расширенный)
+      basePrice = 220000;
+      serviceConfig.isWebsite = true;
+      serviceConfig.isEcommerce = true;
+      complexityMultiplier = 1.5;
     } else if (service.includes('Веб-приложения')) {
-      basePrice = 300000; // Оптимизировано: конкурентная входная цена для сложных приложений
+      basePrice = 350000;
+      serviceConfig.isApp = true;
+      complexityMultiplier = 2.0;
     } else if (service.includes('SEO') || service.includes('Продвижение')) {
-      basePrice = 40000; // Оптимизировано: рынок 74,500-79,500₽/месяц, мы предлагаем конкурентную цену
+      basePrice = 45000; // Месячная стоимость
+      serviceConfig.isOngoing = true;
+      isOngoingService = true;
     } else if (service.includes('UI/UX') || service.includes('Дизайн')) {
-      basePrice = 80000; // Оптимизировано: рынок ~60,000-95,000₽, конкурентная цена
+      basePrice = 90000;
+      serviceConfig.isDesign = true;
+      complexityMultiplier = 1.1;
     } else if (service.includes('Техническая поддержка')) {
-      basePrice = 15000; // Оптимально: соответствует рынку
+      basePrice = 18000; // Месячная стоимость
+      serviceConfig.isOngoing = true;
+      isOngoingService = true;
     } else if (service.includes('Хостинг') || service.includes('домен')) {
-      basePrice = 1000; // Оптимизировано: более реалистичная месячная цена вместо 5,000₽
+      basePrice = 1200; // Месячная стоимость
+      serviceConfig.isOngoing = true;
+      isOngoingService = true;
     } else if (service.includes('Интеграция платежных')) {
-      basePrice = 45000; // Оптимизировано: средняя конкурентная цена
+      basePrice = 50000;
+      complexityMultiplier = 1.3;
     } else if (service.includes('Автоматизация')) {
-      basePrice = 150000; // Оптимизировано: конкурентная цена для автоматизации бизнеса
+      basePrice = 180000;
+      complexityMultiplier = 1.8;
     } else if (service.includes('Разработка Сайтов')) {
-      basePrice = 80000; // Оптимизировано: общая разработка сайтов
+      basePrice = 90000;
+      serviceConfig.isWebsite = true;
+      complexityMultiplier = 1.0;
     } else {
-      basePrice = 60000; // Оптимизировано: базовая цена по умолчанию
+      basePrice = 70000;
+      complexityMultiplier = 1.0;
     }
 
-    // Pages count multiplier (если применимо)
-    if (formData.pagesCount > 0) {
-      const pagesMultiplier = Math.max(1, formData.pagesCount / 5);
-      basePrice = basePrice * pagesMultiplier;
+    // Улучшенный расчет количества страниц (нелинейное масштабирование)
+    if (serviceConfig.isWebsite && formData.pagesCount > 0) {
+      const pages = formData.pagesCount;
+      let pagesCost = 0;
+
+      // Первые 5 страниц включены в базовую цену
+      if (pages <= 5) {
+        pagesCost = 0;
+      } else if (pages <= 10) {
+        // Страницы 6-10: умеренная стоимость
+        pagesCost = basePrice * 0.15 * (pages - 5);
+      } else if (pages <= 20) {
+        // Страницы 11-20: стандартная стоимость
+        pagesCost = basePrice * 0.15 * 5 + basePrice * 0.12 * (pages - 10);
+      } else {
+        // Страницы 21+: сниженная стоимость за счет тиражирования
+        pagesCost =
+          basePrice * 0.15 * 5 +
+          basePrice * 0.12 * 10 +
+          basePrice * 0.08 * (pages - 20);
+      }
+
+      basePrice += pagesCost;
     }
 
-    // Design style multiplier (если применимо)
-    if (formData.designStyle) {
+    // Design style multiplier (более точные коэффициенты)
+    if (formData.designStyle && serviceConfig.isWebsite) {
       switch (formData.designStyle) {
         case 'simple':
-          basePrice *= 1;
+          basePrice *= 0.95; // Небольшая скидка за простоту
           break;
         case 'standard':
-          basePrice *= 1.3;
+          basePrice *= 1.0; // Базовая цена
           break;
         case 'premium':
-          basePrice *= 1.7;
+          basePrice *= 1.5; // Премиум дизайн
           break;
         case 'luxury':
-          basePrice *= 2.2;
+          basePrice *= 2.0; // Люкс дизайн с уникальными элементами
           break;
       }
     }
 
-    // Features (в рублях, оптимизировано согласно рыночным ценам)
-    if (formData.cmsRequired) basePrice += 20000; // Оптимизировано: CMS интеграция
-    if (formData.ecommerce) basePrice += 60000; // Оптимизировано: e-commerce функционал
-    if (formData.paymentSystems && formData.paymentSystems !== 'none') {
-      if (formData.paymentSystems === 'single') {
-        basePrice += 25000; // Оптимизировано: одна платежная система
-      } else if (formData.paymentSystems === 'multiple') {
-        basePrice += 40000; // Оптимизировано: несколько платежных систем
+    // Улучшенный расчет функций в зависимости от типа услуги
+    if (serviceConfig.isWebsite || serviceConfig.isApp) {
+      // CMS система управления
+      if (formData.cmsRequired) {
+        if (serviceConfig.isEcommerce) {
+          basePrice += 25000; // Для интернет-магазина дороже
+        } else {
+          basePrice += 22000;
+        }
       }
+
+      // E-commerce функционал (только если не выбран интернет-магазин как основная услуга)
+      if (formData.ecommerce && !serviceConfig.isEcommerce) {
+        basePrice += 70000; // Полноценный e-commerce модуль
+      }
+
+      // Платежные системы
+      if (formData.paymentSystems && formData.paymentSystems !== 'none') {
+        if (formData.paymentSystems === 'single') {
+          basePrice += 30000;
+        } else if (formData.paymentSystems === 'multiple') {
+          basePrice += 50000; // Интеграция нескольких систем сложнее
+        }
+      }
+
+      // Мобильное приложение
+      if (formData.mobileApp) {
+        if (serviceConfig.isApp) {
+          basePrice += 80000; // Если уже веб-приложение, мобильная версия дешевле
+        } else {
+          basePrice += 140000; // Полноценное мобильное приложение
+        }
+      }
+
+      // SEO оптимизация
+      if (formData.seoOptimization) {
+        basePrice += 30000; // Базовая SEO настройка
+      }
+
+      // Управление контентом
+      if (formData.contentManagement) {
+        basePrice += 18000;
+      }
+
+      // Дополнительные функции с учетом сложности
+      const featureCosts: Record<string, number> = {
+        Многоязычность: 25000,
+        'Интеграция с соцсетями': 15000,
+        'Онлайн-чат': 12000,
+        'Форма обратной связи': 5000,
+        'Галерея изображений': 8000,
+        'Видео интеграция': 15000,
+        Блог: 20000,
+        'Новостная лента': 18000,
+      };
+
+      formData.features.forEach((feature) => {
+        basePrice += featureCosts[feature] || 10000;
+      });
     }
-    if (formData.mobileApp) basePrice += 120000; // Оптимизировано: мобильное приложение
-    if (formData.seoOptimization) basePrice += 25000; // Оптимизировано: SEO оптимизация
-    if (formData.contentManagement) basePrice += 15000; // Оптимизировано: управление контентом
 
-    // Additional features
-    basePrice += formData.features.length * 10000; // Оптимизировано: дополнительные функции
+    // Применение коэффициента сложности
+    basePrice *= complexityMultiplier;
 
-    return Math.round(basePrice);
+    // Учет ответов на вопросы по услуге (может влиять на сложность)
+    const serviceAnswersCount = Object.keys(formData.serviceAnswers).length;
+    if (serviceAnswersCount > 0) {
+      // Если есть детальные ответы, это может увеличить сложность на 5-15%
+      const answersComplexityMultiplier = 1 + serviceAnswersCount * 0.02;
+      basePrice *= Math.min(answersComplexityMultiplier, 1.15);
+    }
+
+    // Для услуг с ежемесячной оплатой показываем месячную стоимость
+    // (но можно добавить опцию выбора периода)
+    if (isOngoingService) {
+      // Для SEO и поддержки можно умножить на количество месяцев
+      // Пока оставляем месячную стоимость
+    }
+
+    // Округление до ближайшей тысячи для более понятной цены
+    return Math.round(basePrice / 1000) * 1000;
+  };
+
+  // Расчет диапазона цен (минимальная и максимальная оценка)
+  const calculatePriceRange = (basePrice: number) => {
+    // Диапазон ±15% от базовой цены
+    const minPrice = Math.round((basePrice * 0.85) / 1000) * 1000;
+    const maxPrice = Math.round((basePrice * 1.15) / 1000) * 1000;
+    return { min: minPrice, max: maxPrice };
   };
 
   const handleServiceSelect = (service: string) => {
@@ -221,7 +350,9 @@ export default function Calculator() {
     }
 
     const price = calculatePrice();
+    const range = calculatePriceRange(price);
     setEstimatedPrice(price);
+    setPriceRange(range);
     setShowPrice(false); // Не показываем цену до отправки формы
     setStep('contact');
     setSubmitMessage(null);
@@ -265,6 +396,16 @@ export default function Calculator() {
     setIsSubmitting(true);
     setSubmitMessage(null);
 
+    // Рассчитываем цену, если она еще не была рассчитана
+    let finalPrice = estimatedPrice;
+    let finalPriceRange = priceRange;
+    if (finalPrice === null) {
+      finalPrice = calculatePrice();
+      finalPriceRange = calculatePriceRange(finalPrice);
+      setEstimatedPrice(finalPrice);
+      setPriceRange(finalPriceRange);
+    }
+
     try {
       // Combine service answers into features string
       const serviceAnswersText = Object.entries(formData.serviceAnswers)
@@ -278,7 +419,7 @@ export default function Calculator() {
           ...formData.features,
           ...(serviceAnswersText ? [serviceAnswersText] : []),
         ],
-        estimatedPrice: estimatedPrice || 0,
+        estimatedPrice: finalPrice || 0,
         name: contactData.name.trim(),
         email: contactData.email.trim(),
         phone: contactData.phone.trim(),
@@ -632,12 +773,35 @@ export default function Calculator() {
             </div>
           ) : (
             <div className="contact-form">
+              {!showPrice && estimatedPrice !== null && (
+                <div className="price-info-message">
+                  <div className="info-icon">💰</div>
+                  <div className="info-text">
+                    <h3>Расчет выполнен!</h3>
+                    <p>
+                      Мы рассчитали стоимость вашего проекта. Пожалуйста,
+                      заполните ваши контактные данные, чтобы увидеть результат
+                      расчета.
+                    </p>
+                  </div>
+                </div>
+              )}
+
               {showPrice && estimatedPrice !== null && (
                 <div className="estimated-price">
                   <h3>Примерная стоимость</h3>
                   <div className="price-value">
                     {estimatedPrice.toLocaleString('ru-RU')} ₽
                   </div>
+                  {priceRange && (
+                    <div className="price-range">
+                      <span className="range-label">Диапазон:</span>
+                      <span className="range-values">
+                        {priceRange.min.toLocaleString('ru-RU')} -{' '}
+                        {priceRange.max.toLocaleString('ru-RU')} ₽
+                      </span>
+                    </div>
+                  )}
                   <p className="price-note">
                     Это примерная стоимость. Точную цену мы рассчитаем после
                     обсуждения деталей вашего проекта и изучения рынка.
