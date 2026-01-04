@@ -23,6 +23,7 @@ import RecentNotifications from '@/components/common/recent-notifications/recent
 import { NotificationProvider } from '@/components/common/recent-notifications/notification-context';
 import { ToastNotifications } from '@/components/common/recent-notifications/toast-notifications';
 import CookieConsent from '@/components/common/cookie-consent/cookie-consent';
+import YandexMetrika from '@/components/common/YandexMetrika/YandexMetrika';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -72,6 +73,7 @@ export default async function RootLayout({
             </Providers>
           </SesProviders>
         </div>
+        <YandexMetrika />
       </body>
     </html>
   );

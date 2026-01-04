@@ -165,7 +165,7 @@ export const Works = [
       },
     ],
     created:
-      'Next.js, Typescript, MySql, Prisma, React JS, TypeScrip, Material UI',
+      'Next.js, Typescript, MySql, Prisma, React JS, TypeScript, Material UI',
     description:
       'Крупная казахстанская компания, специализирующаяся на предоставлении современных цифровых решений для бизнеса. Известна на рынке Казахстана как надежный партнер в области технологий и инноваций.',
   },
@@ -180,7 +180,7 @@ export const Works = [
       },
     ],
     created:
-      'Next.js, Typescript, MySql, Prisma, React JS, TypeScrip, Material UI',
+      'Next.js, Typescript, MySql, Prisma, React JS, TypeScript, Material UI',
     description:
       'Популярная российская платформа для обмена и торговли, известная своей удобной системой и широкой пользовательской базой. Один из ведущих сервисов в своей нише на российском рынке.',
   },
@@ -189,7 +189,7 @@ export const Works = [
     slug: 'zkteco',
     imgUrl: 'images/ZKTeco.png',
     links: [],
-    created: 'React JS, Next.js, TypeScript',
+    created: 'React JS, Next.js, TypeScript, Material UI',
     description:
       'Международная компания-лидер в области биометрических систем безопасности и контроля доступа. ZKTeco является одним из крупнейших производителей систем безопасности в мире, с продукцией, используемой в более чем 180 странах. Признанный лидер индустрии с многолетним опытом.',
   },
@@ -355,7 +355,7 @@ export const Works = [
         }`,
       };
     }),
-    created: 'React JS, TypeScrip, Material UI',
+    created: 'React JS, TypeScript, Material UI',
     description:
       'Популярная игровая платформа для торговли игровыми предметами и аккаунтами. Один из ведущих маркетплейсов в игровой индустрии, известный своей надежностью и широким ассортиментом игровых товаров.',
   },
@@ -369,7 +369,7 @@ export const Works = [
         url: 'https://torgomyan01.github.io/web-it/',
       },
     ],
-    created: 'React JS, TypeScrip, Material UI',
+    created: 'React JS, TypeScript, Material UI',
     description:
       'IT-компания, специализирующаяся на разработке веб-приложений и цифровых решений. Известна своими инновационными подходами в области веб-разработки и высоким качеством технических решений.',
   },
@@ -391,7 +391,7 @@ export const Works = [
         url: 'https://torgomyan01.github.io/akg/products.html',
       },
     ],
-    created: 'React JS, TypeScrip, Material UI',
+    created: 'React JS, TypeScript, Material UI',
     description:
       'Известный армянский производитель коньяка премиум-класса. Бренд с богатой историей и традициями, признанный как в Армении, так и на международном рынке. Продукция компании ценится знатоками и коллекционерами.',
   },
