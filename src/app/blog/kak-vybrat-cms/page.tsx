@@ -7,16 +7,19 @@ import './_article.scss';
 export const metadata: Metadata = {
   title: 'Как выбрать CMS для вашего сайта | Torgomyan.Studio',
   description:
-    'Сравнение популярных CMS систем. Какую платформу выбрать для вашего проекта: WordPress, Tilda, Webflow или кастомная разработка?',
+    'Сравнение популярных CMS систем. Какую платформу выбрать для вашего проекта: WordPress, Tilda, Webflow или кастомная разработка? Подробный анализ преимуществ и недостатков.',
   keywords:
-    'выбор CMS, сравнение CMS, WordPress, Tilda, Webflow, система управления контентом, какая CMS лучше',
+    'выбор CMS, сравнение CMS, WordPress, Tilda, Webflow, система управления контентом, какая CMS лучше, какую CMS выбрать, сравнение систем управления контентом',
   alternates: {
-    canonical: '/blog/kak-vybrat-cms',
+    canonical: 'https://torgomyan.studio/blog/kak-vybrat-cms',
   },
   openGraph: {
     title: 'Как выбрать CMS для вашего сайта',
-    description: 'Сравнение популярных CMS систем и рекомендации по выбору',
+    description:
+      'Сравнение популярных CMS систем и рекомендации по выбору. WordPress, Tilda, Webflow или кастомная разработка?',
     type: 'article',
+    locale: 'ru_RU',
+    siteName: 'Torgomyan.Studio',
   },
 };
 

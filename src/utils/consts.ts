@@ -156,6 +156,7 @@ const ciklevkaUrl = [
 export const Works = [
   {
     name: 'Galamat',
+    slug: 'galamat',
     imgUrl: 'images/glamat-kz.png',
     links: [
       {
@@ -170,6 +171,7 @@ export const Works = [
   },
   {
     name: 'Swappe',
+    slug: 'swappe',
     imgUrl: 'images/swappe.ru.png',
     links: [
       {
@@ -184,6 +186,7 @@ export const Works = [
   },
   {
     name: 'ZKTeco',
+    slug: 'zkteco',
     imgUrl: 'images/ZKTeco.png',
     links: [],
     created: 'React JS, Next.js, TypeScript',
@@ -192,11 +195,12 @@ export const Works = [
   },
   {
     name: 'Line-Artworks',
+    slug: 'line-artworks',
     imgUrl: 'images/line-artworks.png',
     links: [
       {
         name: 'Home',
-        url: 'https://torgomyan01.github.io/line-artworks/',
+        url: 'https://line-artworks.com/',
       },
       {
         name: 'Projects',
@@ -207,12 +211,13 @@ export const Works = [
         url: 'https://torgomyan01.github.io/line-artworks/studio.html',
       },
     ],
-    created: 'HTML CSS JS',
+    created: 'HTML CSS JS WordPress',
     description:
       'Креативное дизайн-агентство, специализирующееся на создании уникальных художественных проектов и визуальных решений. Известно своими инновационными подходами в области современного искусства и дизайна.',
   },
   {
     name: 'Sdney',
+    slug: 'sdney',
     imgUrl: 'images/Sydney.png',
     links: [
       {
@@ -226,6 +231,7 @@ export const Works = [
   },
   {
     name: 'Kettik-travel',
+    slug: 'kettik-travel',
     imgUrl: 'images/kettik-travel.png',
     links: [
       {
@@ -239,6 +245,7 @@ export const Works = [
   },
   {
     name: 'Mosco',
+    slug: 'mosco',
     imgUrl: 'images/Mosco.png',
     links: [
       {
@@ -268,6 +275,7 @@ export const Works = [
   },
   {
     name: 'Lagom',
+    slug: 'lagom',
     imgUrl: 'images/Lagom.png',
     links: [
       {
@@ -281,6 +289,7 @@ export const Works = [
   },
   {
     name: 'Artel',
+    slug: 'artel',
     imgUrl: 'images/ARTEL1.png',
     links: [
       {
@@ -294,6 +303,7 @@ export const Works = [
   },
   {
     name: 'Empover-Prosper',
+    slug: 'empover-prosper',
     imgUrl: 'images/Empower-Prosper.png',
     links: [
       {
@@ -307,6 +317,7 @@ export const Works = [
   },
   {
     name: 'ArtHall-Synergy Landing ',
+    slug: 'arthall-synergy-landing',
     imgUrl: 'images/ArtHall-Synergy-Landing.png',
     links: [
       {
@@ -320,6 +331,7 @@ export const Works = [
   },
   {
     name: 'Mir Darog',
+    slug: 'mir-darog',
     imgUrl: 'images/mir-darog-screen.png',
     links: [
       {
@@ -333,6 +345,7 @@ export const Works = [
   },
   {
     name: 'Dealkgo',
+    slug: 'dealkgo',
     imgUrl: 'images/Dealkgo.png',
     links: Object.keys(dealkGoUrl).map((item) => {
       return {
@@ -348,6 +361,7 @@ export const Works = [
   },
   {
     name: 'Web-It',
+    slug: 'web-it',
     imgUrl: 'images/Web-IQ.png',
     links: [
       {
@@ -361,6 +375,7 @@ export const Works = [
   },
   {
     name: 'ԿՈՆՅԱԿ',
+    slug: 'konyak',
     imgUrl: 'images/aygezardi-konyki-gorcaran.png',
     links: [
       {
@@ -382,6 +397,7 @@ export const Works = [
   },
   {
     name: 'Ciklevka',
+    slug: 'ciklevka',
     imgUrl: 'images/Ciklevka.png',
     links: [
       {
@@ -395,6 +411,7 @@ export const Works = [
   },
   {
     name: 'Adz-motors',
+    slug: 'adz-motors',
     imgUrl: 'images/adz-motors.png',
     links: ciklevkaUrl.map((url) => {
       return {
@@ -408,6 +425,7 @@ export const Works = [
   },
   {
     name: 'MediaCatalog',
+    slug: 'mediacatalog',
     imgUrl: 'images/MediaCatalog.png',
     links: [
       {
@@ -433,6 +451,7 @@ export const Works = [
   },
   {
     name: 'Aniox',
+    slug: 'aniox',
     imgUrl: 'images/Aniox.png',
     links: [
       {
@@ -486,6 +505,7 @@ export const Works = [
   },
   {
     name: 'Arthall-Synergy',
+    slug: 'arthall-synergy',
     imgUrl: 'images/ArtHall-Synergy.png',
     links: [
       {
@@ -499,6 +519,7 @@ export const Works = [
   },
   {
     name: 'МосСервис',
+    slug: 'mosservis',
     imgUrl: 'images/mosservices.png',
     links: [
       {
@@ -510,6 +531,7 @@ export const Works = [
   },
   {
     name: 'RimPlitka',
+    slug: 'rimplitka',
     imgUrl: 'images/RIM-PLITKA.png',
     links: [
       {
@@ -523,6 +545,7 @@ export const Works = [
   },
   {
     name: 'Arthall',
+    slug: 'arthall',
     imgUrl: 'images/ArtHall.png',
     links: [
       {
@@ -572,6 +595,7 @@ export const Works = [
   },
   {
     name: 'Max-Asfalt',
+    slug: 'max-asfalt',
     imgUrl: 'images/max-asfalt.png',
     links: [
       {
@@ -585,6 +609,7 @@ export const Works = [
   },
   {
     name: 'Easy Card',
+    slug: 'easy-card',
     imgUrl: 'images/EasyCards-Ru-Home.png',
     links: [
       {
@@ -618,6 +643,7 @@ export const Works = [
   },
   {
     name: 'Neural-Network',
+    slug: 'neural-network',
     imgUrl: 'images/Widgets.png',
     links: [
       {
@@ -691,6 +717,7 @@ export const Works = [
   },
   {
     name: 'Kupon',
+    slug: 'kupon',
     imgUrl: 'images/Kupon.png',
     links: [
       {
@@ -712,6 +739,7 @@ export const Works = [
   },
   {
     name: 'Neuron',
+    slug: 'neuron',
     imgUrl: 'images/neuron.png',
     links: [
       {
@@ -725,6 +753,7 @@ export const Works = [
   },
   {
     name: '54 Agency',
+    slug: '54-agency',
     imgUrl: 'images/54-agensy.png',
     links: [
       {
@@ -738,6 +767,7 @@ export const Works = [
   },
   {
     name: 'YTSMp3.org',
+    slug: 'ytsmp3',
     imgUrl: 'images/ytsmp3.png',
     links: [
       {
@@ -751,6 +781,7 @@ export const Works = [
   },
   {
     name: 'Kampus',
+    slug: 'kampus',
     imgUrl: 'images/kampus.png',
     links: [
       {
@@ -788,6 +819,7 @@ export const Works = [
   },
   {
     name: 'RosMigrant',
+    slug: 'rosmigrant',
     imgUrl: 'images/ros-mirgrant.png',
     links: [
       {
@@ -806,5 +838,64 @@ export const Works = [
     created: 'HTML CSS Bootstrap JAVASCRIPT',
     description:
       'Информационный портал, предоставляющий услуги и информацию для мигрантов в России. Известный сервис, помогающий тысячам людей с вопросами миграции, документооборота и адаптации. Важный ресурс в сфере миграционных услуг.',
+  },
+];
+
+export const testimonials = [
+  {
+    author: 'Александр Петров',
+    company: 'Galamat',
+    rating: 5,
+    text: 'Отличная работа! Команда Torgomyan.Studio создала для нас современный и функциональный сайт. Все было сделано в срок, качественно и профессионально. Особенно понравилось внимание к деталям и готовность вносить изменения.',
+    project: 'Galamat',
+  },
+  {
+    author: 'Мария Иванова',
+    company: 'Swappe',
+    rating: 5,
+    text: 'Очень довольны результатом! Сайт получился именно таким, как мы хотели. Команда проявила профессионализм на всех этапах работы - от дизайна до запуска. Рекомендую!',
+    project: 'Swappe',
+  },
+  {
+    author: 'Дмитрий Смирнов',
+    company: 'ZKTeco',
+    rating: 5,
+    text: 'Работали с Torgomyan.Studio над корпоративным сайтом. Все выполнено на высшем уровне. Современный дизайн, удобная навигация, быстрая загрузка. Клиенты остались довольны.',
+    project: 'ZKTeco',
+  },
+  {
+    author: 'Елена Козлова',
+    company: 'Artel',
+    rating: 5,
+    text: 'Профессиональная команда, которая понимает потребности бизнеса. Создали для нас красивый и функциональный сайт. Особенно понравилось, что учли все наши пожелания и предложили свои идеи.',
+    project: 'Artel',
+  },
+  {
+    author: 'Игорь Волков',
+    company: 'Dealkgo',
+    rating: 5,
+    text: 'Отличный опыт сотрудничества! Разработали сложное веб-приложение с множеством функций. Все работает стабильно, интерфейс интуитивно понятный. Спасибо за качественную работу!',
+    project: 'Dealkgo',
+  },
+  {
+    author: 'Анна Соколова',
+    company: 'Kampus',
+    rating: 5,
+    text: 'Очень благодарны команде за проделанную работу! Создали для нас образовательную платформу с нуля. Все функции работают отлично, дизайн современный и привлекательный. Рекомендую всем!',
+    project: 'Kampus',
+  },
+  {
+    author: 'Сергей Лебедев',
+    company: 'Mir Darog',
+    rating: 5,
+    text: 'Работали над сайтом дорожно-строительной компании. Результат превзошел ожидания! Сайт получился информативным, красивым и удобным. Команда всегда была на связи и оперативно решала все вопросы.',
+    project: 'Mir Darog',
+  },
+  {
+    author: 'Ольга Новикова',
+    company: 'Neural-Network',
+    rating: 5,
+    text: 'Профессионалы своего дела! Разработали для нас AI-платформу с множеством сложных функций. Все работает безупречно. Особенно понравилось внимание к деталям и качество кода.',
+    project: 'Neural-Network',
   },
 ];

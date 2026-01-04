@@ -1,4 +1,4 @@
-import { SITE_URL } from '@/utils/consts';
+import { SITE_URL, Works } from '@/utils/consts';
 import { headers } from 'next/headers';
 import { MetadataRoute } from 'next';
 
@@ -138,6 +138,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly',
       priority: 0.7,
     },
+    // Project detail pages - medium priority
+    ...Works.map((work) => ({
+      url: `${baseUrl}/our-works/${work.slug}`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    })),
     // Calculator page
     {
       url: `${baseUrl}${SITE_URL.CALCULATOR}`,

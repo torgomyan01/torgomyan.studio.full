@@ -26,18 +26,22 @@ import CookieConsent from '@/components/common/cookie-consent/cookie-consent';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: 'Torgomyan.Studio - Создаем сайты для вашего бизнеса',
-    description: '',
+    title: 'Разработка Сайтов под Ключ | Torgomyan.Studio - Веб-Студия',
+    description:
+      'Профессиональная разработка сайтов под ключ. Создание сайтов, интернет-магазинов, лендингов и веб-приложений. SEO-продвижение, дизайн UI/UX. Более 100 успешных проектов. Заказать сайт.',
     keywords:
-      'создание сайтов, разработка сайтов, дизайн сайтов, SEO оптимизация, хостинг, домены, веб-разработка',
+      'разработка сайтов под ключ, создание сайтов Армения, веб-студия Ереван, разработка сайтов, создание интернет-магазина, лендинг пейдж, корпоративный сайт, SEO продвижение, веб-дизайн, разработка веб-приложений, заказать сайт, стоимость разработки сайта, профессиональная разработка сайтов',
     alternates: {
-      canonical: 'https://swappe.ru',
+      canonical: 'https://torgomyan.studio',
     },
-    // openGraph: {
-    //   title: data.data.name,
-    //   description: data.data.description?.slice(0, 140),
-    //   images: image?.image || "",
-    // },
+    openGraph: {
+      title: 'Разработка Сайтов под Ключ | Torgomyan.Studio - Веб-Студия',
+      description:
+        'Профессиональная разработка сайтов под ключ. Создание сайтов, интернет-магазинов, лендингов и веб-приложений. SEO-продвижение, дизайн UI/UX. Более 100 успешных проектов.',
+      type: 'website',
+      locale: 'ru_RU',
+      siteName: 'Torgomyan.Studio',
+    },
   };
 }
 

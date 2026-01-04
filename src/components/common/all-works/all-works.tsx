@@ -5,6 +5,7 @@ import { Works } from '@/utils/consts';
 import Image from 'next/image';
 import { useState } from 'react';
 import ImageGalleryModal from '@/components/ui/image-gallery-modal';
+import Link from 'next/link';
 
 function AllWorks() {
   const [selectedWork, setSelectedWork] = useState<number | null>(null);
@@ -40,13 +41,12 @@ function AllWorks() {
                   setSelectedWork(selectedWork === index ? null : index)
                 }
               >
-                <span
+                <Link
+                  href={`/our-works/${work.slug}`}
                   className="img-wrap"
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleImageClick(index);
                   }}
-                  style={{ cursor: 'pointer' }}
                 >
                   <Image
                     src={`/${work.imgUrl}`}
@@ -54,9 +54,11 @@ function AllWorks() {
                     width={400}
                     height={400}
                   />
-                </span>
+                </Link>
                 <div className="work-info">
-                  <h3 className="work-name">{work.name}</h3>
+                  <Link href={`/our-works/${work.slug}`}>
+                    <h3 className="work-name">{work.name}</h3>
+                  </Link>
                   <p className="work-tech">{work.created}</p>
                   {work.description && (
                     <p className="work-description">{work.description}</p>

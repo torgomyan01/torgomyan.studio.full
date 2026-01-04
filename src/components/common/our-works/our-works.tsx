@@ -40,10 +40,17 @@ function OurWorks() {
         </p>
         <div className="our-works-items">
           {displayedWorks.map((work, index) => (
-            <div key={work.name} className="our-works-item">
+            <Link
+              key={work.name}
+              href={`/our-works/${work.slug}`}
+              className="our-works-item"
+            >
               <span
                 className="img-wrap"
-                onClick={() => handleImageClick(index)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleImageClick(index);
+                }}
                 style={{ cursor: 'pointer' }}
               >
                 <Image
@@ -56,7 +63,7 @@ function OurWorks() {
               <div className="work-content">
                 <span className="text">{work.name}</span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
         <Link href={SITE_URL.OUR_WORKS} className="show-all">

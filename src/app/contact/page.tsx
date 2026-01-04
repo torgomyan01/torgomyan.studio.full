@@ -4,19 +4,21 @@ import ServicesHeaderWithContent from '@/components/common/services-header/servi
 import ContactUs from '@/components/common/contact-us/contact-us';
 
 export const metadata: Metadata = {
-  title: 'Связь - Контакты Torgomyan.Studio | Связаться с нами',
+  title: 'Контакты | Связаться с Веб-Студией | Torgomyan.Studio',
   description:
-    'Свяжитесь с нами для обсуждения вашего проекта. Мы всегда готовы ответить на ваши вопросы и помочь реализовать ваши идеи. Телефон, email, WhatsApp, Telegram.',
+    'Свяжитесь с нами для обсуждения вашего проекта. Консультация бесплатно. Телефон, WhatsApp, Telegram, Email. Мы ответим в течение часа. Заказать разработку сайта.',
   keywords:
-    'контакты, связаться, связь, torgomyan studio контакты, связаться с веб-студией, контакты разработчика, связь с нами',
+    'контакты веб-студии, связаться с веб-студией, контакты разработчика сайтов, связаться с нами, заказать сайт, консультация по разработке сайта, контакты Torgomyan Studio',
   alternates: {
-    canonical: '/contact',
+    canonical: 'https://torgomyan.studio/contact',
   },
   openGraph: {
-    title: 'Связь - Контакты Torgomyan.Studio',
+    title: 'Контакты | Связаться с Веб-Студией',
     description:
-      'Свяжитесь с нами для обсуждения вашего проекта. Мы всегда готовы ответить на ваши вопросы.',
+      'Свяжитесь с нами для обсуждения вашего проекта. Консультация бесплатно. Телефон, WhatsApp, Telegram, Email. Мы ответим в течение часа.',
     type: 'website',
+    locale: 'ru_RU',
+    siteName: 'Torgomyan.Studio',
   },
 };
 

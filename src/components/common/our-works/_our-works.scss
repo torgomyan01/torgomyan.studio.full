@@ -23,6 +23,14 @@
       overflow: hidden;
       border-radius: 20px;
       background: linear-gradient(148deg, #c444ff 1.27%, #562999 100.15%);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(196, 68, 255, 0.3);
+      }
       .work-content {
         display: flex;
         flex-direction: column;

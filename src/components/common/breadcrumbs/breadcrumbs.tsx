@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import './_breadcrumbs.scss';
+import { Works } from '@/utils/consts';
 
 interface BreadcrumbItem {
   label: string;
@@ -64,6 +65,18 @@ export default function Breadcrumbs() {
         const articleLabel = blogArticleLabels[articleSlug] || segment;
         items.push({
           label: articleLabel,
+          href: currentPath,
+        });
+      } else if (
+        currentPath.startsWith('/our-works/') &&
+        index === segments.length - 1
+      ) {
+        // Check if it's a project detail page
+        const projectSlug = segment;
+        const project = Works.find((w) => w.slug === projectSlug);
+        const projectLabel = project ? project.name : segment;
+        items.push({
+          label: projectLabel,
           href: currentPath,
         });
       } else {
