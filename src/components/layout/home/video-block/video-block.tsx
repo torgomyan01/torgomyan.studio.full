@@ -4,26 +4,31 @@ import { useEffect, useRef, useState } from 'react';
 import './_video.scss';
 
 interface VideoBlockProps {
-  videoId?: string; // YouTube video ID
+  videoId?: string; // YouTube video ID (kept for backward compatibility, not used)
 }
 
 function VideoBlock({ videoId = 'dQw4w9WgXcQ' }: VideoBlockProps) {
   const videoRef = useRef<HTMLDivElement>(null);
+  const videoElementRef = useRef<HTMLVideoElement>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [hasPlayed, setHasPlayed] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && !hasPlayed) {
+          if (entry.isIntersecting) {
             setIsVisible(true);
-            setHasPlayed(true);
+          } else {
+            setIsVisible(false);
+            // Pause video when it goes out of view
+            if (videoElementRef.current) {
+              videoElementRef.current.pause();
+            }
           }
         });
       },
       {
-        threshold: 0.7,
+        threshold: 0.5,
       }
     );
 
@@ -36,7 +41,32 @@ function VideoBlock({ videoId = 'dQw4w9WgXcQ' }: VideoBlockProps) {
         observer.unobserve(videoRef.current);
       }
     };
-  }, [hasPlayed]);
+  }, []);
+
+  useEffect(() => {
+    if (isVisible && videoElementRef.current) {
+      const video = videoElementRef.current;
+
+      const handleCanPlay = () => {
+        video.play().catch((error) => {
+          console.error('Error playing video:', error);
+        });
+      };
+
+      if (video.readyState >= 3) {
+        // Video is already loaded enough to play
+        video.play().catch((error) => {
+          console.error('Error playing video:', error);
+        });
+      } else {
+        video.addEventListener('canplay', handleCanPlay);
+      }
+
+      return () => {
+        video.removeEventListener('canplay', handleCanPlay);
+      };
+    }
+  }, [isVisible]);
 
   return (
     <div className="video-block" ref={videoRef}>
@@ -47,19 +77,27 @@ function VideoBlock({ videoId = 'dQw4w9WgXcQ' }: VideoBlockProps) {
         </p>
         <div className="video">
           {isVisible ? (
-            <iframe
+            <video
+              ref={videoElementRef}
               width="100%"
-              height="600"
-              src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=1&rel=0`}
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className="h-[300px] md:h-[600px]"
-            ></iframe>
+              height="700"
+              muted
+              controls
+              loop
+              preload="auto"
+              className="h-[300px] md:h-[700px] object-cover rounded-2xl sm:rounded-4xl"
+              playsInline
+            >
+              <source
+                src="/video/video-cover-Andranik-Torgomyan.mp4"
+                type="video/mp4"
+              />
+              Your browser does not support the video tag.
+            </video>
           ) : (
-            <div className="video-placeholder">
-              <img src="/images/video.jpg" alt="" />
+            <div className="w-full h-[300px] md:h-[700px] bg-[linear-gradient(108deg,#C444FF_0%,#752999_100%)] flex-jc-c flex-col rounded-4xl">
+              <i className="fa-solid fa-play text-[80px] text-white"></i>
+              <h3 className="text-white text-[30px] mt-4">Немного о нас</h3>
             </div>
           )}
         </div>

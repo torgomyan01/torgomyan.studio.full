@@ -225,7 +225,7 @@ export const Works = [
         url: 'https://torgomyan01.github.io/sydney/',
       },
     ],
-    created: 'HTML CSS JS',
+    created: 'HTML CSS JS GSAP Node.js',
     description:
       'Современная дизайн-студия, создающая элегантные и функциональные веб-решения. Известна своим вниманием к деталям и высоким качеством визуального оформления проектов.',
   },
@@ -239,7 +239,7 @@ export const Works = [
         url: 'https://torgomyan01.github.io/Kettik-travel/home.html',
       },
     ],
-    created: 'HTML CSS JS',
+    created: 'HTML CSS JS GSAP Node.js Next.js',
     description:
       'Туристическая компания, специализирующаяся на организации путешествий и туров. Популярный сервис в сфере туризма, предлагающий качественные услуги для путешественников.',
   },
