@@ -10,6 +10,7 @@ import './tailwind.css';
 
 import NextTopLoader from 'nextjs-toploader';
 import type { Metadata } from 'next';
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 import { Providers } from '@/app/providers';
 import { SesProviders } from '@/components/common/session-provider/session-provider';
@@ -74,6 +75,7 @@ export default async function RootLayout({
           </SesProviders>
         </div>
         <YandexMetrika />
+        <GoogleAnalytics gaId="G-NZBTEVKW5Z" />
       </body>
     </html>
   );
