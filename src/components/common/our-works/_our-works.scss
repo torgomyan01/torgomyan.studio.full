@@ -13,7 +13,8 @@
       grid-template-columns: 1fr 1fr;
     }
     @media (max-width: 767px) {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
       margin-bottom: 30px;
     }
     .our-works-item {
@@ -37,7 +38,7 @@
         flex-grow: 1;
         padding: 30px;
         @media (max-width: 767px) {
-          padding: 20px;
+          padding: 15px;
         }
       }
       .text {
@@ -53,7 +54,7 @@
           font-size: 40px;
         }
         @media (max-width: 767px) {
-          font-size: 32px;
+          font-size: 24px;
           margin-bottom: 10px;
         }
       }
@@ -75,6 +76,10 @@
         width: 104%;
         margin-left: -2%;
         height: 400px;
+
+        @media (max-width: 767px) {
+          height: 150px;
+        }
         &:hover {
           img {
             transform: scale(1.01);
