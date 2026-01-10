@@ -76,7 +76,7 @@ function AllWorks() {
                 </div>
               </div>
               {selectedWork === index && (
-                <div className="work-links">
+                <div className="work-links pt-4!">
                   <h4>Ссылки на проект:</h4>
                   <div className="links-grid">
                     {work.links.map((link, linkIndex) => (
