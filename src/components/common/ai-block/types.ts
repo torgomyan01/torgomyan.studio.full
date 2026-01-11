@@ -28,6 +28,9 @@ export interface ChatData {
   phone?: string;
   // Question step tracking
   questionStep?: number;
+  // Discount fields
+  discountEligible?: boolean;
+  discountPercentage?: number;
 }
 
 export type ChatStep = 'service' | 'details' | 'contact';

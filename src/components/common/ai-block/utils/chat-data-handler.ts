@@ -99,10 +99,44 @@ export function saveAnswerToChatData(
 
 export async function saveChatInquiry(data: ChatData): Promise<void> {
   try {
-    const result = await saveChatInquiryAction(data);
+    // Check if promotion timer is still active
+    const STORAGE_KEY = 'promotion_timer_start';
+    const PROMOTION_DURATION = 10 * 60 * 1000; // 10 minutes
+    let discountEligible = false;
+    let discountPercentage: number | undefined = undefined;
+
+    // Check localStorage only in browser environment
+    if (typeof window !== 'undefined') {
+      const timerStart = localStorage.getItem(STORAGE_KEY);
+
+      if (timerStart) {
+        const now = Date.now();
+        const elapsed = now - parseInt(timerStart, 10);
+        const remaining = PROMOTION_DURATION - elapsed;
+
+        if (remaining > 0) {
+          // Promotion is still active
+          discountEligible = true;
+          discountPercentage = 25;
+          // Remove timer after use
+          localStorage.removeItem(STORAGE_KEY);
+        }
+      }
+    }
+
+    const dataWithDiscount: ChatData = {
+      ...data,
+      discountEligible,
+      discountPercentage,
+    };
+
+    const result = await saveChatInquiryAction(dataWithDiscount);
 
     if (result.success) {
       console.log('Chat inquiry saved successfully:', result);
+      if (discountEligible) {
+        console.log('Discount applied: 25%');
+      }
     } else {
       console.error('Failed to save chat inquiry:', result.error);
     }

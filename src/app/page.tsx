@@ -1,5 +1,6 @@
 import MainTemplate from '@/components/common/main-template/main-template';
 import ServicesBlock from '@/components/common/services-block/services-block';
+import PromotionSection from '@/components/common/promotion-section/promotion-section';
 import Header from '@/components/layout/home/header/header';
 import VideoBlock from '@/components/layout/home/video-block/video-block';
 import OurWorks from '@/components/common/our-works/our-works';
@@ -11,6 +12,8 @@ export default function Page() {
   return (
     <MainTemplate>
       <Header />
+
+      <PromotionSection />
 
       <ServicesBlock />
 

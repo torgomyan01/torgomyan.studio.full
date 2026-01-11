@@ -168,6 +168,43 @@
       width: 100%;
     }
   }
+
+  .modal-cancel-btn,
+  .modal-submit-btn {
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  .modal-cancel-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+    &:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.2);
+    }
+  }
+
+  .modal-submit-btn {
+    background: linear-gradient(97deg, #c444ff 0.62%, #562999 110%);
+    color: white;
+
+    &:hover:not(:disabled) {
+      background: linear-gradient(-97deg, #c444ff 0.62%, #562999 110%);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(196, 68, 255, 0.4);
+    }
+  }
 }
 
 // Custom Input Styles

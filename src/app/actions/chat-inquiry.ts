@@ -14,6 +14,8 @@ export type ChatInquiry = {
   email: string | null;
   phone: string | null;
   called: boolean;
+  discount_percentage: number | null;
+  discount_eligible: boolean;
   created_at: Date;
   updated_at: Date;
 };
@@ -127,6 +129,8 @@ export async function saveChatInquiryAction(
         name: data.name || null,
         email: data.email || null,
         phone: data.phone || null,
+        discount_percentage: data.discountPercentage || null,
+        discount_eligible: data.discountEligible || false,
       },
     });
 
