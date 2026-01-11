@@ -124,26 +124,6 @@ function AiBlock() {
         )}
       </div>
 
-      {/* Fixed scroll block - always visible on mobile, hidden on desktop when main block is visible */}
-      {!showChat && (
-        <motion.div
-          ref={scrollBlockRef}
-          className="ai-block scroll-block fixed! md:hidden! h-auto! left-10! lg:left-[unset]! right-[unset]! lg:right-10! bottom-10! lg:bottom-[50%]! lg:translate-y-[50%]! bg-transparent! shadow-none!"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 20 }}
-          transition={{ duration: 0.3 }}
-        >
-          <div className="chat-toggle-wrapper">
-            <SmileyButton
-              onClick={() => setShowChat(true)}
-              showChat={showChat}
-              isScrolled={true}
-            />
-          </div>
-        </motion.div>
-      )}
-
       {/* ChatContent - always renders as modal when chat is open */}
       {showChat && (
         <ChatContent {...chatContentProps} className="floating-open" />
