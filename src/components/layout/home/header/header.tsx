@@ -158,6 +158,21 @@ function Header() {
               <span>Калькулятор</span>
             </Link>
           </div>
+          <div className="header-contact-info">
+            <a href="tel:+37477769668" className="phone-header-link">
+              <i className="fas fa-phone" aria-hidden="true"></i>
+              <span>+374 77 76-96-68</span>
+            </a>
+            <a
+              href="https://t.me/torgomyan01"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="telegram-header-link"
+            >
+              <i className="fab fa-telegram-plane" aria-hidden="true"></i>
+              <span>@torgomyan01</span>
+            </a>
+          </div>
         </div>
         <AiBlock />
       </div>

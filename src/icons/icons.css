@@ -184,6 +184,10 @@
   content: '\f095';
 }
 
+.fa-telegram-plane:before {
+  content: '\f2c6';
+}
+
 .fa-bolt:before {
   content: '\f0e7';
 }

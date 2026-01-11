@@ -12,9 +12,9 @@ export default function Page() {
     <MainTemplate>
       <Header />
 
-      <VideoBlock />
-
       <ServicesBlock />
+
+      <VideoBlock />
 
       <OurWorks />
 
