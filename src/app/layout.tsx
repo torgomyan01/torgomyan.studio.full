@@ -23,7 +23,7 @@ import ScrollTriggeredPopup from '@/components/common/scroll-triggered-popup/scr
 import RecentNotifications from '@/components/common/recent-notifications/recent-notifications';
 import { NotificationProvider } from '@/components/common/recent-notifications/notification-context';
 import { ToastNotifications } from '@/components/common/recent-notifications/toast-notifications';
-import CookieConsent from '@/components/common/cookie-consent/cookie-consent';
+// import CookieConsent from '@/components/common/cookie-consent/cookie-consent';
 import YandexMetrika from '@/components/common/YandexMetrika/YandexMetrika';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -68,7 +68,7 @@ export default async function RootLayout({
                   <ScrollTriggeredPopup />
                   <RecentNotifications />
                   <ToastNotifications />
-                  <CookieConsent />
+                  {/* <CookieConsent /> */}
                 </NotificationProvider>
               </UiProviders>
             </Providers>
