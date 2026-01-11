@@ -151,7 +151,7 @@ function Header() {
           <div className="header-actions">
             <Link href="/schedule-call" className="schedule-call-header-btn">
               <i className="fas fa-phone" aria-hidden="true"></i>
-              <span>Запланировать звонок</span>
+              <span>Заказать консультацию</span>
             </Link>
             <Link href={SITE_URL.CALCULATOR} className="calculator-header-btn">
               <i className="fa-solid fa-calculator" aria-hidden="true"></i>
