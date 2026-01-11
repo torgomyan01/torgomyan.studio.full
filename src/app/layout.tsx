@@ -10,7 +10,7 @@ import './tailwind.css';
 
 import NextTopLoader from 'nextjs-toploader';
 import type { Metadata } from 'next';
-import { GoogleAnalytics } from '@next/third-parties/google'
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 import { Providers } from '@/app/providers';
 import { SesProviders } from '@/components/common/session-provider/session-provider';
@@ -25,6 +25,7 @@ import { NotificationProvider } from '@/components/common/recent-notifications/n
 import { ToastNotifications } from '@/components/common/recent-notifications/toast-notifications';
 // import CookieConsent from '@/components/common/cookie-consent/cookie-consent';
 import YandexMetrika from '@/components/common/YandexMetrika/YandexMetrika';
+import Smartsupp from '@/components/common/Smartsupp/Smartsupp';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -76,6 +77,7 @@ export default async function RootLayout({
         </div>
         <YandexMetrika />
         <GoogleAnalytics gaId="G-NZBTEVKW5Z" />
+        <Smartsupp />
       </body>
     </html>
   );
