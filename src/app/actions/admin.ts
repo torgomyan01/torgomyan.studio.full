@@ -73,24 +73,36 @@ export async function adminLoginAction(
     });
 
     // Set session cookie
-    // NextAuth v4 uses __Secure- prefix when NEXTAUTH_URL starts with https://
-    // or when useSecureCookies is true (which is determined by NEXTAUTH_URL)
+    // NextAuth v4 automatically adds __Secure- prefix when secure is true
+    // We should use the base name 'next-auth.session-token' and let NextAuth handle the prefix
     const nextAuthUrl = process.env.NEXTAUTH_URL || '';
     const isSecure =
       process.env.NODE_ENV === 'production' ||
       process.env.VERCEL === '1' ||
       nextAuthUrl.startsWith('https://');
+
+    // Use the base cookie name - NextAuth will handle __Secure- prefix automatically
+    // But when setting manually, we need to use the full name
     const cookieName = isSecure
       ? '__Secure-next-auth.session-token'
       : 'next-auth.session-token';
 
     const cookieStore = await cookies();
+
+    // Delete old cookie first if it exists with different name to avoid conflicts
+    if (isSecure) {
+      cookieStore.delete('next-auth.session-token');
+    } else {
+      cookieStore.delete('__Secure-next-auth.session-token');
+    }
+
     cookieStore.set(cookieName, token, {
       httpOnly: true,
       secure: isSecure,
       sameSite: 'lax',
       maxAge: 30 * 24 * 60 * 60, // 30 days
       path: '/',
+      // Don't set domain - let browser handle it automatically for Vercel
     });
 
     // Success - redirect to admin dashboard
@@ -118,9 +130,10 @@ export async function adminLogoutAction() {
     process.env.NODE_ENV === 'production' ||
     process.env.VERCEL === '1' ||
     nextAuthUrl.startsWith('https://');
-  const cookieName = isSecure
-    ? '__Secure-next-auth.session-token'
-    : 'next-auth.session-token';
-  cookieStore.delete(cookieName);
+
+  // Delete both possible cookie names to ensure logout works
+  cookieStore.delete('next-auth.session-token');
+  cookieStore.delete('__Secure-next-auth.session-token');
+
   redirect('/admin/login');
 }

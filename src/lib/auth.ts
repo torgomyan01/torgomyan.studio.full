@@ -11,16 +11,24 @@ export const authOptions: NextAuthOptions = {
     error: '/admin/login',
   },
   // Cookie configuration for production (Vercel)
-  // NextAuth v4 determines secure cookies based on NEXTAUTH_URL
-  // If NEXTAUTH_URL starts with https://, it automatically uses __Secure- prefix
-  // useSecureCookies is deprecated but we can still set it for compatibility
+  // NextAuth v4 automatically adds __Secure- prefix when secure is true
+  // and NEXTAUTH_URL starts with https://
   useSecureCookies:
     process.env.NODE_ENV === 'production' ||
     process.env.VERCEL === '1' ||
     (process.env.NEXTAUTH_URL || '').startsWith('https://'),
   cookies: {
     sessionToken: {
-      name: 'next-auth.session-token',
+      // NextAuth v4: When secure is true and useSecureCookies is true,
+      // NextAuth automatically adds __Secure- prefix to cookie name
+      // But getServerSession reads cookies using the name specified here
+      // So we need to match what we set in adminLoginAction
+      name:
+        process.env.NODE_ENV === 'production' ||
+        process.env.VERCEL === '1' ||
+        (process.env.NEXTAUTH_URL || '').startsWith('https://')
+          ? '__Secure-next-auth.session-token'
+          : 'next-auth.session-token',
       options: {
         httpOnly: true,
         sameSite: 'lax',
@@ -29,6 +37,8 @@ export const authOptions: NextAuthOptions = {
           process.env.NODE_ENV === 'production' ||
           process.env.VERCEL === '1' ||
           (process.env.NEXTAUTH_URL || '').startsWith('https://'),
+        // Don't set domain - let browser handle it automatically
+        // domain: undefined,
       },
     },
   },
