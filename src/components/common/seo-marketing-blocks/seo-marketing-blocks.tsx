@@ -31,6 +31,23 @@ function SEOMarketingBlocks({
         </section>
       )}
 
+      {/* Features Section */}
+      {features && features.length > 0 && (
+        <section className="seo-features-section">
+          <div className="container">
+            <h2 className="section-title">Что входит в услугу</h2>
+            <div className="features-list">
+              {features.map((feature, index) => (
+                <div key={index} className="feature-item">
+                  <i className="fas fa-check-circle" aria-hidden="true"></i>
+                  <span>{feature}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Benefits Section */}
       {benefits && benefits.length > 0 && (
         <section className="seo-benefits-section">
@@ -44,23 +61,6 @@ function SEOMarketingBlocks({
                   </div>
                   <h3 className="benefit-title">{benefit.title}</h3>
                   <p className="benefit-description">{benefit.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Features Section */}
-      {features && features.length > 0 && (
-        <section className="seo-features-section">
-          <div className="container">
-            <h2 className="section-title">Что входит в услугу</h2>
-            <div className="features-list">
-              {features.map((feature, index) => (
-                <div key={index} className="feature-item">
-                  <i className="fas fa-check-circle" aria-hidden="true"></i>
-                  <span>{feature}</span>
                 </div>
               ))}
             </div>

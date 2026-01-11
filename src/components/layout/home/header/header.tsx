@@ -7,7 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import './_info-block.scss';
 import AiBlock from '@/components/common/ai-block/ai-block';
-import { Works } from '@/utils/consts';
+import { Works, SITE_URL } from '@/utils/consts';
 import ImageGalleryModal from '@/components/ui/image-gallery-modal';
 
 function Header() {
@@ -152,6 +152,10 @@ function Header() {
             <Link href="/schedule-call" className="schedule-call-header-btn">
               <i className="fas fa-phone" aria-hidden="true"></i>
               <span>Запланировать звонок</span>
+            </Link>
+            <Link href={SITE_URL.CALCULATOR} className="calculator-header-btn">
+              <i className="fa-solid fa-calculator" aria-hidden="true"></i>
+              <span>Калькулятор</span>
             </Link>
           </div>
         </div>
