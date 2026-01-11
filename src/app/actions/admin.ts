@@ -73,10 +73,21 @@ export async function adminLoginAction(
     });
 
     // Set session cookie
+    // NextAuth v4 uses __Secure- prefix when NEXTAUTH_URL starts with https://
+    // or when useSecureCookies is true (which is determined by NEXTAUTH_URL)
+    const nextAuthUrl = process.env.NEXTAUTH_URL || '';
+    const isSecure =
+      process.env.NODE_ENV === 'production' ||
+      process.env.VERCEL === '1' ||
+      nextAuthUrl.startsWith('https://');
+    const cookieName = isSecure
+      ? '__Secure-next-auth.session-token'
+      : 'next-auth.session-token';
+
     const cookieStore = await cookies();
-    cookieStore.set('next-auth.session-token', token, {
+    cookieStore.set(cookieName, token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: isSecure,
       sameSite: 'lax',
       maxAge: 30 * 24 * 60 * 60, // 30 days
       path: '/',
@@ -102,6 +113,14 @@ export async function adminLoginAction(
 export async function adminLogoutAction() {
   'use server';
   const cookieStore = await cookies();
-  cookieStore.delete('next-auth.session-token');
+  const nextAuthUrl = process.env.NEXTAUTH_URL || '';
+  const isSecure =
+    process.env.NODE_ENV === 'production' ||
+    process.env.VERCEL === '1' ||
+    nextAuthUrl.startsWith('https://');
+  const cookieName = isSecure
+    ? '__Secure-next-auth.session-token'
+    : 'next-auth.session-token';
+  cookieStore.delete(cookieName);
   redirect('/admin/login');
 }

@@ -30,6 +30,7 @@ const routeLabels: Record<string, string> = {
   '/privacy-policy': 'Политика конфиденциальности',
   '/calculator': 'Калькулятор',
   '/contact': 'Контакты',
+  '/schedule-call': 'Запланировать звонок',
 };
 
 const blogArticleLabels: Record<string, string> = {

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
 import './_scroll-triggered-popup.scss';
 
 const STORAGE_KEY = 'scroll-triggered-popup-shown';
@@ -129,19 +130,7 @@ export default function ScrollTriggeredPopup() {
       }
     }
 
-    // Scroll to contact section
-    const contactSection = document.querySelector('.contact-us');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      // Small delay to ensure smooth scroll
-      setTimeout(() => {
-        // Try to trigger the contact modal button click
-        const scheduleButton = contactSection.querySelector('a[href="#"]');
-        if (scheduleButton) {
-          (scheduleButton as HTMLElement).click();
-        }
-      }, 500);
-    }
+    window.location.href = '/schedule-call';
     setIsOpen(false);
   };
 
@@ -312,17 +301,19 @@ export default function ScrollTriggeredPopup() {
 
                 {/* Action Buttons */}
                 <div className="scroll-triggered-actions">
-                  <button
-                    type="button"
+                  <Link
+                    href="/schedule-call"
                     className={`scroll-triggered-btn scroll-triggered-btn-primary ${
                       hasDiscount ? 'has-discount' : ''
                     }`}
-                    onClick={handleConsultationClick}
+                    onClick={() => {
+                      handleConsultationClick();
+                    }}
                   >
                     {hasDiscount
                       ? `Получить ${DISCOUNT_PERCENTAGE}% скидку`
                       : 'Получить консультацию'}
-                  </button>
+                  </Link>
 
                   <div className="scroll-triggered-social-buttons">
                     <button

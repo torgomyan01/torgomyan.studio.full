@@ -10,6 +10,28 @@ export const authOptions: NextAuthOptions = {
     signOut: '/admin/login',
     error: '/admin/login',
   },
+  // Cookie configuration for production (Vercel)
+  // NextAuth v4 determines secure cookies based on NEXTAUTH_URL
+  // If NEXTAUTH_URL starts with https://, it automatically uses __Secure- prefix
+  // useSecureCookies is deprecated but we can still set it for compatibility
+  useSecureCookies:
+    process.env.NODE_ENV === 'production' ||
+    process.env.VERCEL === '1' ||
+    (process.env.NEXTAUTH_URL || '').startsWith('https://'),
+  cookies: {
+    sessionToken: {
+      name: 'next-auth.session-token',
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure:
+          process.env.NODE_ENV === 'production' ||
+          process.env.VERCEL === '1' ||
+          (process.env.NEXTAUTH_URL || '').startsWith('https://'),
+      },
+    },
+  },
   providers: [
     // Admin credentials provider
     Credentials({

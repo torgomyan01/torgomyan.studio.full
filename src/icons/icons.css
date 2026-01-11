@@ -180,6 +180,10 @@
   content: '\f3cd';
 }
 
+.fa-phone:before {
+  content: '\f095';
+}
+
 .fa-bolt:before {
   content: '\f0e7';
 }

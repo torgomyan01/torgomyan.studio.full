@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
 import './_exit-intent-popup.scss';
 
 const STORAGE_KEY = 'exit-intent-popup-shown';
@@ -58,19 +59,7 @@ export default function ExitIntentPopup() {
   };
 
   const handleConsultationClick = () => {
-    // Scroll to contact section
-    const contactSection = document.querySelector('.contact-us');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      // Small delay to ensure smooth scroll
-      setTimeout(() => {
-        // Try to trigger the contact modal button click
-        const scheduleButton = contactSection.querySelector('a[href="#"]');
-        if (scheduleButton) {
-          (scheduleButton as HTMLElement).click();
-        }
-      }, 500);
-    }
+    window.location.href = '/schedule-call';
     setIsOpen(false);
   };
 
@@ -173,13 +162,13 @@ export default function ExitIntentPopup() {
 
                 {/* Action Buttons */}
                 <div className="exit-intent-actions">
-                  <button
-                    type="button"
+                  <Link
+                    href="/schedule-call"
                     className="exit-intent-btn exit-intent-btn-primary"
-                    onClick={handleConsultationClick}
+                    onClick={() => setIsOpen(false)}
                   >
                     Получить консультацию
-                  </button>
+                  </Link>
 
                   <div className="exit-intent-social-buttons">
                     <button

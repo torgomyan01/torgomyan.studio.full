@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 import './_ui-components.scss';
 
 interface Work {
@@ -98,14 +99,24 @@ export default function ImageGalleryModal({
                     </p>
                   )}
                 </div>
-                <button
-                  type="button"
-                  className="modal-close-btn"
-                  onClick={onClose}
-                  aria-label="Закрыть"
-                >
-                  ✕
-                </button>
+                <div className="header-actions">
+                  <button
+                    type="button"
+                    className="modal-close-btn"
+                    onClick={onClose}
+                    aria-label="Закрыть"
+                  >
+                    ✕
+                  </button>
+                  <Link
+                    href="/schedule-call"
+                    className="schedule-call-btn"
+                    aria-label="Запланировать звонок"
+                  >
+                    <i className="fas fa-phone" aria-hidden="true"></i>
+                    <span>Запланировать звонок</span>
+                  </Link>
+                </div>
               </div>
 
               {/* Image Container */}

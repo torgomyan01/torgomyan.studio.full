@@ -57,19 +57,7 @@ function DiscussBlock() {
     // Track marketing event
     trackButtonClick('discuss_project', 'discuss_block');
 
-    // Scroll to contact section
-    const contactSection = document.querySelector('.contact-us');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-      // Open contact modal after scroll animation
-      setTimeout(() => {
-        const scheduleButton = contactSection.querySelector('a[href="#"]');
-        if (scheduleButton) {
-          (scheduleButton as HTMLElement).click();
-        }
-      }, 500);
-    }
+    window.location.href = '/schedule-call';
   };
 
   return (

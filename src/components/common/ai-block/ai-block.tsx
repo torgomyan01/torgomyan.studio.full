@@ -1,16 +1,17 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { RefObject, useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import './_ai-block.scss';
 import { useChatLogic } from './hooks/use-chat-logic';
-import { useScrollDetection } from './hooks/use-scroll-detection';
 import SmileyButton from './smiley-button';
 import SpeechBubble from './speech-bubble';
 import ChatContent from './chat-content';
 
 function AiBlock() {
   const blockRef = useRef<HTMLDivElement>(null);
+  const scrollBlockRef = useRef<HTMLDivElement>(null);
+  const [showScrollBlock, setShowScrollBlock] = useState(false);
   const {
     messages,
     currentStep,
@@ -31,11 +32,54 @@ function AiBlock() {
     timelineOptions,
   } = useChatLogic();
 
-  const isScrolled = useScrollDetection(
-    200,
-    blockRef as RefObject<HTMLElement>
-  );
-  const showBackdrop = isScrolled && showChat;
+  const showBackdrop = showScrollBlock && showChat;
+
+  // Track scroll position to show/hide scroll block
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY || window.pageYOffset;
+      // Show scroll block when scrolled more than 500px
+      setShowScrollBlock(scrollY > 500);
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (showChat) {
+      // Save current scroll position
+      const scrollY = window.scrollY;
+      // Set body overflow hidden
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+    } else {
+      // Restore body scroll
+      const scrollY = document.body.style.top;
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      // Restore scroll position
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      }
+    }
+
+    return () => {
+      // Cleanup on unmount
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+    };
+  }, [showChat]);
 
   // Check if all service-specific questions are answered
   const service = chatData.selectedService || '';
@@ -44,10 +88,31 @@ function AiBlock() {
     chatData.questionStep !== undefined &&
     chatData.questionStep >= questions.length;
 
+  // Common ChatContent component props
+  const chatContentProps = {
+    messages,
+    currentStep,
+    chatData,
+    inputValue,
+    setInputValue,
+    isTyping,
+    showChat,
+    messagesEndRef,
+    messagesContainerRef,
+    handleServiceSelection,
+    handleDetailsInput,
+    handleTimelineSelection,
+    handleBudgetSelection,
+    getServiceQuestions,
+    budgetOptions,
+    timelineOptions,
+    onClose: () => setShowChat(false),
+  };
+
   return (
     <>
-      {isScrolled && <div className="block sm:hidden h-[500px]" />}
-      {showBackdrop && (
+      {/* Backdrop - always show when chat is open */}
+      {showChat && (
         <motion.div
           className="chat-backdrop"
           initial={{ opacity: 0 }}
@@ -56,70 +121,50 @@ function AiBlock() {
           onClick={() => setShowChat(false)}
         />
       )}
-      {showChat && isScrolled ? (
-        <ChatContent
-          messages={messages}
-          currentStep={currentStep}
-          chatData={chatData}
-          inputValue={inputValue}
-          setInputValue={setInputValue}
-          isTyping={isTyping}
-          showChat={showChat}
-          messagesEndRef={messagesEndRef}
-          messagesContainerRef={messagesContainerRef}
-          handleServiceSelection={handleServiceSelection}
-          handleDetailsInput={handleDetailsInput}
-          handleTimelineSelection={handleTimelineSelection}
-          handleBudgetSelection={handleBudgetSelection}
-          getServiceQuestions={getServiceQuestions}
-          budgetOptions={budgetOptions}
-          timelineOptions={timelineOptions}
-          className="floating-open"
-          onClose={() => setShowChat(false)}
-        />
-      ) : (
-        <div
-          ref={blockRef}
-          className={`ai-block ${isScrolled ? 'floating-mode' : ''}`}
-        >
-          {!showChat ? (
-            <div className="chat-toggle-wrapper">
-              {!isScrolled && <SpeechBubble />}
-              <SmileyButton
-                onClick={() => setShowChat(true)}
-                showChat={showChat}
-              />
-              {!isScrolled && (
-                <button
-                  className="hover-open-btn"
-                  onClick={() => setShowChat(true)}
-                >
-                  Давайте обсудим
-                </button>
-              )}
-            </div>
-          ) : (
-            <ChatContent
-              messages={messages}
-              currentStep={currentStep}
-              chatData={chatData}
-              inputValue={inputValue}
-              setInputValue={setInputValue}
-              isTyping={isTyping}
+
+      {/* Main block - always stays in place */}
+      <div ref={blockRef} className="ai-block">
+        {!showChat && (
+          <div className="chat-toggle-wrapper">
+            <SpeechBubble />
+            <SmileyButton
+              onClick={() => setShowChat(true)}
               showChat={showChat}
-              messagesEndRef={messagesEndRef}
-              messagesContainerRef={messagesContainerRef}
-              handleServiceSelection={handleServiceSelection}
-              handleDetailsInput={handleDetailsInput}
-              handleTimelineSelection={handleTimelineSelection}
-              handleBudgetSelection={handleBudgetSelection}
-              getServiceQuestions={getServiceQuestions}
-              budgetOptions={budgetOptions}
-              timelineOptions={timelineOptions}
-              onClose={() => setShowChat(false)}
+              isScrolled={false}
             />
-          )}
-        </div>
+            <button
+              className="hover-open-btn"
+              onClick={() => setShowChat(true)}
+            >
+              Давайте обсудим
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Hidden scroll block - appears when scrolled down */}
+      {showScrollBlock && !showChat && (
+        <motion.div
+          ref={scrollBlockRef}
+          className="ai-block scroll-block h-auto! left-10! lg:left-[unset]! right-[unset]! lg:right-10! bottom-10! lg:bottom-[50%]! lg:translate-y-[50%]! bg-transparent! shadow-none!"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 20 }}
+          transition={{ duration: 0.3 }}
+        >
+          <div className="chat-toggle-wrapper">
+            <SmileyButton
+              onClick={() => setShowChat(true)}
+              showChat={showChat}
+              isScrolled={true}
+            />
+          </div>
+        </motion.div>
+      )}
+
+      {/* ChatContent - always renders as modal when chat is open */}
+      {showChat && (
+        <ChatContent {...chatContentProps} className="floating-open" />
       )}
     </>
   );

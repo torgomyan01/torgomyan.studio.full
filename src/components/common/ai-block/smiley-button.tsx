@@ -11,9 +11,14 @@ interface EyePosition {
 interface SmileyButtonProps {
   onClick: () => void;
   showChat: boolean;
+  isScrolled?: boolean;
 }
 
-export default function SmileyButton({ onClick, showChat }: SmileyButtonProps) {
+export default function SmileyButton({
+  onClick,
+  showChat,
+  isScrolled = false,
+}: SmileyButtonProps) {
   const [eyePosition, setEyePosition] = useState<EyePosition>({ x: 0, y: 0 });
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -62,16 +67,8 @@ export default function SmileyButton({ onClick, showChat }: SmileyButtonProps) {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [showChat]);
 
-  return (
-    <motion.button
-      ref={buttonRef}
-      className="chat-toggle-btn"
-      onClick={onClick}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-    >
+  const ButtonContent = () => (
+    <>
       <div className="animated-background">
         <div className="blob blob-1"></div>
         <div className="blob blob-2"></div>
@@ -212,6 +209,20 @@ export default function SmileyButton({ onClick, showChat }: SmileyButtonProps) {
           />
         </svg>
       </div>
+    </>
+  );
+
+  return (
+    <motion.button
+      ref={buttonRef}
+      className="chat-toggle-btn"
+      onClick={onClick}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+    >
+      <ButtonContent />
     </motion.button>
   );
 }

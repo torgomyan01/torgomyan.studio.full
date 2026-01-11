@@ -375,23 +375,19 @@
     margin: 50px 0;
   }
 
-  // Floating mode - when user scrolls
-  &.floating-mode {
-    margin: 0;
+  // Scroll block - appears when scrolled past main block
+  &.scroll-block {
     position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
+    bottom: 30px;
     right: 30px;
     width: auto;
+    margin: 0;
     z-index: 1000000;
-    transition: all 0.3s ease;
-    height: auto;
+    box-shadow: 0 8px 25px rgba(196, 68, 255, 0.4);
 
     @media (max-width: 767px) {
       bottom: 20px;
-      left: 20px;
-      right: auto;
-      top: 90%;
+      right: 20px;
     }
 
     .chat-toggle-wrapper {
@@ -403,15 +399,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-
-      @media (max-width: 767px) {
-        width: auto;
-        height: auto;
-      }
-    }
-
-    .speech-bubble {
-      display: none;
     }
 
     .chat-toggle-btn {
@@ -556,7 +543,7 @@
   }
 
   .chat-toggle-btn {
-    position: relative;
+    position: relative !important; // Always keep main button in its original position
     display: flex;
     align-items: center;
     justify-content: center;
@@ -570,6 +557,49 @@
     border: none;
     box-sizing: border-box;
     overflow: visible;
+
+    // Scroll button - appears when scrolled past main button
+    &.scroll-button {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 70px;
+      height: 70px;
+      padding: 10px;
+      z-index: 1000000;
+      box-shadow: 0 8px 25px rgba(196, 68, 255, 0.4);
+
+      @media (max-width: 767px) {
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+      }
+
+      .smiley-svg {
+        width: 50px;
+        height: 50px;
+
+        @media (max-width: 767px) {
+          width: 40px;
+          height: 40px;
+        }
+      }
+
+      .animated-background {
+        .blob {
+          width: 100px;
+          height: 100px;
+          filter: blur(20px);
+          opacity: 0.6;
+        }
+      }
+
+      &:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 12px 35px rgba(196, 68, 255, 0.5);
+      }
+    }
 
     &::before {
       content: '';
