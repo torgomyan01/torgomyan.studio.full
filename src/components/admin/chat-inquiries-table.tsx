@@ -76,7 +76,9 @@ export default function ChatInquiriesTable() {
   const sortedInquiries = [...inquiries].sort((a, b) => {
     if (a.called === b.called) {
       // If same status, sort by created_at descending (newest first)
-      return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      return (
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
     }
     return a.called ? 1 : -1; // uncalled (false) comes before called (true)
   });
@@ -97,6 +99,7 @@ export default function ChatInquiriesTable() {
     { key: 'website_type', label: 'Тип сайта' },
     { key: 'budget', label: 'Бюджет' },
     { key: 'timeline', label: 'Сроки' },
+    { key: 'discount', label: 'Скидка' },
     { key: 'called', label: 'Статус' },
     { key: 'additional_info', label: 'Дополнительная информация' },
     { key: 'created_at', label: 'Дата создания' },
@@ -152,7 +155,8 @@ export default function ChatInquiriesTable() {
           onSelectionChange={(key) => setFilter(key as FilterType)}
           variant="underlined"
           classNames={{
-            tabList: 'gap-6 w-full relative rounded-none p-0 border-b border-divider',
+            tabList:
+              'gap-6 w-full relative rounded-none p-0 border-b border-divider',
             cursor: 'w-full bg-primary',
             tab: 'max-w-fit px-0 h-12',
             tabContent: 'group-data-[selected=true]:text-primary',
@@ -195,8 +199,7 @@ export default function ChatInquiriesTable() {
       </div>
       <Table
         aria-label="Таблица заявок из чата"
-        classNames={{
-        }}
+        classNames={{}}
         selectionMode="none"
       >
         <TableHeader columns={columns}>
@@ -251,6 +254,20 @@ export default function ChatInquiriesTable() {
               </TableCell>
               <TableCell>
                 <span className="text-sm">{item.timeline || '-'}</span>
+              </TableCell>
+              <TableCell>
+                {item.discount_eligible && item.discount_percentage ? (
+                  <Chip
+                    size="sm"
+                    variant="flat"
+                    color="success"
+                    className="font-medium"
+                  >
+                    {item.discount_percentage}% скидка
+                  </Chip>
+                ) : (
+                  <span className="text-gray-400">-</span>
+                )}
               </TableCell>
               <TableCell>
                 <div className="flex items-center gap-2">

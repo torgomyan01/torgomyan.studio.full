@@ -144,14 +144,14 @@ export default function PromotionBlock() {
         setSubmitMessage({
           type: 'success',
           text: discountEligible
-            ? 'Спасибо! Ваши данные сохранены. Вы получили скидку 25%!'
-            : 'Спасибо! Ваши данные сохранены.',
+            ? 'Спасибо! Мы получили ваше сообщение. Вы получили скидку 25%! Мы скоро свяжемся с вами.'
+            : 'Спасибо! Мы получили ваше сообщение. Мы скоро свяжемся с вами.',
         });
         setIsActive(false);
         setTimeLeft(null);
         setTimeout(() => {
           handleCloseModal();
-        }, 2000);
+        }, 3000);
       } else {
         setSubmitMessage({
           type: 'error',
