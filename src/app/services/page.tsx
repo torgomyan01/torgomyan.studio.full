@@ -99,6 +99,9 @@ export default function ServicesPage() {
           </div>
         </section>
 
+        {/* Services Block */}
+        <ServicesBlock />
+
         {/* Benefits Section */}
         <section className="services-benefits">
           <div className="container">
@@ -167,9 +170,6 @@ export default function ServicesPage() {
             </div>
           </div>
         </section>
-
-        {/* Services Block */}
-        <ServicesBlock />
 
         {/* Our Works */}
         <OurWorks />
