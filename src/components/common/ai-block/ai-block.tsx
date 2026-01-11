@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect } from 'react';
 import './_ai-block.scss';
 import { useChatLogic } from './hooks/use-chat-logic';
 import SmileyButton from './smiley-button';
@@ -11,7 +11,6 @@ import ChatContent from './chat-content';
 function AiBlock() {
   const blockRef = useRef<HTMLDivElement>(null);
   const scrollBlockRef = useRef<HTMLDivElement>(null);
-  const [showScrollBlock, setShowScrollBlock] = useState(false);
   const {
     messages,
     currentStep,
@@ -31,23 +30,6 @@ function AiBlock() {
     budgetOptions,
     timelineOptions,
   } = useChatLogic();
-
-  const showBackdrop = showScrollBlock && showChat;
-
-  // Track scroll position to show/hide scroll block
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY || window.pageYOffset;
-      // Show scroll block when scrolled more than 500px
-      setShowScrollBlock(scrollY > 500);
-    };
-
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
 
   // Prevent body scroll when modal is open
   useEffect(() => {
@@ -123,7 +105,7 @@ function AiBlock() {
       )}
 
       {/* Main block - always stays in place */}
-      <div ref={blockRef} className="ai-block">
+      <div ref={blockRef} className="ai-block hidden md:block">
         {!showChat && (
           <div className="chat-toggle-wrapper">
             <SpeechBubble />
@@ -142,11 +124,11 @@ function AiBlock() {
         )}
       </div>
 
-      {/* Hidden scroll block - appears when scrolled down */}
-      {showScrollBlock && !showChat && (
+      {/* Fixed scroll block - always visible on mobile, hidden on desktop when main block is visible */}
+      {!showChat && (
         <motion.div
           ref={scrollBlockRef}
-          className="ai-block scroll-block h-auto! left-10! lg:left-[unset]! right-[unset]! lg:right-10! bottom-10! lg:bottom-[50%]! lg:translate-y-[50%]! bg-transparent! shadow-none!"
+          className="ai-block scroll-block fixed! md:hidden! h-auto! left-10! lg:left-[unset]! right-[unset]! lg:right-10! bottom-10! lg:bottom-[50%]! lg:translate-y-[50%]! bg-transparent! shadow-none!"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}

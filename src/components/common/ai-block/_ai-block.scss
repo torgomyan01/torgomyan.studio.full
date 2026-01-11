@@ -375,19 +375,20 @@
     margin: 50px 0;
   }
 
-  // Scroll block - appears when scrolled past main block
+  // Scroll block - fixed on mobile, hidden on desktop
   &.scroll-block {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
+    bottom: 20px;
+    right: 20px;
     width: auto;
     margin: 0;
     z-index: 1000000;
     box-shadow: 0 8px 25px rgba(196, 68, 255, 0.4);
+    // Hidden on desktop (md and up), visible on mobile
+    display: block;
 
-    @media (max-width: 767px) {
-      bottom: 20px;
-      right: 20px;
+    @media (min-width: 768px) {
+      display: none;
     }
 
     .chat-toggle-wrapper {

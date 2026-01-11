@@ -1,12 +1,7 @@
 'use client';
 
-import { useRef, useEffect, useState } from 'react';
+import { useRef } from 'react';
 import { motion } from 'framer-motion';
-
-interface EyePosition {
-  x: number;
-  y: number;
-}
 
 interface SmileyButtonProps {
   onClick: () => void;
@@ -19,53 +14,7 @@ export default function SmileyButton({
   showChat,
   isScrolled = false,
 }: SmileyButtonProps) {
-  const [eyePosition, setEyePosition] = useState<EyePosition>({ x: 0, y: 0 });
   const buttonRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (buttonRef.current && !showChat) {
-        const rect = buttonRef.current.getBoundingClientRect();
-
-        // Left eye center position (relative to button)
-        const leftEyeX = rect.left + rect.width * 0.35;
-        const leftEyeY = rect.top + rect.height * 0.4;
-
-        // Right eye center position (relative to button)
-        const rightEyeX = rect.left + rect.width * 0.65;
-        const rightEyeY = rect.top + rect.height * 0.4;
-
-        // Calculate distance from mouse to each eye
-        const leftEyeDistanceX = e.clientX - leftEyeX;
-        const leftEyeDistanceY = e.clientY - leftEyeY;
-        const rightEyeDistanceX = e.clientX - rightEyeX;
-        const rightEyeDistanceY = e.clientY - rightEyeY;
-
-        // Use average for both eyes to look at same point
-        const avgDistanceX = (leftEyeDistanceX + rightEyeDistanceX) / 2;
-        const avgDistanceY = (leftEyeDistanceY + rightEyeDistanceY) / 2;
-
-        // Calculate eye position (limit movement to eye socket)
-        const maxDistance = 7;
-        const eyeDistance = Math.min(
-          Math.sqrt(avgDistanceX * avgDistanceX + avgDistanceY * avgDistanceY),
-          maxDistance
-        );
-        const angle = Math.atan2(avgDistanceY, avgDistanceX);
-
-        setEyePosition({
-          x: Math.cos(angle) * eyeDistance,
-          y: Math.sin(angle) * eyeDistance,
-        });
-      } else {
-        // Reset eyes to center when chat is open
-        setEyePosition({ x: 0, y: 0 });
-      }
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [showChat]);
 
   const ButtonContent = () => (
     <>
@@ -144,8 +93,8 @@ export default function SmileyButton({
           {/* Left eye - vertical rectangle */}
           <g className="eye-group left-eye">
             <rect
-              x={45 + eyePosition.x * 0.3}
-              y={53 + eyePosition.y * 0.3}
+              x={45}
+              y={53}
               width="4"
               height="21"
               rx="2"
@@ -174,8 +123,8 @@ export default function SmileyButton({
           {/* Right eye - vertical rectangle */}
           <g className="eye-group right-eye">
             <rect
-              x={111 + eyePosition.x * 0.3}
-              y={53 + eyePosition.y * 0.3}
+              x={111}
+              y={53}
               width="4"
               height="21"
               rx="2"
