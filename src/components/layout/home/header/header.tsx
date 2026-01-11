@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Swiper } from 'swiper';
 import { Navigation, Autoplay } from 'swiper/modules';
 import Image from 'next/image';
+import Link from 'next/link';
 import './_info-block.scss';
 import AiBlock from '@/components/common/ai-block/ai-block';
 import { Works } from '@/utils/consts';
@@ -146,6 +147,12 @@ function Header() {
                 </div>
               ))}
             </div>
+          </div>
+          <div className="header-actions">
+            <Link href="/schedule-call" className="schedule-call-header-btn">
+              <i className="fas fa-phone" aria-hidden="true"></i>
+              <span>Запланировать звонок</span>
+            </Link>
           </div>
         </div>
         <AiBlock />
