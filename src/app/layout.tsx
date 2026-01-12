@@ -26,6 +26,7 @@ import { ToastNotifications } from '@/components/common/recent-notifications/toa
 // import CookieConsent from '@/components/common/cookie-consent/cookie-consent';
 import YandexMetrika from '@/components/common/YandexMetrika/YandexMetrika';
 import Smartsupp from '@/components/common/Smartsupp/Smartsupp';
+import AdsConversionTracker from '@/components/common/AdsConversionTracker/AdsConversionTracker';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -78,6 +79,7 @@ export default async function RootLayout({
         <YandexMetrika />
         <GoogleAnalytics gaId="G-NZBTEVKW5Z" />
         <Smartsupp />
+        <AdsConversionTracker />
       </body>
     </html>
   );

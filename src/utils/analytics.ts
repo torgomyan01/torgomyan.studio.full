@@ -25,6 +25,11 @@ export const trackEvent = (eventName: string, params?: Record<string, any>) => {
     ...params,
   };
 
+  // Google Analytics
+  if (window.gtag) {
+    window.gtag('event', eventName, eventParams);
+  }
+
   // Yandex Metrika
   if (window.ym && process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID) {
     const metrikaId = parseInt(process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID);
@@ -61,4 +66,22 @@ export const trackButtonClick = (buttonName: string, location?: string) => {
     button_name: buttonName,
     button_location: location,
   });
+};
+
+/**
+ * Track Google Ads conversion event
+ * @param params - Event parameters for the conversion
+ */
+export const trackAdsConversion = (params?: Record<string, any>) => {
+  if (typeof window === 'undefined') return;
+
+  // Google Analytics conversion event
+  if (window.gtag) {
+    window.gtag('event', 'ads_conversion___1', params || {});
+  }
+
+  // Console log for debugging
+  if (process.env.NODE_ENV === 'development') {
+    console.log('📊 Ads Conversion Event:', 'ads_conversion___1', params);
+  }
 };
