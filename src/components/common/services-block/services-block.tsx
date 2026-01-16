@@ -6,7 +6,6 @@ import { services } from '@/utils/consts';
 import { useLocale } from '@/i18n/use-locale';
 import { getTranslation } from '@/i18n';
 import { addLocaleToPath } from '@/i18n/utils';
-import Link from 'next/link';
 
 interface IThisProps {
   but?: string;
@@ -39,6 +38,26 @@ function ServicesBlock({ but = '' }: IThisProps) {
     return originalTitle;
   };
 
+  // Map services to FontAwesome icons
+  const serviceIconMap: Record<string, string> = {
+    'Разработка Сайтов': 'fa-code',
+    Лендинг: 'fa-bolt',
+    'Сайт-визитка': 'fa-briefcase',
+    'Корпоративный сайт': 'fa-building',
+    'Интернет-магазин': 'fa-shopping-cart',
+    'Веб-приложения': 'fa-laptop-code',
+    'Продвижение сайтов (SEO)': 'fa-chart-line',
+    'Дизайн интерфейсов (UI/UX)': 'fa-palette',
+    'Техническая поддержка': 'fa-headset',
+    'Хостинг и домены': 'fa-globe',
+    'Интеграция платежных систем': 'fa-credit-card',
+    'Автоматизация бизнес-процессов': 'fa-cogs',
+  };
+
+  const getServiceIcon = (originalTitle: string): string => {
+    return serviceIconMap[originalTitle] || 'fa-globe';
+  };
+
   return (
     <div className="services-block">
       <div className="container">
@@ -48,27 +67,36 @@ function ServicesBlock({ but = '' }: IThisProps) {
         <p className="main-subtitle">
           {getTranslation(locale, 'common.forCompanies')}
         </p>
-        {services.map(
-          (service) =>
-            service.title !== but && (
-              <motion.a
-                whileHover={{ scale: 1.05, x: 10 }}
-                initial="init"
-                whileInView="animate"
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{
-                  duration: 0.2,
-                  ease: [0.25, 0.46, 0.45, 0.94],
-                }}
-                key={service.title}
-                href={addLocaleToPath(service.href, locale)}
-                className="services-link"
-              >
-                {getServiceTitle(service.title)}
-                <img src="/images/link-arrow.svg" alt="" />
-              </motion.a>
-            )
-        )}
+        <div className="services-grid">
+          {services.map(
+            (service) =>
+              service.title !== but && (
+                <motion.a
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{
+                    duration: 0.4,
+                    ease: [0.25, 0.46, 0.45, 0.94],
+                  }}
+                  key={service.title}
+                  href={addLocaleToPath(service.href, locale)}
+                  className="services-card"
+                >
+                  <div className="services-card-icon">
+                    <i className={`fas ${getServiceIcon(service.title)}`}></i>
+                  </div>
+                  <h3 className="services-card-title">
+                    {getServiceTitle(service.title)}
+                  </h3>
+                  <div className="services-card-arrow">
+                    <i className="fas fa-arrow-right"></i>
+                  </div>
+                </motion.a>
+              )
+          )}
+        </div>
       </div>
     </div>
   );

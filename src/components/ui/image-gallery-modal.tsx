@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -30,6 +30,12 @@ export default function ImageGalleryModal({
   onPrev,
 }: ImageGalleryModalProps) {
   const currentWork = works[currentIndex];
+  const [isImageLoading, setIsImageLoading] = useState(true);
+
+  // Reset loading state when image changes
+  useEffect(() => {
+    setIsImageLoading(true);
+  }, [currentIndex]);
 
   // Prevent body scroll when modal is open
   useEffect(() => {
@@ -122,6 +128,11 @@ export default function ImageGalleryModal({
               {/* Image Container */}
               <div className="image-gallery-modal-content">
                 <div className="image-gallery-image-wrapper">
+                  {isImageLoading && (
+                    <div className="image-gallery-loading">
+                      <div className="loading-spinner"></div>
+                    </div>
+                  )}
                   <Image
                     src={`/${currentWork.imgUrl}`}
                     alt={`Пример работы - ${currentWork.name}`}
@@ -130,6 +141,12 @@ export default function ImageGalleryModal({
                     quality={95}
                     className="image-gallery-image"
                     priority
+                    onLoad={() => setIsImageLoading(false)}
+                    onLoadingComplete={() => setIsImageLoading(false)}
+                    style={{
+                      opacity: isImageLoading ? 0 : 1,
+                      transition: 'opacity 0.3s ease',
+                    }}
                   />
                 </div>
               </div>

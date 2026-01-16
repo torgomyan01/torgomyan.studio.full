@@ -23,7 +23,6 @@ import ScrollTriggeredPopup from '@/components/common/scroll-triggered-popup/scr
 import RecentNotifications from '@/components/common/recent-notifications/recent-notifications';
 import { NotificationProvider } from '@/components/common/recent-notifications/notification-context';
 import { ToastNotifications } from '@/components/common/recent-notifications/toast-notifications';
-// import CookieConsent from '@/components/common/cookie-consent/cookie-consent';
 import YandexMetrika from '@/components/common/YandexMetrika/YandexMetrika';
 import Smartsupp from '@/components/common/Smartsupp/Smartsupp';
 import AdsConversionTracker from '@/components/common/AdsConversionTracker/AdsConversionTracker';
