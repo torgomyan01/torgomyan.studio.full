@@ -62,3 +62,16 @@ model calculator_submission {
   created_at        DateTime @default(now())
   updated_at        DateTime @updatedAt
 }
+
+model company {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(255)
+  phone       String   @db.VarChar(255)
+  category    String   @db.VarChar(255)
+  email       String?  @db.VarChar(255)
+  notes       String?  @db.Text
+  whatsapp_sent Boolean @default(false)
+  last_message_date DateTime?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}

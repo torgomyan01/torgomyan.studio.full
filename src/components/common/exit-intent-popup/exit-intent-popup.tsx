@@ -4,6 +4,9 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import './_exit-intent-popup.scss';
+import { useLocale } from '@/i18n/use-locale';
+import { getTranslation } from '@/i18n';
+import { addLocaleToPath } from '@/i18n/utils';
 
 const STORAGE_KEY = 'exit-intent-popup-shown';
 const STORAGE_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
@@ -59,7 +62,7 @@ export default function ExitIntentPopup() {
   };
 
   const handleConsultationClick = () => {
-    window.location.href = '/schedule-call';
+    window.location.href = addLocaleToPath('/schedule-call', locale);
     setIsOpen(false);
   };
 
@@ -127,7 +130,7 @@ export default function ExitIntentPopup() {
                 type="button"
                 className="exit-intent-close-btn"
                 onClick={handleClose}
-                aria-label="Закрыть"
+                aria-label={getTranslation(locale, 'common.close')}
               >
                 ✕
               </button>
@@ -149,25 +152,26 @@ export default function ExitIntentPopup() {
                   </svg>
                 </div>
 
-                <h2 className="exit-intent-title">Не уходите!</h2>
+                <h2 className="exit-intent-title">
+                  {getTranslation(locale, 'popups.dontLeave')}
+                </h2>
 
                 <p className="exit-intent-subtitle">
-                  Получите бесплатную консультацию по созданию сайта
+                  {getTranslation(locale, 'popups.getFreeConsultationTitle')}
                 </p>
 
                 <p className="exit-intent-description">
-                  Мы поможем вам выбрать оптимальное решение для вашего бизнеса
-                  и ответим на все ваши вопросы
+                  {getTranslation(locale, 'popups.helpChooseSolution')}
                 </p>
 
                 {/* Action Buttons */}
                 <div className="exit-intent-actions">
                   <Link
-                    href="/schedule-call"
+                    href={addLocaleToPath('/schedule-call', locale)}
                     className="exit-intent-btn exit-intent-btn-primary"
                     onClick={() => setIsOpen(false)}
                   >
-                    Получить консультацию
+                    {getTranslation(locale, 'popups.getFreeConsultation')}
                   </Link>
 
                   <div className="exit-intent-social-buttons">

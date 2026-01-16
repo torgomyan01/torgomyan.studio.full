@@ -4,6 +4,9 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import './_scroll-triggered-popup.scss';
+import { useLocale } from '@/i18n/use-locale';
+import { getTranslation } from '@/i18n';
+import { addLocaleToPath } from '@/i18n/utils';
 
 const STORAGE_KEY = 'scroll-triggered-popup-shown';
 const STORAGE_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
@@ -13,6 +16,7 @@ const DISCOUNT_DURATION = 10 * 60 * 1000; // 10 minutes in milliseconds
 const DISCOUNT_PERCENTAGE = 20; // 20% discount
 
 export default function ScrollTriggeredPopup() {
+  const locale = useLocale();
   const [isOpen, setIsOpen] = useState(false);
   const [hasShown, setHasShown] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
@@ -130,7 +134,7 @@ export default function ScrollTriggeredPopup() {
       }
     }
 
-    window.location.href = '/schedule-call';
+    window.location.href = addLocaleToPath('/schedule-call', locale);
     setIsOpen(false);
   };
 
@@ -283,26 +287,26 @@ export default function ScrollTriggeredPopup() {
 
                 <h2 className="scroll-triggered-title">
                   {hasDiscount
-                    ? 'Специальное предложение!'
-                    : 'Вы уже прочитали 70% — пора поговорить'}
+                    ? getTranslation(locale, 'popups.specialOffer')
+                    : getTranslation(locale, 'popups.read70Percent')}
                 </h2>
 
                 <p className="scroll-triggered-subtitle">
                   {hasDiscount
-                    ? `Отправьте заявку в течение 10 минут и получите ${DISCOUNT_PERCENTAGE}% скидку`
-                    : 'Получите бесплатную консультацию по созданию сайта'}
+                    ? `${getTranslation(locale, 'popups.submitWithin10Minutes')} ${DISCOUNT_PERCENTAGE}% ${getTranslation(locale, 'popups.discount')}`
+                    : getTranslation(locale, 'popups.getFreeConsultation')}
                 </p>
 
                 <p className="scroll-triggered-description">
                   {hasDiscount
-                    ? 'Успейте воспользоваться специальным предложением! Мы поможем вам выбрать оптимальное решение для вашего бизнеса.'
-                    : 'Мы поможем вам выбрать оптимальное решение для вашего бизнеса и ответим на все ваши вопросы'}
+                    ? getTranslation(locale, 'popups.hurrySpecialOffer')
+                    : getTranslation(locale, 'popups.helpChooseSolution')}
                 </p>
 
                 {/* Action Buttons */}
                 <div className="scroll-triggered-actions">
                   <Link
-                    href="/schedule-call"
+                    href={addLocaleToPath('/schedule-call', locale)}
                     className={`scroll-triggered-btn scroll-triggered-btn-primary ${
                       hasDiscount ? 'has-discount' : ''
                     }`}
@@ -311,8 +315,8 @@ export default function ScrollTriggeredPopup() {
                     }}
                   >
                     {hasDiscount
-                      ? `Получить ${DISCOUNT_PERCENTAGE}% скидку`
-                      : 'Получить консультацию'}
+                      ? `${getTranslation(locale, 'popups.getDiscount')} ${DISCOUNT_PERCENTAGE}% ${getTranslation(locale, 'popups.discount')}`
+                      : getTranslation(locale, 'popups.getFreeConsultation')}
                   </Link>
 
                   <div className="scroll-triggered-social-buttons">

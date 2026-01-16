@@ -1,0 +1,784 @@
+{
+  "common": {
+    "about": "About Us",
+    "contact": "Contact",
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "blog": "Blog",
+    "calculator": "Calculator",
+    "scheduleCall": "Schedule Call",
+    "getConsultation": "Get Consultation",
+    "readMore": "Read More",
+    "learnMore": "Learn More",
+    "viewAll": "View All",
+    "close": "Close",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "submitting": "Submitting...",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "enterName": "Enter your name",
+    "enterEmail": "Enter your email",
+    "enterPhone": "Enter your phone",
+    "call": "Call",
+    "project": "Project",
+    "gallery": "Portfolio Gallery",
+    "forCompanies": "for companies and entrepreneurs",
+    "privacyPolicy": "Privacy Policy",
+    "allRightsReserved": "All rights reserved"
+  },
+  "home": {
+    "title": "We create websites for your business",
+    "subtitle": "By working with us, you will get business growth up to <strong>30%</strong>",
+    "scheduleCall": "Schedule Call",
+    "getConsultation": "Get Consultation"
+  },
+  "services": {
+    "websiteDevelopment": "Website Development",
+    "landingPage": "Landing Page",
+    "businessCardWebsite": "Business Card Website",
+    "corporateWebsite": "Corporate Website",
+    "onlineShop": "Online Shop",
+    "webApplications": "Web Applications",
+    "seo": "Website Promotion (SEO)",
+    "uiUxDesign": "Interface Design (UI/UX)",
+    "technicalSupport": "Technical Support",
+    "hostingDomains": "Hosting & Domains",
+    "paymentIntegration": "Payment System Integration",
+    "businessAutomation": "Business Process Automation"
+  },
+  "promotion": {
+    "badge": "Promotion",
+    "discount": "25% discount",
+    "registerWithin": "Register within",
+    "andGet": "and get 25% discount",
+    "timeLeft": "Time left",
+    "getDiscount": "Get discount",
+    "getDiscountTitle": "Get 25% discount",
+    "fillAllFields": "Please fill in all fields",
+    "enterValidEmail": "Please enter a valid email",
+    "thankYou": "Thank you! We have received your message.",
+    "thankYouDiscount": "Thank you! We have received your message. You got a 25% discount! We will contact you soon.",
+    "thankYouNoDiscount": "Thank you! We have received your message. We will contact you soon.",
+    "errorSaving": "An error occurred while saving data"
+  },
+  "ourWorks": {
+    "title": "Our Works",
+    "subtitle": "Full-service website that solves your tasks",
+    "viewAll": "View All",
+    "workExample": "Work Example",
+    "descriptions": {
+      "arakelians-drive": "Arakelians Drive is one of the most successful driving schools in Armenia, specializing in obtaining driver's licenses. Our driving school offers a comprehensive training program that includes both theoretical and practical classes. 98% of our students successfully pass the driver's license exam on their first attempt thanks to our professional approach and high-quality training. We use an effective methodology that allows students to quickly and reliably master driving skills. Our driving school is equipped with modern cars with dual control systems, ensuring safe training. Our instructors are experienced specialists with many years of experience who use an individual approach and help each student achieve success. We offer flexible schedules, affordable prices, and guaranteed results.",
+      "galamat": "A major Kazakhstani company specializing in providing modern digital solutions for business. Known in the Kazakhstan market as a reliable partner in technology and innovation.",
+      "swappe": "A popular Russian platform for exchange and trading, known for its convenient system and wide user base. One of the leading services in its niche in the Russian market.",
+      "zkteco": "An international leader in biometric security systems and access control. ZKTeco is one of the world's largest manufacturers of security systems, with products used in more than 180 countries. A recognized industry leader with years of experience.",
+      "line-artworks": "A creative design agency specializing in creating unique artistic projects and visual solutions. Known for its innovative approaches in contemporary art and design.",
+      "sdney": "A modern design studio creating elegant and functional web solutions. Known for its attention to detail and high quality of visual design for projects.",
+      "kettik-travel": "A tourism company specializing in organizing trips and tours. A popular service in the tourism sector offering quality services for travelers.",
+      "mosco": "A corporate company providing a wide range of professional services. Known for its reliability and quality service in various business sectors.",
+      "lagom": "A modern design studio following the philosophy of minimalism and elegance. Known for creating stylish and functional design solutions with an emphasis on quality and aesthetics.",
+      "artel": "The largest manufacturer of household appliances and electronics in Central Asia. Artel is one of the leading brands in the region, known for high product quality and innovative technologies. A company with a long history and recognized reputation.",
+      "empover-prosper": "A company specializing in business development and consulting services. Known for its effective solutions for client business growth and prosperity.",
+      "arthall-synergy-landing": "A prestigious art gallery and cultural center combining contemporary art and innovative projects. A well-known venue in the art community attracting the attention of art connoisseurs and collectors.",
+      "mir-darog": "A major road construction company specializing in the construction and repair of highways. A well-known company in the construction industry with years of experience and implemented projects of federal significance.",
+      "dealkgo": "A popular gaming platform for trading game items and accounts. One of the leading marketplaces in the gaming industry, known for its reliability and wide range of gaming products.",
+      "web-it": "An IT company specializing in web application development and digital solutions. Known for its innovative approaches in web development and high quality of technical solutions.",
+      "konyak": "A renowned Armenian premium cognac producer. A brand with a rich history and traditions, recognized both in Armenia and on the international market. The company's products are valued by connoisseurs and collectors.",
+      "ciklevka": "A specialized company for floor sanding and parquet floor restoration. Known for high quality work and the use of modern technologies in flooring.",
+      "adz-motors": "An automotive company specializing in car sales and service. Known for its wide range and quality service in the automotive industry.",
+      "mediacatalog": "An innovative media platform for cataloging and managing media content. A modern service combining advertising companies, auctions, and specialized services in a single ecosystem.",
+      "aniox": "A modern ticket management and customer support system. An innovative platform for organizing efficient customer support operations using automation and AI technologies.",
+      "arthall-synergy": "A prestigious art gallery combining traditions and modernity in the art world. A well-known cultural space attracting the attention of artists, collectors, and art connoisseurs.",
+      "rimplitka": "A major supplier of ceramic tiles and finishing materials. A well-known company in the construction industry with a wide range of products and reliable market reputation.",
+      "arthall": "A large-scale art platform uniting artists, art critics, dealers, and exhibition spaces. The largest ecosystem in the art industry, promoting the development of contemporary art and cultural exchange.",
+      "max-asfalt": "A major road construction company specializing in asphalt production and laying. A well-known company in the road industry with years of experience and implemented projects of state significance.",
+      "easy-card": "A financial platform providing bank cards and financial services in Central Asian countries. A popular service known for ease of use and wide coverage of the regional market.",
+      "neural-network": "An innovative AI platform specializing in developing solutions based on neural networks. The company is known for advanced technologies in computer vision, image recognition, and machine learning. A recognized leader in artificial intelligence.",
+      "kupon": "A popular discount and coupon platform helping users save on purchases. A well-known service in e-commerce with a wide partner base and active audience.",
+      "neuron": "A technology company specializing in developing innovative solutions in neural networks and artificial intelligence. Known for its advanced developments and technical solutions.",
+      "54-agency": "A creative agency specializing in developing modern digital solutions and branding. Known for its innovative approaches and quality projects in marketing and design.",
+      "ytsmp3": "A popular online service for converting video to audio format. A widely known tool among users, processing thousands of requests daily and providing a convenient service for working with media content.",
+      "kampus": "An innovative educational platform for students and universities. A modern ecosystem uniting educational institutions, students, and employers. A popular platform in education with extensive functionality and analytics.",
+      "rosmigrant": "An information portal providing services and information for migrants in Russia. A well-known service helping thousands of people with migration, document processing, and adaptation issues. An important resource in migration services."
+    }
+  },
+  "reviews": {
+    "title": "Client Reviews",
+    "subtitle": "What our clients say about working with us"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Useful articles about web development, website creation and SEO optimization",
+    "viewAllArticles": "View All Articles",
+    "readMore": "Read More",
+    "tips": "Tips",
+    "min": "min",
+    "pageTitle": "Web Development Blog | Articles on Website Creation and SEO | Torgomyan.Studio",
+    "pageDescription": "Expert articles on web development, website creation, SEO optimization, and choosing a web studio. Practical tips and guides from professionals. Read our blog.",
+    "pageKeywords": "web development blog, website creation articles, how to choose a web studio, SEO articles, web design articles, website creation mistakes, website creation guide, website promotion articles, web studio blog",
+    "structuredDataName": "Torgomyan.Studio Blog",
+    "structuredDataDescription": "Useful articles about web development and SEO",
+    "backToBlog": "← Back to Blog",
+    "labels": {
+      "problem": "Problem:",
+      "consequences": "Consequences:",
+      "solution": "Solution:"
+    },
+    "categories": {
+      "tips": "Tips",
+      "errors": "Errors",
+      "seo": "SEO",
+      "design": "Design",
+      "technologies": "Technologies",
+      "optimization": "Optimization"
+    },
+    "articles": {
+      "kak-vybrat-veb-studiyu": {
+        "title": "How to Choose a Web Studio",
+        "description": "Guide to choosing a reliable web studio for your project. What to pay attention to when choosing a contractor.",
+        "category": "tips"
+      },
+      "10-oshibok-pri-sozdanii-sajta": {
+        "title": "10 Mistakes When Creating a Website",
+        "description": "Top 10 common mistakes made when creating a website. How to avoid problems and create a successful project.",
+        "category": "errors"
+      },
+      "seo-optimizaciya-sajta": {
+        "title": "SEO Website Optimization: Basics and Practice",
+        "description": "Complete guide to SEO website optimization. Learn how to improve positions in search engines and attract organic traffic.",
+        "category": "seo"
+      },
+      "kak-sozdat-uspeshnyj-lending": {
+        "title": "How to Create a Successful Landing Page",
+        "description": "Step-by-step guide to creating an effective landing page that converts visitors into customers.",
+        "category": "design"
+      },
+      "kak-vybrat-cms": {
+        "title": "How to Choose a CMS for Your Website",
+        "description": "Comparison of popular CMS systems. Which platform to choose for your project: WordPress, Tilda, Webflow, or custom development?",
+        "category": "technologies"
+      },
+      "optimizaciya-skorosti-sajta": {
+        "title": "Website Loading Speed Optimization",
+        "description": "Practical tips for speeding up your website. How to reduce loading time and improve user experience.",
+        "category": "optimization"
+      },
+      "trendy-veb-dizajna": {
+        "title": "Web Design Trends 2024",
+        "description": "Current trends in web design for 2024. What will be popular and how to create a modern website.",
+        "category": "design"
+      }
+    },
+    "articlePages": {
+      "kak-vybrat-veb-studiyu": {
+        "pageTitle": "How to Choose a Web Studio - 2024 Guide | Torgomyan.Studio",
+        "pageDescription": "Detailed guide to choosing a reliable web studio for your project. What to pay attention to when choosing a contractor, how to evaluate a portfolio and avoid mistakes. Practical tips from professionals.",
+        "pageKeywords": "how to choose a web studio, choosing a web studio, web studio selection criteria, what to look for when choosing a web studio, how to choose a contractor for a website, guide to choosing a web studio, how to choose a website developer",
+        "openGraphTitle": "How to Choose a Web Studio - 2024 Guide",
+        "openGraphDescription": "Detailed guide to choosing a reliable web studio for your project. Practical tips from professionals.",
+        "structuredDataHeadline": "How to Choose a Web Studio",
+        "structuredDataDescription": "Detailed guide to choosing a reliable web studio for your project",
+        "subtitle": "Guide to choosing a reliable web studio for your project"
+      },
+      "10-oshibok-pri-sozdanii-sajta": {
+        "pageTitle": "10 Mistakes When Creating a Website - How to Avoid Problems | Torgomyan.Studio",
+        "pageDescription": "Top 10 common mistakes made when creating a website. Learn how to avoid problems and create a successful project that will attract customers. Practical tips from professionals.",
+        "pageKeywords": "mistakes when creating a website, typical web development mistakes, problems when developing a website, how to avoid mistakes when creating a website, web design mistakes, common mistakes when developing a website, website creation mistakes",
+        "openGraphTitle": "10 Mistakes When Creating a Website - How to Avoid Problems",
+        "openGraphDescription": "Top 10 common mistakes made when creating a website. Learn how to avoid problems and create a successful project.",
+        "structuredDataHeadline": "10 Mistakes When Creating a Website",
+        "structuredDataDescription": "Top 10 common mistakes made when creating a website",
+        "subtitle": "Top 10 common mistakes made when creating a website. How to avoid problems and create a successful project.",
+        "content": {
+          "introduction": {
+            "title": "Introduction",
+            "text": "Creating a website is a complex process that requires attention to detail and understanding of user needs. Many entrepreneurs and companies make typical mistakes that can negatively impact the effectiveness of a website. In this article, we will look at the 10 most common mistakes and tell you how to avoid them."
+          },
+          "mistake1": {
+            "title": "1. Lack of Clear Goals and Strategy",
+            "problem": "The website is created without understanding the goals and objectives of the business.",
+            "consequences": "Unclear structure, lack of focus, low conversion.",
+            "solution": "Before starting development, clearly define:",
+            "solutionList": [
+              "Target audience",
+              "Main goals of the website (sales, leads, information)",
+              "Key user actions",
+              "Success metrics"
+            ]
+          },
+          "mistake2": {
+            "title": "2. Ignoring Mobile Version",
+            "problem": "The website is not adapted for mobile devices or the adaptation is done poorly.",
+            "consequences": "Loss of a significant portion of the audience, poor user experience, decrease in search rankings.",
+            "solution": "Use responsive design that displays correctly on all devices. Test the website on various screens before launch."
+          },
+          "mistake3": {
+            "title": "3. Slow Page Loading",
+            "problem": "Large images, unoptimized code, unnecessary plugins slow down loading.",
+            "consequences": "High bounce rate, decrease in search rankings, loss of potential customers.",
+            "solution": "",
+            "solutionList": [
+              "Optimize images (compression, correct formats)",
+              "Minify CSS and JavaScript",
+              "Use caching",
+              "Choose quality hosting",
+              "Remove unused plugins and scripts"
+            ]
+          },
+          "mistake4": {
+            "title": "4. Poor Navigation and Structure",
+            "problem": "Complex navigation, unclear website structure, difficulties finding information.",
+            "consequences": "Users cannot find the information they need, high bounce rate.",
+            "solution": "",
+            "solutionList": [
+              "Create a logical and clear structure",
+              "Use clear section names",
+              "Add breadcrumbs",
+              "Implement site search",
+              "Limit the number of menu items (5-7 maximum)"
+            ]
+          },
+          "mistake5": {
+            "title": "5. Ignoring SEO Optimization",
+            "problem": "The website is created without considering search engine requirements.",
+            "consequences": "Low search rankings, lack of organic traffic.",
+            "solution": "",
+            "solutionList": [
+              "Proper heading structure (H1, H2, H3)",
+              "Optimization of meta tags (title, description)",
+              "Use semantic markup",
+              "Optimize URLs",
+              "Create a sitemap (sitemap.xml)",
+              "Optimize images (alt tags)"
+            ]
+          },
+          "mistake6": {
+            "title": "6. Lack of Call-to-Actions (CTA)",
+            "problem": "Users don't understand what to do next after viewing a page.",
+            "consequences": "Low conversion, loss of potential customers.",
+            "solution": "Place clear and noticeable calls to action:",
+            "solutionList": [
+              "\"Order consultation\"",
+              "\"Buy now\"",
+              "\"Download catalog\"",
+              "\"Book a meeting\""
+            ],
+            "solutionNote": "CTAs should be visually highlighted and placed in strategically important places on the page."
+          },
+          "mistake7": {
+            "title": "7. Poor Content and Copywriting",
+            "problem": "Poor quality text, errors, information overload or, conversely, lack of information.",
+            "consequences": "Low user trust, poor SEO, decrease in conversion.",
+            "solution": "",
+            "solutionList": [
+              "Write in a language understandable to the target audience",
+              "Use structured text (headings, lists)",
+              "Avoid errors and typos",
+              "Focus on benefits for the client",
+              "Add visual elements (images, video)"
+            ]
+          },
+          "mistake8": {
+            "title": "8. Lack of Contact Information",
+            "problem": "It's difficult to find company contacts or the contact form doesn't work.",
+            "consequences": "Loss of potential customers, decrease in trust.",
+            "solution": "",
+            "solutionList": [
+              "Place contacts in a visible location",
+              "Add multiple ways to contact (phone, email, form)",
+              "Make sure forms work correctly",
+              "Add a map if there's an office",
+              "Specify working hours"
+            ]
+          },
+          "mistake9": {
+            "title": "9. Ignoring Security",
+            "problem": "The website is not protected from hacking, data leaks, spam.",
+            "consequences": "Compromise of customer data, website blocking, loss of reputation.",
+            "solution": "",
+            "solutionList": [
+              "Use HTTPS (SSL certificate)",
+              "Regularly update CMS and plugins",
+              "Use strong passwords",
+              "Set up spam protection",
+              "Regularly make backups",
+              "Use DDoS attack protection"
+            ]
+          },
+          "mistake10": {
+            "title": "10. Lack of Analytics and Testing",
+            "problem": "Performance indicators are not tracked, tests are not conducted.",
+            "consequences": "Inability to improve the website, ineffective solutions.",
+            "solution": "",
+            "solutionList": [
+              "Set up Google Analytics or Yandex.Metrica",
+              "Track key metrics (conversion, bounce rate, time on site)",
+              "Conduct A/B testing",
+              "Collect user feedback",
+              "Regularly analyze data and make improvements"
+            ]
+          },
+          "conclusion": {
+            "title": "Conclusion",
+            "text1": "By avoiding these common mistakes, you will significantly increase your chances of creating a successful website that will attract customers and grow your business. Remember that creating a website is not a one-time event, but a constant process of improvement and optimization.",
+            "text2": "If you're planning to create a website or want to improve an existing one, contact professionals. We will help you avoid these mistakes and create an effective website for your business."
+          },
+          "tags": {
+            "webDevelopment": "Web Development",
+            "errors": "Errors",
+            "tips": "Tips",
+            "seo": "SEO"
+          }
+        }
+      },
+      "seo-optimizaciya-sajta": {
+        "pageTitle": "SEO Website Optimization: Basics and Practice | Torgomyan.Studio",
+        "pageDescription": "Complete guide to SEO website optimization. Learn how to improve positions in search engines and attract organic traffic. Practical tips and tools for optimization.",
+        "pageKeywords": "SEO optimization, website SEO, search engine optimization, website promotion, SEO promotion, website optimization for search engines, SEO tips, how to optimize a website",
+        "openGraphTitle": "SEO Website Optimization: Basics and Practice",
+        "openGraphDescription": "Complete guide to SEO website optimization. Learn how to improve positions in search engines and attract organic traffic.",
+        "structuredDataHeadline": "SEO Website Optimization: Basics and Practice",
+        "structuredDataDescription": "Complete guide to SEO website optimization",
+        "subtitle": "Complete guide to SEO website optimization. Learn how to improve positions in search engines and attract organic traffic."
+      },
+      "kak-sozdat-uspeshnyj-lending": {
+        "pageTitle": "How to Create a Successful Landing Page | Torgomyan.Studio",
+        "pageDescription": "Step-by-step guide to creating an effective landing page that converts visitors into customers. Practical tips on design, content, and conversion optimization.",
+        "pageKeywords": "landing page, landing creation, effective landing, landing conversion, how to create a landing, selling landing, landing page creation, conversion landing",
+        "openGraphTitle": "How to Create a Successful Landing Page",
+        "openGraphDescription": "Step-by-step guide to creating an effective landing page that converts visitors into customers.",
+        "structuredDataHeadline": "How to Create a Successful Landing Page",
+        "structuredDataDescription": "Step-by-step guide to creating an effective landing page",
+        "subtitle": "Step-by-step guide to creating an effective landing page that converts visitors into customers."
+      },
+      "kak-vybrat-cms": {
+        "pageTitle": "How to Choose a CMS for Your Website | Torgomyan.Studio",
+        "pageDescription": "Comparison of popular CMS systems. Which platform to choose for your project: WordPress, Tilda, Webflow, or custom development? Practical tips and recommendations.",
+        "pageKeywords": "how to choose CMS, CMS selection, CMS comparison, WordPress, Tilda, Webflow, content management system, which CMS is better, choosing a platform for a website",
+        "openGraphTitle": "How to Choose a CMS for Your Website",
+        "openGraphDescription": "Comparison of popular CMS systems and recommendations for choosing the optimal platform",
+        "structuredDataHeadline": "How to Choose a CMS for Your Website",
+        "structuredDataDescription": "Comparison of popular CMS systems and selection recommendations",
+        "subtitle": "Comparison of popular CMS systems and recommendations for choosing the optimal platform for your project"
+      },
+      "optimizaciya-skorosti-sajta": {
+        "pageTitle": "Website Loading Speed Optimization | Torgomyan.Studio",
+        "pageDescription": "Practical tips for speeding up your website. How to reduce loading time and improve user experience. Tools and methods for performance optimization.",
+        "pageKeywords": "website speed optimization, website acceleration, website loading speed, performance optimization, how to speed up a website, website loading optimization, website performance",
+        "openGraphTitle": "Website Loading Speed Optimization",
+        "openGraphDescription": "Practical tips for speeding up your website. How to reduce loading time and improve user experience.",
+        "structuredDataHeadline": "Website Loading Speed Optimization",
+        "structuredDataDescription": "Practical tips for speeding up your website",
+        "subtitle": "Practical tips for speeding up your website. How to reduce loading time and improve user experience."
+      },
+      "trendy-veb-dizajna": {
+        "pageTitle": "Web Design Trends 2024 | Torgomyan.Studio",
+        "pageDescription": "Current trends in web design for 2024. What will be popular and how to create a modern website. Design trends that will help your website stand out.",
+        "pageKeywords": "web design trends, web design 2024, modern website design, design trends, current design, trendy web design, website design 2024",
+        "openGraphTitle": "Web Design Trends 2024",
+        "openGraphDescription": "Current trends in web design for 2024. What will be popular and how to create a modern website.",
+        "structuredDataHeadline": "Web Design Trends 2024",
+        "structuredDataDescription": "Current trends in web design for 2024",
+        "subtitle": "Current trends in web design for 2024. What will be popular and how to create a modern website."
+      }
+    },
+    "article1": {
+      "title": "How to Choose a Web Studio",
+      "description": "Guide to choosing a reliable web studio for your project. What to pay attention to when choosing a contractor."
+    },
+    "article2": {
+      "title": "SEO Website Optimization: Basics and Practice",
+      "description": "Complete guide to SEO website optimization. Learn how to improve positions in search engines and attract organic traffic."
+    }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Let's discuss your project? I am a website developer",
+    "scheduleCall": "Schedule Call",
+    "call": "Call",
+    "address": "Armenia, Martuni, Myasnikyan 62",
+    "pageTitle": "Contacts | Contact Web Studio | Torgomyan.Studio",
+    "pageDescription": "Contact us to discuss your project. Free consultation. Phone, WhatsApp, Telegram, Email. We will respond within an hour. Order website development.",
+    "pageKeywords": "web studio contacts, contact web studio, website developer contacts, contact us, order website, website development consultation, Torgomyan Studio contacts",
+    "headerTitle": "Contact Us",
+    "headerDescription": "We are always ready to answer your questions and discuss your project. Contact us in a convenient way: by phone, via WhatsApp, Telegram or fill out the contact form. Our team works to help you realize your ideas and achieve your business goals.",
+    "structuredDataName": "Contact - Torgomyan.Studio Contacts",
+    "structuredDataDescription": "Contact page of Torgomyan.Studio web studio"
+  },
+  "video": {
+    "title": "What to Expect from Us",
+    "subtitle": "The result you will see after we create the website",
+    "aboutUs": "About Us"
+  },
+  "popups": {
+    "specialOffer": "Special Offer!",
+    "read70Percent": "You've already read 70% — time to talk",
+    "submitWithin10Minutes": "Submit your request within 10 minutes and get",
+    "discount": "discount",
+    "getFreeConsultation": "Get a free consultation on website creation",
+    "hurrySpecialOffer": "Hurry to take advantage of the special offer! We will help you choose the optimal solution for your business.",
+    "helpChooseSolution": "We will help you choose the optimal solution for your business and answer all your questions",
+    "getDiscount": "Get",
+    "dontLeave": "Don't Leave!",
+    "getFreeConsultationTitle": "Get a free consultation on website creation"
+  },
+  "aiBlock": {
+    "letsDiscuss": "Let's Discuss",
+    "speechBubble": "Let's discuss together what website you need.",
+    "chatTitle": "AI Assistant",
+    "initialMessage": "Hello! I will help you choose the most suitable website for your business. Let's start with questions: What type of website do you want to create?",
+    "inputPlaceholder": "Enter your answer...",
+    "budgetQuestion": "Great! Now let's discuss the budget. What budget are you planning for your project?",
+    "timelineQuestion": "Good! What timeline do you want to complete the project?",
+    "contactName": "Thank you for all the information! Now we need your contact details: What is your name?",
+    "contactEmail": "Great! What is your email address?",
+    "contactPhone": "Good! What is your phone number?",
+    "thankYou": "Thank you for all the information! We will contact you soon. Your data has been saved.",
+    "budgetOptions": {
+      "5000_50000": "5,000 - 50,000 ₽",
+      "50000_200000": "50,000 - 200,000 ₽",
+      "200000_500000": "200,000 - 500,000 ₽",
+      "500000_plus": "500,000+ ₽",
+      "notDecided": "Not decided yet"
+    },
+    "timelineOptions": {
+      "1_2weeks": "1-2 weeks",
+      "1month": "1 month",
+      "2_3months": "2-3 months",
+      "3plus_months": "3+ months",
+      "notDecided": "Not decided yet"
+    },
+    "serviceQuestions": {
+      "onlineShop": [
+        "Excellent! An online store is a powerful tool to increase sales by 300-500%! What product or product category are you planning to sell?",
+        "I understand! Approximately how many products will be in your store? This will help us properly configure the catalog and search system for maximum customer convenience.",
+        "Great question! Are you planning to sell products in different currencies? This can significantly expand your audience and increase sales in international markets.",
+        "Important point! Do you need a review and rating system for products? Statistics show that products with reviews sell 270% better - this is a powerful tool for increasing trust and conversion.",
+        "Excellent! Do you need integration with CRM systems for order management? This will allow you to automate order processing, reduce errors and speed up delivery - your customers will be delighted!",
+        "Interesting! Are you planning to use a discount and promo code system? This is one of the most effective ways to attract new customers and retain regular ones - we can increase repeat purchases by 40%.",
+        "Important question! Do you need integration with delivery systems? Delivery automation saves up to 15 hours per week and significantly improves the customer experience.",
+        "Excellent! Are you planning a mobile app for the store? 70% of purchases are now made from mobile devices - this can double your sales!",
+        "Good! Do you need an analytics and reporting system? Detailed analytics will help you understand customer behavior and optimize sales - this is the key to business growth.",
+        "Important! Are you planning to integrate with social networks? Direct sales through Instagram and Facebook can increase your revenue by 35-50%.",
+        "Excellent! Do you need a warehouse management system? Warehouse automation prevents errors and saves up to 20% of time on order processing.",
+        "Interesting! Are you planning a loyalty program for customers? Customers with loyalty programs spend 30% more and return 3 times more often."
+      ],
+      "corporateWebsite": [
+        "Good! A corporate website is the face of your company on the internet and a powerful tool for attracting customers! What company are we talking about? Tell us briefly about your business.",
+        "I understand! What main sections should be on the site? (About the company, Services, Contacts, etc.) The correct site structure increases the conversion of visitors to customers by 200-300%.",
+        "Excellent! How many pages are you planning for your corporate website? Research shows that sites with 10+ pages get 3 times more traffic.",
+        "Important question! Do you need a multilingual interface? Multilingual sites attract 47% more visitors and open access to international markets.",
+        "Good! Are you planning a blog or news section? Companies with an active blog get 55% more visitors and 97% more backlinks - this is a powerful tool for SEO.",
+        "Excellent! Do you need a contact form and application system? Application processing automation increases response speed by 5 times and improves conversion by 40%.",
+        "Interesting! Are you planning to integrate with a CRM system? This will allow you to automatically save all applications and not lose a single potential customer.",
+        "Important! Do you need an online consultation system or chat? Customers who receive a quick response become buyers 3 times more often.",
+        "Excellent! Are you planning a portfolio or cases of your projects? Demonstrating successful projects increases trust by 80% and conversion by 60%.",
+        "Good! Do you need integration with Google Analytics and analytics systems? Understanding visitor behavior will help optimize the site and increase conversion.",
+        "Important question! Are you planning a booking or online appointment system? This can automate up to 70% of your operations and significantly improve the customer experience.",
+        "Excellent! Do you need an adaptive version for mobile devices? 60% of traffic now comes from mobile - without a mobile version you lose most of your customers."
+      ],
+      "landingPage": [
+        "Landing pages are excellent for sales! A properly created landing page converts visitors into customers 2-3 times better than a regular website. What product or service will you be presenting?",
+        "I understand! What is the main goal of your landing page? (Sales, lead generation, registration) A clear goal allows you to create a maximally effective structure and increase conversion to 25-30%.",
+        "Excellent! Do you already have ready materials? (Texts, photos, videos) Quality materials can increase conversion by 80% - we can help with their creation or improvement.",
+        "Important! Do you need integration with advertising systems? (Google Ads, Yandex.Direct) Proper integration allows you to track the effectiveness of each advertising campaign and optimize costs.",
+        "Good! Are you planning A/B testing of different landing page versions? Testing can increase conversion by 20-50% - this is an investment that pays off many times over.",
+        "Excellent! Do you need an email address collection system? Email marketing gives ROI of 4200% - every email collected is a potential customer for years to come.",
+        "Interesting! Are you planning to integrate with CRM for automatic application processing? Automation speeds up application processing by 5 times and increases conversion by 40%.",
+        "Important question! Do you need social proof? (Reviews, cases, statistics) Social proof increases trust by 80% and conversion by 34%.",
+        "Excellent! Are you planning an urgent offer system or countdown timers? Urgency increases conversion by 332% - this is a powerful psychological trigger.",
+        "Good! Do you need integration with messengers? (WhatsApp, Telegram) Customers prefer messengers - this can increase conversion by 25-30%.",
+        "Important! Are you planning video on the landing page? Video increases conversion by 80% and time on site by 88% - this is a powerful persuasion tool.",
+        "Excellent! Do you need an analytics system to track visitor behavior? Understanding where visitors are lost allows you to increase conversion by 50-100%."
+      ],
+      "businessCardWebsite": [
+        "Business card website is an excellent choice to start! This is the ideal way to present yourself on the internet and attract your first customers. What main information should be on the site?",
+        "I understand! How many pages do you need? (Usually 3-5 pages) The correct structure helps visitors quickly find the information they need and contact you.",
+        "Excellent! Do you need a contact form? A contact form increases the number of requests by 200% compared to simply indicating an email.",
+        "Good! Are you planning to add a portfolio or gallery of works? A portfolio increases trust by 75% and conversion by 60% - this is your main weapon for attracting customers.",
+        "Important! Do you need integration with social networks? Integration with social networks increases traffic by 185% and helps build a community around your brand.",
+        "Excellent! Are you planning a blog or section with useful articles? A blog increases traffic by 434% and helps position you as an expert in your field.",
+        "Interesting! Do you need an online booking or appointment system? This can automate up to 80% of your operations and significantly improve the customer experience.",
+        "Good! Are you planning customer reviews? Reviews increase trust by 92% and conversion by 270% - this is the most powerful social proof.",
+        "Important question! Do you need an adaptive version for mobile devices? 60% of traffic comes from mobile - without this you lose most of your potential customers.",
+        "Excellent! Are you planning to integrate with Google Maps? This helps customers easily find you and increases the number of visits by 30%.",
+        "Good! Do you need an analytics system? Understanding visitor behavior will help optimize the site and increase the number of inquiries.",
+        "Excellent! Are you planning to expand the site in the future? We can create a structure that scales easily - this will save you money in the future."
+      ],
+      "webApplications": [
+        "Web applications are very powerful! They can automate business processes and increase efficiency by 300-500%. Describe what task your application should solve?",
+        "I understand! What main functions are you planning in your application? Properly designed functions can save up to 20 hours of work per week.",
+        "Excellent! How many users will use the application simultaneously? This will help us properly design the architecture for maximum performance and scalability.",
+        "Important! Do you need a user authentication and authorization system? Security is critical - the right protection system prevents data leaks and protects reputation.",
+        "Good! Are you planning a mobile version of the application? Mobile applications are used 3 times more often and increase user engagement by 200%.",
+        "Excellent! Do you need a notification system? Notifications increase user activity by 88% and improve retention by 65%.",
+        "Interesting! Are you planning to integrate with external APIs? Integrations can automate up to 70% of routine operations and significantly improve the user experience.",
+        "Important question! Do you need an analytics and reporting system? Detailed analytics helps optimize the application and increase usage efficiency by 50-100%.",
+        "Good! Are you planning a payment system? Payment integration can open new revenue streams and increase monetization by 300%.",
+        "Excellent! Do you need a data backup and recovery system? Reliable backup prevents data loss and protects your business.",
+        "Important! Are you planning a multi-user collaboration system? Collaboration increases team productivity by 30-40% and improves work quality.",
+        "Excellent! Do you need an administration system? The right admin panel saves up to 15 hours per week on system management."
+      ],
+      "seo": [
+        "Excellent! SEO is a long-term investment that can increase organic traffic by 500-1000%! Do you already have an existing website? If yes, please provide the address.",
+        "I understand! In which region do you want to promote? Proper regional optimization can increase local traffic by 300% and attract targeted customers.",
+        "Excellent! What keywords or phrases do you want to promote? The right choice of keywords is 50% of SEO success. We can conduct an analysis and find the most effective queries.",
+        "Important! What competitors do you have in this niche? Competitor analysis helps find growth opportunities and outrank them in search results.",
+        "Good! What is your current website traffic? (If any) Understanding the current situation will help us measure results and show real growth.",
+        "Excellent! Are you planning content marketing? Companies with an active blog get 434% more indexed pages and 97% more backlinks.",
+        "Interesting! Do you need technical website optimization? Technical optimization can increase loading speed by 70% and improve search rankings by 20-30%.",
+        "Important question! Are you planning to work with backlinks? Quality links can increase traffic by 200-300% and significantly improve rankings.",
+        "Good! Do you need local SEO optimization? Local SEO increases the number of calls by 29% and office visits by 28%.",
+        "Excellent! Are you planning optimization for voice search? Voice search is growing by 270% per year - this is the future of SEO, and early implementation will give an advantage.",
+        "Important! Do you need a position monitoring system? Tracking positions helps you see work results and quickly respond to changes.",
+        "Excellent! Are you planning to integrate with Google Analytics and Search Console? Detailed analytics helps optimize strategy and increase efficiency by 50-100%."
+      ],
+      "uiUxDesign": [
+        "Excellent! The right design can increase conversion by 200-400%! What project needs design? (New website, redesign of existing, mobile application)",
+        "I understand! Do you have a corporate style or brand book? A unified style increases brand recognition by 80% and customer trust by 33%.",
+        "Excellent! What design examples do you like? Describe the desired style. Understanding your preferences will help create a design that hits the target exactly.",
+        "Good! Do you need only interface design or also icons, illustrations? Quality visual elements increase engagement by 94% and improve brand perception.",
+        "Important! Are you planning an adaptive design for mobile devices? 60% of traffic comes from mobile - without mobile design you lose most of your customers.",
+        "Excellent! Do you need a design system for social networks? A unified style on social networks increases brand recognition by 80% and engagement by 200%.",
+        "Interesting! Are you planning animations and interactive elements? Animations increase conversion by 20-30% and improve user experience.",
+        "Important question! Do you need a design system for future projects? A design system speeds up development by 50% and ensures consistency.",
+        "Good! Are you planning A/B testing of the design? Testing can increase conversion by 20-50% - this is an investment that pays off many times over.",
+        "Excellent! Do you need conversion optimization design? The right structure and call-to-action elements can increase conversion by 200-300%.",
+        "Important! Are you planning design for email campaigns? Emails with proper design open 26% more often and provide 600% more conversions.",
+        "Excellent! Do you need a prototyping and testing system? Prototyping helps find problems before development and saves up to 50% of time and budget."
+      ],
+      "technicalSupport": [
+        "Good! Technical support is an investment in the stability and growth of your business. Do you already have an existing website? If yes, what platform does it run on?",
+        "I understand! What type of support do you need? (Technical, content, updates) Comprehensive support can increase website efficiency by 40% and prevent customer loss.",
+        "Excellent! How often do you need support? (Daily, weekly, on request) Regular support prevents 90% of problems before they occur and saves your time.",
+        "Important! What tasks need to be performed? (Content updates, error fixes, backups) Automation of routine tasks saves up to 20 hours per week.",
+        "Good! Do you need website monitoring and analytics? Monitoring prevents 95% of problems before they occur and increases website uptime by 99.9%.",
+        "Excellent! Are you planning security updates? Regular security updates prevent 99% of cyberattacks and protect your business reputation.",
+        "Interesting! Do you need a backup system? Automatic backup prevents data loss and can save your business from disaster.",
+        "Important question! Are you planning performance optimization? Speed optimization can increase conversion by 7% and improve search rankings by 20-30%.",
+        "Good! Do you need support for integrations with external services? Proper integration automates up to 70% of operations and improves customer experience.",
+        "Excellent! Are you planning content support? Regular content updates increase traffic by 434% and improve search rankings.",
+        "Important! Do you need a website performance reporting system? Detailed reports help you see results and optimize development strategy.",
+        "Excellent! Are you planning website scaling and development? Proper support ensures growth without technical problems and downtime."
+      ],
+      "hostingDomains": [
+        "Excellent! The right hosting is the foundation of stable website operation. What type of website are you planning to host?",
+        "I understand! What is the expected traffic on the site? The right hosting choice prevents downtime and customer loss - 1 minute of downtime can cost you dozens of customers.",
+        "Excellent! Are you planning to use a database? (MySQL, PostgreSQL) An optimized database can increase website speed by 300% and improve user experience.",
+        "Important! Do you need SSL certificate support? SSL is mandatory for security and trust - sites without SSL lose 64% of visitors and are not ranked in Google.",
+        "Good! Do you need data backup and recovery? Automatic backup prevents data loss and can save your business.",
+        "Excellent! Are you planning CDN to speed up loading? CDN can increase loading speed by 50-70% and improve search rankings by 20-30%.",
+        "Interesting! Do you need DDoS attack protection? Protection prevents 99% of attacks and ensures stable website operation even under load.",
+        "Important question! Are you planning scaling? The right hosting allows you to scale without migrations and downtime - this saves time and money.",
+        "Good! Do you need 24/7 technical support? Fast support prevents problems and saves your time - every minute of downtime is lost customers.",
+        "Excellent! Are you planning multiple domains? Proper domain configuration improves SEO and protects your brand.",
+        "Important! Do you need a monitoring and analytics system? Monitoring prevents 95% of problems before they occur and ensures 99.9% uptime.",
+        "Excellent! Are you planning integration with development systems? Proper integration speeds up deployment by 80% and improves team workflow."
+      ],
+      "paymentIntegration": [
+        "Good! Payment system integration can increase conversion by 30-50% and automate payment processing. What project needs integration? (Online store, landing page, web application)",
+        "I understand! What payment systems do you want to integrate? (YooKassa, PayPal, Stripe, etc.) Multiple payment systems increase conversion by 25% - customers choose a convenient payment method.",
+        "Excellent! Do you need support for different currencies? Multi-currency can increase sales in international markets by 200-300% and expand the audience.",
+        "Important! Are you planning automatic payment processing? Automation speeds up order processing by 10 times and reduces errors by 95%.",
+        "Good! Do you need a payment notification system? Instant notifications improve customer experience and increase trust by 80%.",
+        "Excellent! Are you planning a refund and partial payment system? A flexible payment system increases customer trust by 60% and reduces the number of refusals.",
+        "Interesting! Do you need integration with accounting systems? Automatic synchronization saves up to 15 hours per week and prevents accounting errors.",
+        "Important question! Are you planning a subscription and recurring payment system? Subscriptions can increase stable revenue by 300% and improve business predictability.",
+        "Good! Do you need a payment analytics system? Detailed analytics helps optimize the payment process and increase conversion by 20-30%.",
+        "Excellent! Are you planning a payment security system? Proper security prevents fraud and protects your business reputation.",
+        "Important! Do you need integration with delivery systems? Automatic linking of payments and delivery speeds up order processing by 5 times.",
+        "Excellent! Are you planning a bonus and cashback system? Loyalty programs increase repeat purchases by 300% and improve customer retention."
+      ],
+      "businessAutomation": [
+        "Excellent! Automation can increase business efficiency by 300-500% and save up to 20 hours per week! What business processes do you want to automate?",
+        "I understand! Are you already using any systems? (CRM, ERP, etc.) Proper integration of existing systems can double automation efficiency.",
+        "Excellent! How many employees will use the system? Scalable automation saves each employee's time and increases team productivity by 40%.",
+        "Important! What tasks should be automated? (Order processing, reports, notifications) Automation of routine tasks frees up time for strategic tasks and business growth.",
+        "Good! Do you need integration with external services? Integrations can automate up to 70% of operations and significantly improve customer experience.",
+        "Excellent! Are you planning a notification system? Automatic notifications increase response speed by 500% and improve customer experience.",
+        "Interesting! Do you need an analytics and reporting system? Automatic reports save up to 10 hours per week and help make data-driven decisions.",
+        "Important question! Are you planning a workflow and business process system? Proper processes increase efficiency by 50% and reduce errors by 90%.",
+        "Good! Do you need a task management system? Task automation increases team productivity by 30-40% and improves coordination.",
+        "Excellent! Are you planning an integration system with email and messengers? Communication automation saves up to 5 hours per day and improves response speed.",
+        "Important! Do you need a data backup system? Automatic backup prevents data loss and protects your business.",
+        "Excellent! Are you planning automation scaling? The right architecture allows you to scale without problems and increase efficiency as you grow."
+      ],
+      "default": [
+        "Excellent! A properly created website can increase your business by 200-500%! Describe what website you need?",
+        "I understand! What main functions do you want on your website? The right functions can automate up to 70% of operations and significantly improve customer experience.",
+        "Excellent! Do you already have an existing website or is this a new project? Understanding the current situation will help us create a maximally effective solution.",
+        "Important! What is the target audience of your website? Understanding the audience allows you to create a website that hits the target exactly and increases conversion by 200-300%.",
+        "Good! Are you planning a mobile version of the website? 60% of traffic comes from mobile - without a mobile version you lose most of your customers.",
+        "Excellent! Do you need an analytics system? Understanding visitor behavior helps optimize the website and increase conversion by 50-100%.",
+        "Interesting! Are you planning CRM integration? Integration can automate application processing and increase conversion by 40%.",
+        "Important question! Do you need an online payment system? Payment integration can open new revenue streams and increase sales by 30-50%.",
+        "Good! Are you planning a blog or content section? A blog increases traffic by 434% and helps position you as an expert.",
+        "Excellent! Do you need an email marketing system? Email marketing gives ROI of 4200% and helps retain customers for years.",
+        "Important! Are you planning SEO optimization? SEO can increase organic traffic by 500-1000% and attract targeted customers.",
+        "Excellent! Do you need a backup system? Reliable backup protects your business from data loss."
+      ]
+    }
+  },
+  "breadcrumbs": {
+    "home": "Home",
+    "routes": {
+      "/": "Home",
+      "/services": "Services",
+      "/services/website-development": "Website Development",
+      "/services/landing-page": "Landing Page",
+      "/services/business-card-website": "Business Card Website",
+      "/services/corporate-website": "Corporate Website",
+      "/services/online-shop": "Online Shop",
+      "/services/web-applications": "Web Applications",
+      "/services/seo": "SEO Promotion",
+      "/services/ui-ux-design": "UI/UX Design",
+      "/services/technical-support": "Technical Support",
+      "/services/hosting-domains": "Hosting & Domains",
+      "/services/payment-integration": "Payment Integration",
+      "/services/business-automation": "Business Automation",
+      "/our-works": "Our Works",
+      "/blog": "Blog",
+      "/privacy-policy": "Privacy Policy",
+      "/calculator": "Calculator",
+      "/contact": "Contact",
+      "/schedule-call": "Schedule Call"
+    },
+    "blogArticles": {
+      "kak-vybrat-veb-studiyu": "How to Choose a Web Studio",
+      "10-oshibok-pri-sozdanii-sajta": "10 Mistakes When Creating a Website",
+      "seo-optimizaciya-sajta": "SEO Website Optimization",
+      "kak-sozdat-uspeshnyj-lending": "How to Create a Successful Landing Page",
+      "kak-vybrat-cms": "How to Choose a CMS",
+      "optimizaciya-skorosti-sajta": "Website Speed Optimization",
+      "trendy-veb-dizajna": "Web Design Trends 2024"
+    }
+  },
+  "calculator": {
+    "hero": {
+      "title": "Website Cost Calculator",
+      "subtitle": "Calculate the approximate cost of your project in a few minutes. Get a personalized offer after filling out the form."
+    },
+    "form": {
+      "selectService": "Select a service",
+      "serviceQuestions": "Questions about the service \"{{service}}\"",
+      "enterAnswer": "Enter your answer...",
+      "pagesCount": "Number of pages",
+      "pages": "{{count}} pages",
+      "designStyle": "Design style",
+      "additionalFeatures": "Additional features",
+      "paymentSystems": "Payment systems",
+      "additionalOptions": "Additional options",
+      "contactData": "Contact information",
+      "calculatePrice": "Calculate cost",
+      "back": "Back",
+      "submit": "Submit request",
+      "submitting": "Submitting...",
+      "prev": "← Back",
+      "next": "Next →"
+    },
+    "designStyles": {
+      "simple": "Simple",
+      "standard": "Standard",
+      "premium": "Premium",
+      "luxury": "Luxury"
+    },
+    "features": {
+      "cms": "CMS management system",
+      "ecommerce": "Online store",
+      "mobileApp": "Mobile application",
+      "seo": "SEO optimization",
+      "contentManagement": "Content management",
+      "multilingual": "Multilingual",
+      "socialIntegration": "Social media integration",
+      "onlineChat": "Online chat",
+      "contactForm": "Contact form",
+      "imageGallery": "Image gallery",
+      "videoIntegration": "Video integration",
+      "blog": "Blog",
+      "newsFeed": "News feed"
+    },
+    "paymentSystems": {
+      "none": "Not required",
+      "single": "One system",
+      "multiple": "Multiple systems"
+    },
+    "errors": {
+      "selectService": "Please select a service",
+      "enterName": "Please enter your name",
+      "enterEmail": "Please enter your email",
+      "enterPhone": "Please enter your phone number",
+      "invalidEmail": "Please enter a valid email",
+      "submitError": "An error occurred while submitting",
+      "generalError": "An error occurred"
+    },
+    "success": {
+      "thankYou": "Thank you! We will contact you shortly."
+    },
+    "priceInfo": {
+      "calculationComplete": "Calculation complete!",
+      "calculationCompleteText": "We have calculated the cost of your project. Please fill in your contact information to see the calculation result.",
+      "estimatedPrice": "Estimated cost",
+      "range": "Range:",
+      "note": "This is an approximate cost. We will calculate the exact price after discussing the details of your project and market research."
+    },
+    "benefits": {
+      "title": "Why choose us?",
+      "transparentPrices": {
+        "title": "Transparent prices",
+        "text": "No hidden fees. You see the cost before work begins"
+      },
+      "fastDelivery": {
+        "title": "Fast delivery",
+        "text": "We meet agreed deadlines without compromising on quality"
+      },
+      "individualApproach": {
+        "title": "Individual approach",
+        "text": "Every project is unique. We take into account all your requirements"
+      },
+      "qualityGuarantee": {
+        "title": "Quality guarantee",
+        "text": "We provide a guarantee on all work and technical support"
+      }
+    },
+    "trust": {
+      "completedProjects": "Completed projects",
+      "yearsExperience": "Years of experience",
+      "satisfiedClients": "Satisfied clients",
+      "support": "Technical support"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "howItWorks": {
+        "question": "How does the website cost calculator work?",
+        "answer": "The calculator takes into account the type of website, number of pages, design style and additional features. After filling out the form, you will receive an approximate cost and a personalized offer."
+      },
+      "priceAccuracy": {
+        "question": "Is the price calculated by the calculator accurate?",
+        "answer": "The calculator shows an approximate cost. We will calculate the exact price after studying all the details of your project and market analysis."
+      },
+      "developmentTime": {
+        "question": "How long does it take to develop a website?",
+        "answer": "Timelines depend on the complexity of the project. Simple landing page - 1-2 weeks, corporate website - 2-4 weeks, online store - 1-3 months."
+      },
+      "whatIncluded": {
+        "question": "What is included in the development cost?",
+        "answer": "The cost includes design, layout, programming, setup, testing and basic technical support. All details are discussed individually."
+      }
+    },
+    "cta": {
+      "title": "Ready to start your project?",
+      "text": "Leave a request and get a personalized offer with exact cost within 24 hours",
+      "getOffer": "Get offer",
+      "callUs": "Call us"
+    }
+  },
+  "meta": {
+    "title": "Full-Service Website Development | Torgomyan.Studio - Web Studio",
+    "description": "Professional full-service website development. Creation of websites, online stores, landing pages and web applications. SEO promotion, UI/UX design. Over 100 successful projects. Order a website.",
+    "keywords": "full-service website development, website creation Armenia, web studio Yerevan, website development, online store creation, landing page, corporate website, SEO promotion, web design, web application development, order website, website development cost, professional website development"
+  }
+}

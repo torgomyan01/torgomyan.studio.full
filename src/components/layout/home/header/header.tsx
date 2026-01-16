@@ -9,6 +9,9 @@ import './_info-block.scss';
 import AiBlock from '@/components/common/ai-block/ai-block';
 import { Works, SITE_URL } from '@/utils/consts';
 import ImageGalleryModal from '@/components/ui/image-gallery-modal';
+import { useLocale } from '@/i18n/use-locale';
+import { getTranslation } from '@/i18n';
+import { addLocaleToPath } from '@/i18n/utils';
 
 function Header() {
   const [isLoading, setIsLoading] = useState(true);
@@ -16,6 +19,7 @@ function Header() {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const swiperRef = useRef<HTMLDivElement>(null);
   const displayedWorks = Works.slice(0, 10);
+  const locale = useLocale();
 
   useEffect(() => {
     if (!swiperRef.current) {
@@ -72,17 +76,18 @@ function Header() {
     );
   };
 
-  // Structured data for SEO (JSON-LD) - оптимизировано для Yandex и Google
-  // Using static URL to prevent hydration mismatch
+  // Structured data for SEO (JSON-LD)
   const baseUrl = 'https://torgomyan.studio';
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'Создаем сайты для вашего бизнеса',
-    description:
-      'Профессиональная разработка сайтов для бизнеса. Работать с нами, вы получите рост бизнеса до 30%.',
+    name: getTranslation(locale, 'home.title'),
+    description: getTranslation(locale, 'home.subtitle').replace(
+      /<[^>]*>/g,
+      ''
+    ),
     url: baseUrl,
-    inLanguage: 'ru',
+    inLanguage: locale,
     potentialAction: {
       '@type': 'SearchAction',
       target: {
@@ -106,20 +111,27 @@ function Header() {
       <div className="container">
         <div className="info">
           <h1 className="main-title" itemProp="name">
-            Создаем сайты для вашего бизнеса
+            {getTranslation(locale, 'home.title')}
           </h1>
-          <h2 className="main-subtitle" itemProp="description">
-            Работать с нами, вы получите рост бизнеса до <strong>30%</strong>.
-          </h2>
+          <h2
+            className="main-subtitle"
+            itemProp="description"
+            dangerouslySetInnerHTML={{
+              __html: getTranslation(locale, 'home.subtitle'),
+            }}
+          />
           <div
             ref={swiperRef}
             className="info-slider swiper"
             role="region"
-            aria-label="Галерея примеров работ"
+            aria-label={getTranslation(locale, 'common.gallery')}
           >
             {isLoading && (
               <div className="info-slider-loading" aria-hidden="true">
-                <div className="loading-spinner" aria-label="Загрузка"></div>
+                <div
+                  className="loading-spinner"
+                  aria-label={getTranslation(locale, 'common.loading')}
+                ></div>
               </div>
             )}
             <div
@@ -136,7 +148,7 @@ function Header() {
                 >
                   <Image
                     src={`/${work.imgUrl}`}
-                    alt={`Пример работы - ${work.name}`}
+                    alt={`${getTranslation(locale, 'ourWorks.workExample')} - ${work.name}`}
                     width={600}
                     height={170}
                     priority={index < 2}
@@ -149,13 +161,19 @@ function Header() {
             </div>
           </div>
           <div className="header-actions">
-            <Link href="/schedule-call" className="schedule-call-header-btn">
+            <Link
+              href={addLocaleToPath('/schedule-call', locale)}
+              className="schedule-call-header-btn"
+            >
               <i className="fas fa-phone" aria-hidden="true"></i>
-              <span>Заказать консультацию</span>
+              <span>{getTranslation(locale, 'home.getConsultation')}</span>
             </Link>
-            <Link href={SITE_URL.CALCULATOR} className="calculator-header-btn">
+            <Link
+              href={addLocaleToPath(SITE_URL.CALCULATOR, locale)}
+              className="calculator-header-btn"
+            >
               <i className="fa-solid fa-calculator" aria-hidden="true"></i>
-              <span>Калькулятор</span>
+              <span>{getTranslation(locale, 'common.calculator')}</span>
             </Link>
           </div>
           <div className="header-contact-info">

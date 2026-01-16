@@ -5,6 +5,8 @@ import { CustomInput, CustomPhoneInput } from '@/components/ui';
 import { saveCalculatorSubmissionAction } from '@/app/actions/calculator';
 import { services } from '@/utils/consts';
 import { useServiceQuestions } from '../ai-block/hooks/use-service-questions';
+import { useLocale } from '@/i18n/use-locale';
+import { getTranslation } from '@/i18n';
 import './_calculator.scss';
 
 interface CalculatorFormData {
@@ -29,8 +31,33 @@ interface ContactFormData {
 }
 
 export default function Calculator() {
+  const locale = useLocale();
   const { getServiceQuestions } = useServiceQuestions();
   const [step, setStep] = useState<'calculator' | 'contact'>('calculator');
+
+  // Map service titles to translation keys
+  const serviceTranslationMap: Record<string, string> = {
+    'Разработка Сайтов': 'services.websiteDevelopment',
+    Лендинг: 'services.landingPage',
+    'Сайт-визитка': 'services.businessCardWebsite',
+    'Корпоративный сайт': 'services.corporateWebsite',
+    'Интернет-магазин': 'services.onlineShop',
+    'Веб-приложения': 'services.webApplications',
+    'Продвижение сайтов (SEO)': 'services.seo',
+    'Дизайн интерфейсов (UI/UX)': 'services.uiUxDesign',
+    'Техническая поддержка': 'services.technicalSupport',
+    'Хостинг и домены': 'services.hostingDomains',
+    'Интеграция платежных систем': 'services.paymentIntegration',
+    'Автоматизация бизнес-процессов': 'services.businessAutomation',
+  };
+
+  const getServiceTitle = (originalTitle: string): string => {
+    const translationKey = serviceTranslationMap[originalTitle];
+    if (translationKey) {
+      return getTranslation(locale, translationKey);
+    }
+    return originalTitle;
+  };
   const [estimatedPrice, setEstimatedPrice] = useState<number | null>(null);
   const [priceRange, setPriceRange] = useState<{
     min: number;
@@ -344,7 +371,7 @@ export default function Calculator() {
     if (!formData.selectedService) {
       setSubmitMessage({
         type: 'error',
-        text: 'Пожалуйста, выберите услугу',
+        text: getTranslation(locale, 'calculator.errors.selectService'),
       });
       return;
     }
@@ -363,7 +390,7 @@ export default function Calculator() {
     if (!contactData.name.trim()) {
       setSubmitMessage({
         type: 'error',
-        text: 'Пожалуйста, введите ваше имя',
+        text: getTranslation(locale, 'calculator.errors.enterName'),
       });
       return;
     }
@@ -371,7 +398,7 @@ export default function Calculator() {
     if (!contactData.email.trim()) {
       setSubmitMessage({
         type: 'error',
-        text: 'Пожалуйста, введите ваш email',
+        text: getTranslation(locale, 'calculator.errors.enterEmail'),
       });
       return;
     }
@@ -379,7 +406,7 @@ export default function Calculator() {
     if (!contactData.phone.trim()) {
       setSubmitMessage({
         type: 'error',
-        text: 'Пожалуйста, введите ваш телефон',
+        text: getTranslation(locale, 'calculator.errors.enterPhone'),
       });
       return;
     }
@@ -388,7 +415,7 @@ export default function Calculator() {
     if (!emailRegex.test(contactData.email.trim())) {
       setSubmitMessage({
         type: 'error',
-        text: 'Пожалуйста, введите корректный email',
+        text: getTranslation(locale, 'calculator.errors.invalidEmail'),
       });
       return;
     }
@@ -429,7 +456,7 @@ export default function Calculator() {
         setShowPrice(true); // Показываем цену после успешной отправки
         setSubmitMessage({
           type: 'success',
-          text: 'Спасибо! Мы свяжемся с вами в ближайшее время.',
+          text: getTranslation(locale, 'calculator.success.thankYou'),
         });
         setTimeout(() => {
           // Reset form after success
@@ -459,13 +486,15 @@ export default function Calculator() {
       } else {
         setSubmitMessage({
           type: 'error',
-          text: result.error || 'Произошла ошибка',
+          text:
+            result.error ||
+            getTranslation(locale, 'calculator.errors.generalError'),
         });
       }
     } catch (error) {
       setSubmitMessage({
         type: 'error',
-        text: 'Произошла ошибка при отправке',
+        text: getTranslation(locale, 'calculator.errors.submitError'),
       });
     } finally {
       setIsSubmitting(false);
@@ -487,10 +516,11 @@ export default function Calculator() {
       <div className="container">
         {/* Hero Section */}
         <section className="calculator-hero">
-          <h1 className="main-title">Калькулятор стоимости сайта</h1>
+          <h1 className="main-title">
+            {getTranslation(locale, 'calculator.hero.title')}
+          </h1>
           <p className="main-subtitle">
-            Рассчитайте примерную стоимость вашего проекта за несколько минут.
-            Получите персональное предложение после заполнения формы.
+            {getTranslation(locale, 'calculator.hero.subtitle')}
           </p>
         </section>
 
@@ -499,7 +529,9 @@ export default function Calculator() {
           {step === 'calculator' ? (
             <div className="calculator-form">
               <div className="form-section">
-                <h3 className="section-title">Выберите услугу</h3>
+                <h3 className="section-title">
+                  {getTranslation(locale, 'calculator.form.selectService')}
+                </h3>
                 <div className="radio-group">
                   {services.map((service) => (
                     <label key={service.title} className="radio-option">
@@ -510,7 +542,7 @@ export default function Calculator() {
                         checked={formData.selectedService === service.title}
                         onChange={() => handleServiceSelect(service.title)}
                       />
-                      <span>{service.title}</span>
+                      <span>{getServiceTitle(service.title)}</span>
                     </label>
                   ))}
                 </div>
@@ -520,7 +552,13 @@ export default function Calculator() {
                 selectedServiceQuestions.length > 0 && (
                   <div className="form-section">
                     <h3 className="section-title">
-                      Вопросы по услуге "{formData.selectedService}"
+                      {getTranslation(
+                        locale,
+                        'calculator.form.serviceQuestions',
+                        {
+                          service: getServiceTitle(formData.selectedService),
+                        }
+                      )}
                     </h3>
                     <div className="questions-wrapper">
                       {selectedServiceQuestions.map((question, index) => (
@@ -532,7 +570,10 @@ export default function Calculator() {
                         >
                           <p className="question-text">{question}</p>
                           <CustomInput
-                            placeholder="Введите ваш ответ..."
+                            placeholder={getTranslation(
+                              locale,
+                              'calculator.form.enterAnswer'
+                            )}
                             value={formData.serviceAnswers[question] || ''}
                             onChange={(e) =>
                               handleQuestionAnswer(question, e.target.value)
@@ -548,7 +589,7 @@ export default function Calculator() {
                             onClick={handlePrevQuestion}
                             disabled={currentQuestionIndex === 0}
                           >
-                            ← Назад
+                            {getTranslation(locale, 'calculator.form.prev')}
                           </button>
                           <span className="question-counter">
                             {currentQuestionIndex + 1} /{' '}
@@ -563,7 +604,7 @@ export default function Calculator() {
                               selectedServiceQuestions.length - 1
                             }
                           >
-                            Далее →
+                            {getTranslation(locale, 'calculator.form.next')}
                           </button>
                         </div>
                       )}
@@ -580,7 +621,9 @@ export default function Calculator() {
                 formData.selectedService.includes('Разработка Сайтов')) && (
                 <>
                   <div className="form-section">
-                    <h3 className="section-title">Количество страниц</h3>
+                    <h3 className="section-title">
+                      {getTranslation(locale, 'calculator.form.pagesCount')}
+                    </h3>
                     <div className="range-input">
                       <input
                         type="range"
@@ -595,19 +638,23 @@ export default function Calculator() {
                         }
                       />
                       <span className="range-value">
-                        {formData.pagesCount} страниц
+                        {getTranslation(locale, 'calculator.form.pages', {
+                          count: formData.pagesCount.toString(),
+                        })}
                       </span>
                     </div>
                   </div>
 
                   <div className="form-section">
-                    <h3 className="section-title">Стиль дизайна</h3>
+                    <h3 className="section-title">
+                      {getTranslation(locale, 'calculator.form.designStyle')}
+                    </h3>
                     <div className="radio-group">
                       {[
-                        { value: 'simple', label: 'Простой' },
-                        { value: 'standard', label: 'Стандартный' },
-                        { value: 'premium', label: 'Премиум' },
-                        { value: 'luxury', label: 'Люкс' },
+                        { value: 'simple', key: 'simple' },
+                        { value: 'standard', key: 'standard' },
+                        { value: 'premium', key: 'premium' },
+                        { value: 'luxury', key: 'luxury' },
                       ].map((option) => (
                         <label key={option.value} className="radio-option">
                           <input
@@ -622,7 +669,12 @@ export default function Calculator() {
                               }))
                             }
                           />
-                          <span>{option.label}</span>
+                          <span>
+                            {getTranslation(
+                              locale,
+                              `calculator.designStyles.${option.key}`
+                            )}
+                          </span>
                         </label>
                       ))}
                     </div>
@@ -631,7 +683,9 @@ export default function Calculator() {
               )}
 
               <div className="form-section">
-                <h3 className="section-title">Дополнительные функции</h3>
+                <h3 className="section-title">
+                  {getTranslation(locale, 'calculator.form.additionalFeatures')}
+                </h3>
                 <div className="checkbox-group">
                   <label className="checkbox-option">
                     <input
@@ -644,7 +698,9 @@ export default function Calculator() {
                         }))
                       }
                     />
-                    <span>CMS система управления</span>
+                    <span>
+                      {getTranslation(locale, 'calculator.features.cms')}
+                    </span>
                   </label>
                   <label className="checkbox-option">
                     <input
@@ -657,7 +713,9 @@ export default function Calculator() {
                         }))
                       }
                     />
-                    <span>Интернет-магазин</span>
+                    <span>
+                      {getTranslation(locale, 'calculator.features.ecommerce')}
+                    </span>
                   </label>
                   <label className="checkbox-option">
                     <input
@@ -670,7 +728,9 @@ export default function Calculator() {
                         }))
                       }
                     />
-                    <span>Мобильное приложение</span>
+                    <span>
+                      {getTranslation(locale, 'calculator.features.mobileApp')}
+                    </span>
                   </label>
                   <label className="checkbox-option">
                     <input
@@ -683,7 +743,9 @@ export default function Calculator() {
                         }))
                       }
                     />
-                    <span>SEO оптимизация</span>
+                    <span>
+                      {getTranslation(locale, 'calculator.features.seo')}
+                    </span>
                   </label>
                   <label className="checkbox-option">
                     <input
@@ -696,19 +758,26 @@ export default function Calculator() {
                         }))
                       }
                     />
-                    <span>Управление контентом</span>
+                    <span>
+                      {getTranslation(
+                        locale,
+                        'calculator.features.contentManagement'
+                      )}
+                    </span>
                   </label>
                 </div>
               </div>
 
               {formData.ecommerce && (
                 <div className="form-section">
-                  <h3 className="section-title">Платежные системы</h3>
+                  <h3 className="section-title">
+                    {getTranslation(locale, 'calculator.form.paymentSystems')}
+                  </h3>
                   <div className="radio-group">
                     {[
-                      { value: 'none', label: 'Не требуется' },
-                      { value: 'single', label: 'Одна система' },
-                      { value: 'multiple', label: 'Несколько систем' },
+                      { value: 'none', key: 'none' },
+                      { value: 'single', key: 'single' },
+                      { value: 'multiple', key: 'multiple' },
                     ].map((option) => (
                       <label key={option.value} className="radio-option">
                         <input
@@ -723,7 +792,12 @@ export default function Calculator() {
                             }))
                           }
                         />
-                        <span>{option.label}</span>
+                        <span>
+                          {getTranslation(
+                            locale,
+                            `calculator.paymentSystems.${option.key}`
+                          )}
+                        </span>
                       </label>
                     ))}
                   </div>
@@ -731,25 +805,34 @@ export default function Calculator() {
               )}
 
               <div className="form-section">
-                <h3 className="section-title">Дополнительные опции</h3>
+                <h3 className="section-title">
+                  {getTranslation(locale, 'calculator.form.additionalOptions')}
+                </h3>
                 <div className="checkbox-group">
                   {[
-                    'Многоязычность',
-                    'Интеграция с соцсетями',
-                    'Онлайн-чат',
-                    'Форма обратной связи',
-                    'Галерея изображений',
-                    'Видео интеграция',
-                    'Блог',
-                    'Новостная лента',
+                    { key: 'multilingual', original: 'Многоязычность' },
+                    {
+                      key: 'socialIntegration',
+                      original: 'Интеграция с соцсетями',
+                    },
+                    { key: 'onlineChat', original: 'Онлайн-чат' },
+                    { key: 'contactForm', original: 'Форма обратной связи' },
+                    { key: 'imageGallery', original: 'Галерея изображений' },
+                    { key: 'videoIntegration', original: 'Видео интеграция' },
+                    { key: 'newsFeed', original: 'Новостная лента' },
                   ].map((feature) => (
-                    <label key={feature} className="checkbox-option">
+                    <label key={feature.original} className="checkbox-option">
                       <input
                         type="checkbox"
-                        checked={formData.features.includes(feature)}
-                        onChange={() => toggleFeature(feature)}
+                        checked={formData.features.includes(feature.original)}
+                        onChange={() => toggleFeature(feature.original)}
                       />
-                      <span>{feature}</span>
+                      <span>
+                        {getTranslation(
+                          locale,
+                          `calculator.features.${feature.key}`
+                        )}
+                      </span>
                     </label>
                   ))}
                 </div>
@@ -767,7 +850,7 @@ export default function Calculator() {
                   className="calculate-button"
                   onClick={handleCalculate}
                 >
-                  Рассчитать стоимость
+                  {getTranslation(locale, 'calculator.form.calculatePrice')}
                 </button>
               </div>
             </div>
@@ -777,11 +860,17 @@ export default function Calculator() {
                 <div className="price-info-message">
                   <div className="info-icon">💰</div>
                   <div className="info-text">
-                    <h3>Расчет выполнен!</h3>
+                    <h3>
+                      {getTranslation(
+                        locale,
+                        'calculator.priceInfo.calculationComplete'
+                      )}
+                    </h3>
                     <p>
-                      Мы рассчитали стоимость вашего проекта. Пожалуйста,
-                      заполните ваши контактные данные, чтобы увидеть результат
-                      расчета.
+                      {getTranslation(
+                        locale,
+                        'calculator.priceInfo.calculationCompleteText'
+                      )}
                     </p>
                   </div>
                 </div>
@@ -789,31 +878,60 @@ export default function Calculator() {
 
               {showPrice && estimatedPrice !== null && (
                 <div className="estimated-price">
-                  <h3>Примерная стоимость</h3>
+                  <h3>
+                    {getTranslation(
+                      locale,
+                      'calculator.priceInfo.estimatedPrice'
+                    )}
+                  </h3>
                   <div className="price-value">
-                    {estimatedPrice.toLocaleString('ru-RU')} ₽
+                    {estimatedPrice.toLocaleString(
+                      locale === 'ru'
+                        ? 'ru-RU'
+                        : locale === 'hy'
+                          ? 'hy-AM'
+                          : 'en-US'
+                    )}{' '}
+                    ₽
                   </div>
                   {priceRange && (
                     <div className="price-range">
-                      <span className="range-label">Диапазон:</span>
+                      <span className="range-label">
+                        {getTranslation(locale, 'calculator.priceInfo.range')}
+                      </span>
                       <span className="range-values">
-                        {priceRange.min.toLocaleString('ru-RU')} -{' '}
-                        {priceRange.max.toLocaleString('ru-RU')} ₽
+                        {priceRange.min.toLocaleString(
+                          locale === 'ru'
+                            ? 'ru-RU'
+                            : locale === 'hy'
+                              ? 'hy-AM'
+                              : 'en-US'
+                        )}{' '}
+                        -{' '}
+                        {priceRange.max.toLocaleString(
+                          locale === 'ru'
+                            ? 'ru-RU'
+                            : locale === 'hy'
+                              ? 'hy-AM'
+                              : 'en-US'
+                        )}{' '}
+                        ₽
                       </span>
                     </div>
                   )}
                   <p className="price-note">
-                    Это примерная стоимость. Точную цену мы рассчитаем после
-                    обсуждения деталей вашего проекта и изучения рынка.
+                    {getTranslation(locale, 'calculator.priceInfo.note')}
                   </p>
                 </div>
               )}
 
               <div className="form-section">
-                <h3 className="section-title">Контактные данные</h3>
+                <h3 className="section-title">
+                  {getTranslation(locale, 'calculator.form.contactData')}
+                </h3>
                 <CustomInput
-                  label="Имя"
-                  placeholder="Введите ваше имя"
+                  label={getTranslation(locale, 'common.name')}
+                  placeholder={getTranslation(locale, 'common.enterName')}
                   value={contactData.name}
                   onChange={(e) =>
                     setContactData((prev) => ({
@@ -824,8 +942,8 @@ export default function Calculator() {
                   required
                 />
                 <CustomInput
-                  label="Email"
-                  placeholder="Введите ваш email"
+                  label={getTranslation(locale, 'common.email')}
+                  placeholder={getTranslation(locale, 'common.enterEmail')}
                   type="email"
                   value={contactData.email}
                   onChange={(e) =>
@@ -837,7 +955,7 @@ export default function Calculator() {
                   required
                 />
                 <CustomPhoneInput
-                  label="Телефон"
+                  label={getTranslation(locale, 'common.phone')}
                   value={contactData.phone}
                   onChange={(value) =>
                     setContactData((prev) => ({ ...prev, phone: value }))
@@ -860,7 +978,7 @@ export default function Calculator() {
                       setShowPrice(false);
                     }}
                   >
-                    Назад
+                    {getTranslation(locale, 'calculator.form.back')}
                   </button>
                   <button
                     type="button"
@@ -868,7 +986,9 @@ export default function Calculator() {
                     onClick={handleSubmit}
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? 'Отправка...' : 'Отправить заявку'}
+                    {isSubmitting
+                      ? getTranslation(locale, 'calculator.form.submitting')
+                      : getTranslation(locale, 'calculator.form.submit')}
                   </button>
                 </div>
               </div>
@@ -879,30 +999,68 @@ export default function Calculator() {
         {/* Benefits Section */}
         <section className="calculator-benefits">
           <div className="container">
-            <h2 className="section-title">Почему выбирают нас?</h2>
+            <h2 className="section-title">
+              {getTranslation(locale, 'calculator.benefits.title')}
+            </h2>
             <div className="benefits-grid">
               <div className="benefit-card">
                 <div className="benefit-icon">💰</div>
-                <h3>Прозрачные цены</h3>
+                <h3>
+                  {getTranslation(
+                    locale,
+                    'calculator.benefits.transparentPrices.title'
+                  )}
+                </h3>
                 <p>
-                  Никаких скрытых платежей. Вы видите стоимость до начала работы
+                  {getTranslation(
+                    locale,
+                    'calculator.benefits.transparentPrices.text'
+                  )}
                 </p>
               </div>
               <div className="benefit-card">
                 <div className="benefit-icon">⚡</div>
-                <h3>Быстрые сроки</h3>
-                <p>Соблюдаем оговоренные сроки без компромиссов в качестве</p>
+                <h3>
+                  {getTranslation(
+                    locale,
+                    'calculator.benefits.fastDelivery.title'
+                  )}
+                </h3>
+                <p>
+                  {getTranslation(
+                    locale,
+                    'calculator.benefits.fastDelivery.text'
+                  )}
+                </p>
               </div>
               <div className="benefit-card">
                 <div className="benefit-icon">🎯</div>
-                <h3>Индивидуальный подход</h3>
-                <p>Каждый проект уникален. Мы учитываем все ваши требования</p>
+                <h3>
+                  {getTranslation(
+                    locale,
+                    'calculator.benefits.individualApproach.title'
+                  )}
+                </h3>
+                <p>
+                  {getTranslation(
+                    locale,
+                    'calculator.benefits.individualApproach.text'
+                  )}
+                </p>
               </div>
               <div className="benefit-card">
                 <div className="benefit-icon">🛡️</div>
-                <h3>Гарантия качества</h3>
+                <h3>
+                  {getTranslation(
+                    locale,
+                    'calculator.benefits.qualityGuarantee.title'
+                  )}
+                </h3>
                 <p>
-                  Предоставляем гарантию на все работы и техническую поддержку
+                  {getTranslation(
+                    locale,
+                    'calculator.benefits.qualityGuarantee.text'
+                  )}
                 </p>
               </div>
             </div>
@@ -915,19 +1073,27 @@ export default function Calculator() {
             <div className="trust-stats">
               <div className="stat-item">
                 <div className="stat-number">100+</div>
-                <div className="stat-label">Реализованных проектов</div>
+                <div className="stat-label">
+                  {getTranslation(locale, 'calculator.trust.completedProjects')}
+                </div>
               </div>
               <div className="stat-item">
                 <div className="stat-number">7+</div>
-                <div className="stat-label">Лет опыта</div>
+                <div className="stat-label">
+                  {getTranslation(locale, 'calculator.trust.yearsExperience')}
+                </div>
               </div>
               <div className="stat-item">
                 <div className="stat-number">98%</div>
-                <div className="stat-label">Довольных клиентов</div>
+                <div className="stat-label">
+                  {getTranslation(locale, 'calculator.trust.satisfiedClients')}
+                </div>
               </div>
               <div className="stat-item">
                 <div className="stat-number">24/7</div>
-                <div className="stat-label">Техническая поддержка</div>
+                <div className="stat-label">
+                  {getTranslation(locale, 'calculator.trust.support')}
+                </div>
               </div>
             </div>
           </div>
@@ -936,46 +1102,55 @@ export default function Calculator() {
         {/* FAQ Section */}
         <section className="calculator-faq">
           <div className="container">
-            <h2 className="section-title">Часто задаваемые вопросы</h2>
+            <h2 className="section-title">
+              {getTranslation(locale, 'calculator.faq.title')}
+            </h2>
             <div className="faq-list">
               <div className="faq-item">
                 <h3 className="faq-question">
-                  Как работает калькулятор стоимости сайта?
+                  {getTranslation(locale, 'calculator.faq.howItWorks.question')}
                 </h3>
                 <p className="faq-answer">
-                  Калькулятор учитывает тип сайта, количество страниц, стиль
-                  дизайна и дополнительные функции. После заполнения формы вы
-                  получите примерную стоимость и персональное предложение.
+                  {getTranslation(locale, 'calculator.faq.howItWorks.answer')}
                 </p>
               </div>
               <div className="faq-item">
                 <h3 className="faq-question">
-                  Точна ли цена, рассчитанная калькулятором?
+                  {getTranslation(
+                    locale,
+                    'calculator.faq.priceAccuracy.question'
+                  )}
                 </h3>
                 <p className="faq-answer">
-                  Калькулятор показывает примерную стоимость. Точную цену мы
-                  рассчитаем после изучения всех деталей вашего проекта и
-                  анализа рынка.
+                  {getTranslation(
+                    locale,
+                    'calculator.faq.priceAccuracy.answer'
+                  )}
                 </p>
               </div>
               <div className="faq-item">
                 <h3 className="faq-question">
-                  Сколько времени занимает разработка сайта?
+                  {getTranslation(
+                    locale,
+                    'calculator.faq.developmentTime.question'
+                  )}
                 </h3>
                 <p className="faq-answer">
-                  Сроки зависят от сложности проекта. Простой лендинг - 1-2
-                  недели, корпоративный сайт - 2-4 недели, интернет-магазин -
-                  1-3 месяца.
+                  {getTranslation(
+                    locale,
+                    'calculator.faq.developmentTime.answer'
+                  )}
                 </p>
               </div>
               <div className="faq-item">
                 <h3 className="faq-question">
-                  Что входит в стоимость разработки?
+                  {getTranslation(
+                    locale,
+                    'calculator.faq.whatIncluded.question'
+                  )}
                 </h3>
                 <p className="faq-answer">
-                  В стоимость входит дизайн, верстка, программирование,
-                  настройка, тестирование и базовая техническая поддержка. Все
-                  детали обсуждаются индивидуально.
+                  {getTranslation(locale, 'calculator.faq.whatIncluded.answer')}
                 </p>
               </div>
             </div>
@@ -986,17 +1161,18 @@ export default function Calculator() {
         <section className="calculator-cta">
           <div className="container">
             <div className="cta-content">
-              <h2 className="cta-title">Готовы начать свой проект?</h2>
+              <h2 className="cta-title">
+                {getTranslation(locale, 'calculator.cta.title')}
+              </h2>
               <p className="cta-text">
-                Оставьте заявку и получите персональное предложение с точной
-                стоимостью в течение 24 часов
+                {getTranslation(locale, 'calculator.cta.text')}
               </p>
               <div className="cta-buttons">
                 <a href="#contact" className="cta-button-primary">
-                  Получить предложение
+                  {getTranslation(locale, 'calculator.cta.getOffer')}
                 </a>
                 <a href="tel:+37477769668" className="cta-button-secondary">
-                  Позвонить нам
+                  {getTranslation(locale, 'calculator.cta.callUs')}
                 </a>
               </div>
             </div>

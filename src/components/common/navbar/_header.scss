@@ -29,19 +29,11 @@
 
   .logo {
     display: inline-flex;
-    position: absolute;
-    top: -10px;
-    left: 48%;
-    transform: translateX(-50%);
     transition: 0.3s;
+    position: absolute;
+    left: 20px;
+    transform: translateY(-14px);
 
-    @media (max-width: 1024px) {
-      left: 46%;
-      width: 150px;
-      img {
-        width: 100%;
-      }
-    }
     @media (max-width: 767px) {
       position: static;
       transform: translate(0, 0);
@@ -58,6 +50,7 @@
     transition: 0.3s;
     position: relative;
     z-index: 10;
+    padding-left: 200px;
     @media (max-width: 1200px) {
       justify-content: space-between;
     }
@@ -236,10 +229,6 @@
   @media (max-width: 767px) {
     border-radius: 0;
     border: none;
-  }
-
-  .logo {
-    top: -20px;
   }
 }
 

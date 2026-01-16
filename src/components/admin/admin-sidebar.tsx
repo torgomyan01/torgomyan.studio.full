@@ -33,6 +33,11 @@ const menuItems: MenuItem[] = [
     icon: '🧮',
   },
   {
+    label: 'Компании',
+    path: '/admin/companies',
+    icon: '🏢',
+  },
+  {
     label: 'Настройки',
     path: '/admin/settings',
     icon: '⚙️',

@@ -1,74 +1,62 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import './_breadcrumbs.scss';
 import { Works } from '@/utils/consts';
+import { useLocale } from '@/i18n/use-locale';
+import { getTranslation } from '@/i18n';
+import { addLocaleToPath, getPathnameWithoutLocale } from '@/i18n/utils';
 
 interface BreadcrumbItem {
   label: string;
   href: string;
 }
 
-const routeLabels: Record<string, string> = {
-  '/': 'Главная',
-  '/services': 'Услуги',
-  '/services/website-development': 'Разработка сайтов',
-  '/services/landing-page': 'Лендинг-страница',
-  '/services/business-card-website': 'Сайт-визитка',
-  '/services/corporate-website': 'Корпоративный сайт',
-  '/services/online-shop': 'Интернет-магазин',
-  '/services/web-applications': 'Веб-приложения',
-  '/services/seo': 'SEO продвижение',
-  '/services/ui-ux-design': 'UI/UX дизайн',
-  '/services/technical-support': 'Техническая поддержка',
-  '/services/hosting-domains': 'Хостинг и домены',
-  '/services/payment-integration': 'Интеграция платежей',
-  '/services/business-automation': 'Автоматизация бизнеса',
-  '/our-works': 'Наши работы',
-  '/blog': 'Блог',
-  '/privacy-policy': 'Политика конфиденциальности',
-  '/calculator': 'Калькулятор',
-  '/contact': 'Контакты',
-  '/schedule-call': 'Запланировать звонок',
-};
-
-const blogArticleLabels: Record<string, string> = {
-  'kak-vybrat-veb-studiyu': 'Как выбрать веб-студию',
-  '10-oshibok-pri-sozdanii-sajta': '10 ошибок при создании сайта',
-  'seo-optimizaciya-sajta': 'SEO-оптимизация сайта',
-  'kak-sozdat-uspeshnyj-lending': 'Как создать успешный лендинг',
-  'kak-vybrat-cms': 'Как выбрать CMS',
-  'optimizaciya-skorosti-sajta': 'Оптимизация скорости сайта',
-  'trendy-veb-dizajna': 'Тренды веб-дизайна 2024',
-};
-
 export default function Breadcrumbs() {
-  const pathname = usePathname();
+  const locale = useLocale();
+  const [pathname, setPathname] = useState<string>('/');
+
+  // Get actual pathname from browser (not the rewritten one)
+  useEffect(() => {
+    const updatePathname = () => {
+      setPathname(window.location.pathname);
+    };
+
+    // Initial update
+    updatePathname();
+
+    // Listen for navigation changes
+    window.addEventListener('popstate', updatePathname);
+    window.addEventListener('focus', updatePathname);
+
+    return () => {
+      window.removeEventListener('popstate', updatePathname);
+      window.removeEventListener('focus', updatePathname);
+    };
+  }, []);
 
   // Don't show breadcrumbs on home page
-  if (pathname === '/') {
+  const pathWithoutLocale = getPathnameWithoutLocale(pathname);
+  if (pathWithoutLocale === '/') {
     return null;
   }
 
   const generateBreadcrumbs = (): BreadcrumbItem[] => {
-    const items: BreadcrumbItem[] = [{ label: 'Главная', href: '/' }];
+    const items: BreadcrumbItem[] = [
+      {
+        label: getTranslation(locale, 'breadcrumbs.home'),
+        href: addLocaleToPath('/', locale),
+      },
+    ];
 
-    const segments = pathname.split('/').filter(Boolean);
+    const segments = pathWithoutLocale.split('/').filter(Boolean);
 
     let currentPath = '';
     segments.forEach((segment, index) => {
       currentPath += `/${segment}`;
 
-      // Check if it's a blog article
-      if (currentPath.startsWith('/blog/') && index === segments.length - 1) {
-        const articleSlug = segment;
-        const articleLabel = blogArticleLabels[articleSlug] || segment;
-        items.push({
-          label: articleLabel,
-          href: currentPath,
-        });
-      } else if (
+      if (
         currentPath.startsWith('/our-works/') &&
         index === segments.length - 1
       ) {
@@ -78,13 +66,17 @@ export default function Breadcrumbs() {
         const projectLabel = project ? project.name : segment;
         items.push({
           label: projectLabel,
-          href: currentPath,
+          href: addLocaleToPath(currentPath, locale),
         });
       } else {
-        const label = routeLabels[currentPath] || segment;
+        const routeKey = `breadcrumbs.routes.${currentPath}`;
+        const label =
+          getTranslation(locale, routeKey) !== routeKey
+            ? getTranslation(locale, routeKey)
+            : segment;
         items.push({
           label: label,
-          href: currentPath,
+          href: addLocaleToPath(currentPath, locale),
         });
       }
     });

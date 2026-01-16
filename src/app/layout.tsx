@@ -27,24 +27,43 @@ import { ToastNotifications } from '@/components/common/recent-notifications/toa
 import YandexMetrika from '@/components/common/YandexMetrika/YandexMetrika';
 import Smartsupp from '@/components/common/Smartsupp/Smartsupp';
 import AdsConversionTracker from '@/components/common/AdsConversionTracker/AdsConversionTracker';
+import { headers } from 'next/headers';
+import { getTranslations } from '@/i18n';
+import { locales, defaultLocale } from '@/i18n/config';
+import { getPathnameWithoutLocale } from '@/i18n/utils';
 
 export async function generateMetadata(): Promise<Metadata> {
+  const headersList = await headers();
+  const pathname = headersList.get('x-pathname') || '/';
+  const locale = headersList.get('x-locale') || defaultLocale;
+  const t = getTranslations(locale as any);
+  const pathWithoutLocale = getPathnameWithoutLocale(pathname);
+
+  const baseUrl = 'https://torgomyan.studio';
+
+  // Generate hreflang alternates
+  const alternates: Record<string, string> = {};
+  locales.forEach((loc) => {
+    const localePath =
+      loc === defaultLocale ? pathWithoutLocale : `/${loc}${pathWithoutLocale}`;
+    alternates[loc] = `${baseUrl}${localePath === '/' ? '' : localePath}`;
+  });
+
   return {
-    title: 'Разработка Сайтов под Ключ | Torgomyan.Studio - Веб-Студия',
-    description:
-      'Профессиональная разработка сайтов под ключ. Создание сайтов, интернет-магазинов, лендингов и веб-приложений. SEO-продвижение, дизайн UI/UX. Более 100 успешных проектов. Заказать сайт.',
-    keywords:
-      'разработка сайтов под ключ, создание сайтов Армения, веб-студия Ереван, разработка сайтов, создание интернет-магазина, лендинг пейдж, корпоративный сайт, SEO продвижение, веб-дизайн, разработка веб-приложений, заказать сайт, стоимость разработки сайта, профессиональная разработка сайтов',
+    title: t.meta.title,
+    description: t.meta.description,
+    keywords: t.meta.keywords,
     alternates: {
-      canonical: 'https://torgomyan.studio',
+      canonical: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
+      languages: alternates,
     },
     openGraph: {
-      title: 'Разработка Сайтов под Ключ | Torgomyan.Studio - Веб-Студия',
-      description:
-        'Профессиональная разработка сайтов под ключ. Создание сайтов, интернет-магазинов, лендингов и веб-приложений. SEO-продвижение, дизайн UI/UX. Более 100 успешных проектов.',
+      title: t.meta.title,
+      description: t.meta.description,
       type: 'website',
-      locale: 'ru_RU',
+      locale: locale === 'hy' ? 'hy_AM' : locale === 'ru' ? 'ru_RU' : 'en_US',
       siteName: 'Torgomyan.Studio',
+      url: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
     },
   };
 }
@@ -55,8 +74,11 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await getServerSession(authOptions);
+  const headersList = await headers();
+  const locale = headersList.get('x-locale') || defaultLocale;
+
   return (
-    <html lang="ru" suppressHydrationWarning={true} className="light">
+    <html lang={locale} suppressHydrationWarning={true} className="light">
       <body className="text-foreground bg-background">
         <div className="overflow-hidden">
           <SesProviders session={session}>

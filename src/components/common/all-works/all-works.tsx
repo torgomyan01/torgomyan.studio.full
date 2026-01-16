@@ -6,11 +6,14 @@ import Image from 'next/image';
 import { useState } from 'react';
 import ImageGalleryModal from '@/components/ui/image-gallery-modal';
 import Link from 'next/link';
+import { useLocale } from '@/i18n/use-locale';
+import { getTranslation } from '@/i18n';
 
 function AllWorks() {
   const [selectedWork, setSelectedWork] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const locale = useLocale();
 
   const handleImageClick = (index: number) => {
     setSelectedImageIndex(index);
@@ -60,9 +63,14 @@ function AllWorks() {
                     <h3 className="work-name">{work.name}</h3>
                   </Link>
                   <p className="work-tech">{work.created}</p>
-                  {work.description && (
-                    <p className="work-description">{work.description}</p>
-                  )}
+                  {(() => {
+                    const descriptionKey = `ourWorks.descriptions.${work.slug}`;
+                    const translatedDescription = getTranslation(locale, descriptionKey);
+                    const workDescription = translatedDescription || work.description || '';
+                    return workDescription ? (
+                      <p className="work-description">{workDescription}</p>
+                    ) : null;
+                  })()}
                   <span className="work-toggle">
                     {selectedWork === index
                       ? 'Скрыть ссылки'

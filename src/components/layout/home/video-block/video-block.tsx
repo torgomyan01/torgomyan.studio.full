@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import './_video.scss';
+import { useLocale } from '@/i18n/use-locale';
+import { getTranslation } from '@/i18n';
 
 interface VideoBlockProps {
   videoId?: string; // YouTube video ID (kept for backward compatibility, not used)
@@ -11,6 +13,7 @@ function VideoBlock({ videoId = 'dQw4w9WgXcQ' }: VideoBlockProps) {
   const videoRef = useRef<HTMLDivElement>(null);
   const videoElementRef = useRef<HTMLVideoElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const locale = useLocale();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -71,9 +74,9 @@ function VideoBlock({ videoId = 'dQw4w9WgXcQ' }: VideoBlockProps) {
   return (
     <div className="video-block" ref={videoRef}>
       <div className="container">
-        <h2 className="main-title">Что ждать от нас </h2>
+        <h2 className="main-title">{getTranslation(locale, 'video.title')}</h2>
         <p className="main-subtitle">
-          Результат, который вы увидите после того, как мы создадим сайт
+          {getTranslation(locale, 'video.subtitle')}
         </p>
         <div className="video">
           {isVisible ? (
@@ -97,7 +100,9 @@ function VideoBlock({ videoId = 'dQw4w9WgXcQ' }: VideoBlockProps) {
           ) : (
             <div className="w-full h-[300px] md:h-[700px] bg-[linear-gradient(108deg,#C444FF_0%,#752999_100%)] flex-jc-c flex-col rounded-4xl">
               <i className="fa-solid fa-play text-[80px] text-white"></i>
-              <h3 className="text-white text-[30px] mt-4">Немного о нас</h3>
+              <h3 className="text-white text-[30px] mt-4">
+                {getTranslation(locale, 'video.aboutUs')}
+              </h3>
             </div>
           )}
         </div>

@@ -3,9 +3,13 @@
 import './_reviews.scss';
 import { testimonials, Works } from '@/utils/consts';
 import Link from 'next/link';
+import { useLocale } from '@/i18n/use-locale';
+import { getTranslation } from '@/i18n';
+import { addLocaleToPath } from '@/i18n/utils';
 
 function Reviews() {
   const displayedReviews = testimonials.slice(0, 6);
+  const locale = useLocale();
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }).map((_, index) => (
@@ -23,9 +27,11 @@ function Reviews() {
   return (
     <div className="reviews">
       <div className="container">
-        <h2 className="main-title">Отзывы клиентов</h2>
+        <h2 className="main-title">
+          {getTranslation(locale, 'reviews.title')}
+        </h2>
         <p className="main-subtitle">
-          Что говорят наши клиенты о работе с нами
+          {getTranslation(locale, 'reviews.subtitle')}
         </p>
         <div className="reviews-grid">
           {displayedReviews.map((review, index) => (
@@ -52,10 +58,15 @@ function Reviews() {
                   const projectSlug = getProjectSlug(review.project);
                   return (
                     <div className="review-project">
-                      <span className="project-label">Проект:</span>
+                      <span className="project-label">
+                        {getTranslation(locale, 'common.project')}:
+                      </span>
                       {projectSlug ? (
                         <Link
-                          href={`/our-works/${projectSlug}`}
+                          href={addLocaleToPath(
+                            `/our-works/${projectSlug}`,
+                            locale
+                          )}
                           className="project-name"
                         >
                           {review.project}

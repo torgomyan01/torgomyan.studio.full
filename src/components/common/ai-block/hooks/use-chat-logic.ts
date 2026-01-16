@@ -9,32 +9,48 @@ import {
   saveAnswerToChatData,
   saveChatInquiry,
 } from '../utils/chat-data-handler';
+import { useLocale } from '@/i18n/use-locale';
+import { getTranslation } from '@/i18n';
 
-const INITIAL_MESSAGE: Message = {
-  id: '1',
-  text: 'Здравствуйте! Я помогу вам выбрать наиболее подходящий сайт для вашего бизнеса. Начнем с вопросов: Какой тип сайта вы хотите создать?',
-  sender: 'bot',
-  timestamp: new Date(),
-};
+// These will be initialized in the hook based on locale
+let INITIAL_MESSAGE: Message;
+let BUDGET_OPTIONS: string[];
+let TIMELINE_OPTIONS: string[];
 
-const BUDGET_OPTIONS = [
-  '5,000 - 50,000 ₽',
-  '50,000 - 200,000 ₽',
-  '200,000 - 500,000 ₽',
-  '500,000+ ₽',
-  'Еще не определился',
-];
+function initializeMessages(locale: string) {
+  const localeTyped = locale as 'hy' | 'ru' | 'en';
 
-const TIMELINE_OPTIONS = [
-  '1-2 недели',
-  '1 месяц',
-  '2-3 месяца',
-  '3+ месяца',
-  'Еще не определился',
-];
+  INITIAL_MESSAGE = {
+    id: '1',
+    text: getTranslation(localeTyped, 'aiBlock.initialMessage'),
+    sender: 'bot',
+    timestamp: new Date(),
+  };
+
+  BUDGET_OPTIONS = [
+    getTranslation(localeTyped, 'aiBlock.budgetOptions.5000_50000'),
+    getTranslation(localeTyped, 'aiBlock.budgetOptions.50000_200000'),
+    getTranslation(localeTyped, 'aiBlock.budgetOptions.200000_500000'),
+    getTranslation(localeTyped, 'aiBlock.budgetOptions.500000_plus'),
+    getTranslation(localeTyped, 'aiBlock.budgetOptions.notDecided'),
+  ];
+
+  TIMELINE_OPTIONS = [
+    getTranslation(localeTyped, 'aiBlock.timelineOptions.1_2weeks'),
+    getTranslation(localeTyped, 'aiBlock.timelineOptions.1month'),
+    getTranslation(localeTyped, 'aiBlock.timelineOptions.2_3months'),
+    getTranslation(localeTyped, 'aiBlock.timelineOptions.3plus_months'),
+    getTranslation(localeTyped, 'aiBlock.timelineOptions.notDecided'),
+  ];
+}
 
 export function useChatLogic() {
-  const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE]);
+  const locale = useLocale();
+
+  // Initialize messages based on locale
+  initializeMessages(locale);
+
+  const [messages, setMessages] = useState<Message[]>(() => [INITIAL_MESSAGE]);
   const [currentStep, setCurrentStep] = useState<ChatStep>('service');
   const [questionStep, setQuestionStep] = useState<number>(0);
   const [chatData, setChatData] = useState<ChatData>({});
@@ -50,6 +66,14 @@ export function useChatLogic() {
     generateAdaptiveResponse,
     generateUpsellProposal,
   } = useAISalesEngine();
+
+  // Update initial message when locale changes (only if chat hasn't started)
+  useEffect(() => {
+    if (messages.length === 1 && messages[0].id === '1') {
+      initializeMessages(locale);
+      setMessages([INITIAL_MESSAGE]);
+    }
+  }, [locale]);
 
   const scrollToBottom = () => {
     if (messagesContainerRef.current && messagesEndRef.current) {
@@ -115,10 +139,7 @@ export function useChatLogic() {
           const updatedData = { ...chatData, timeline: currentInput };
           setChatData(updatedData);
           simulateTyping(() => {
-            addMessage(
-              'Отлично! Теперь давайте обсудим бюджет. Какой бюджет вы планируете для вашего проекта?',
-              'bot'
-            );
+            addMessage(getTranslation(locale, 'aiBlock.budgetQuestion'), 'bot');
           });
         } else if (!chatData.budget) {
           const updatedData = { ...chatData, budget: currentInput };
@@ -186,7 +207,7 @@ export function useChatLogic() {
             } else {
               // All service questions answered, ask timeline
               addMessage(
-                'Хорошо! В какие сроки вы хотите завершить проект?',
+                getTranslation(locale, 'aiBlock.timelineQuestion'),
                 'bot'
               );
             }
@@ -197,21 +218,18 @@ export function useChatLogic() {
       if (!chatData.name) {
         setChatData({ ...chatData, name: currentInput });
         simulateTyping(() => {
-          addMessage('Отлично! Какой у вас адрес электронной почты?', 'bot');
+          addMessage(getTranslation(locale, 'aiBlock.contactEmail'), 'bot');
         });
       } else if (!chatData.email) {
         setChatData({ ...chatData, email: currentInput });
         simulateTyping(() => {
-          addMessage('Хорошо! Какой у вас номер телефона?', 'bot');
+          addMessage(getTranslation(locale, 'aiBlock.contactPhone'), 'bot');
         });
       } else if (!chatData.phone) {
         const finalData = { ...chatData, phone: currentInput };
         setChatData(finalData);
         simulateTyping(() => {
-          addMessage(
-            'Спасибо за всю информацию! Мы скоро свяжемся с вами. Ваши данные сохранены.',
-            'bot'
-          );
+          addMessage(getTranslation(locale, 'aiBlock.thankYou'), 'bot');
           saveChatInquiry(finalData);
         });
       }
@@ -225,15 +243,9 @@ export function useChatLogic() {
 
     simulateTyping(() => {
       if (!chatData.budget) {
-        addMessage(
-          'Отлично! Теперь давайте обсудим бюджет. Какой бюджет вы планируете для вашего проекта?',
-          'bot'
-        );
+        addMessage(getTranslation(locale, 'aiBlock.budgetQuestion'), 'bot');
       } else {
-        addMessage(
-          'Спасибо за всю информацию! Теперь нам нужны ваши контактные данные: Как вас зовут?',
-          'bot'
-        );
+        addMessage(getTranslation(locale, 'aiBlock.contactName'), 'bot');
         setCurrentStep('contact');
       }
     });
@@ -245,10 +257,7 @@ export function useChatLogic() {
     addMessage(budget, 'user');
 
     simulateTyping(() => {
-      addMessage(
-        'Спасибо за всю информацию! Теперь нам нужны ваши контактные данные: Как вас зовут?',
-        'bot'
-      );
+      addMessage(getTranslation(locale, 'aiBlock.contactName'), 'bot');
       setCurrentStep('contact');
     });
   };

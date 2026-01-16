@@ -10,11 +10,14 @@ import {
 } from '@/components/ui';
 import { saveChatInquiryAction } from '@/app/actions/chat-inquiry';
 import './_promotion-block.scss';
+import { useLocale } from '@/i18n/use-locale';
+import { getTranslation } from '@/i18n';
 
 const PROMOTION_DURATION = 10 * 60 * 1000; // 10 minutes in milliseconds
 const STORAGE_KEY = 'promotion_timer_start';
 
 export default function PromotionBlock() {
+  const locale = useLocale();
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
   const [isActive, setIsActive] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -95,7 +98,7 @@ export default function PromotionBlock() {
     ) {
       setSubmitMessage({
         type: 'error',
-        text: 'Пожалуйста, заполните все поля',
+        text: getTranslation(locale, 'promotion.fillAllFields'),
       });
       return;
     }
@@ -105,7 +108,7 @@ export default function PromotionBlock() {
     if (!emailRegex.test(formData.email.trim())) {
       setSubmitMessage({
         type: 'error',
-        text: 'Пожалуйста, введите корректный email',
+        text: getTranslation(locale, 'promotion.enterValidEmail'),
       });
       return;
     }
@@ -144,8 +147,8 @@ export default function PromotionBlock() {
         setSubmitMessage({
           type: 'success',
           text: discountEligible
-            ? 'Спасибо! Мы получили ваше сообщение. Вы получили скидку 25%! Мы скоро свяжемся с вами.'
-            : 'Спасибо! Мы получили ваше сообщение. Мы скоро свяжемся с вами.',
+            ? getTranslation(locale, 'promotion.thankYouDiscount')
+            : getTranslation(locale, 'promotion.thankYouNoDiscount'),
         });
         setIsActive(false);
         setTimeLeft(null);
@@ -155,13 +158,13 @@ export default function PromotionBlock() {
       } else {
         setSubmitMessage({
           type: 'error',
-          text: result.error || 'Произошла ошибка при сохранении данных',
+          text: result.error || getTranslation(locale, 'promotion.errorSaving'),
         });
       }
     } catch (error) {
       setSubmitMessage({
         type: 'error',
-        text: 'Произошла ошибка при сохранении данных',
+        text: getTranslation(locale, 'promotion.errorSaving'),
       });
     } finally {
       setIsSubmitting(false);
@@ -180,19 +183,25 @@ export default function PromotionBlock() {
       <div className="promotion-block">
         <div className="promotion-content">
           <div className="promotion-left">
-            <div className="promotion-badge">Акция</div>
-            <h3 className="promotion-title">25% скидка</h3>
+            <div className="promotion-badge">
+              {getTranslation(locale, 'promotion.badge')}
+            </div>
+            <h3 className="promotion-title">
+              {getTranslation(locale, 'promotion.discount')}
+            </h3>
             <p className="promotion-description">
-              Зарегистрируйтесь в течение{' '}
+              {getTranslation(locale, 'promotion.registerWithin')}{' '}
               <strong>
                 {minutes}:{seconds.toString().padStart(2, '0')}
               </strong>{' '}
-              и получите скидку 25%
+              {getTranslation(locale, 'promotion.andGet')}
             </p>
           </div>
           <div className="promotion-center">
             <div className="promotion-timer">
-              <span className="timer-label">Осталось времени</span>
+              <span className="timer-label">
+                {getTranslation(locale, 'promotion.timeLeft')}
+              </span>
               <span className="timer-value">
                 {minutes}:{seconds.toString().padStart(2, '0')}
               </span>
@@ -204,7 +213,7 @@ export default function PromotionBlock() {
               onClick={handleOpenModal}
               className="promotion-button"
             >
-              Получить скидку
+              {getTranslation(locale, 'promotion.getDiscount')}
             </button>
           </div>
         </div>
@@ -213,34 +222,34 @@ export default function PromotionBlock() {
       <CustomModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        title="Получить скидку 25%"
+        title={getTranslation(locale, 'promotion.getDiscountTitle')}
       >
         <CustomModalBody>
           <div className="promotion-form">
             <CustomInput
-              label="Имя"
+              label={getTranslation(locale, 'common.name')}
               value={formData.name}
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
               }
-              placeholder="Введите ваше имя"
+              placeholder={getTranslation(locale, 'common.enterName')}
               required
             />
             <CustomInput
-              label="Email"
+              label={getTranslation(locale, 'common.email')}
               type="email"
               value={formData.email}
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
               }
-              placeholder="Введите ваш email"
+              placeholder={getTranslation(locale, 'common.enterEmail')}
               required
             />
             <CustomPhoneInput
-              label="Телефон"
+              label={getTranslation(locale, 'common.phone')}
               value={formData.phone}
               onChange={(value) => setFormData({ ...formData, phone: value })}
-              placeholder="Введите ваш телефон"
+              placeholder={getTranslation(locale, 'common.enterPhone')}
               required
             />
             {submitMessage && (
@@ -261,7 +270,7 @@ export default function PromotionBlock() {
             className="modal-cancel-btn"
             disabled={isSubmitting}
           >
-            Отмена
+            {getTranslation(locale, 'common.cancel')}
           </button>
           <button
             type="button"
@@ -269,7 +278,9 @@ export default function PromotionBlock() {
             className="modal-submit-btn"
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'Отправка...' : 'Отправить'}
+            {isSubmitting
+              ? getTranslation(locale, 'common.submitting')
+              : getTranslation(locale, 'common.submit')}
           </button>
         </CustomModalFooter>
       </CustomModal>

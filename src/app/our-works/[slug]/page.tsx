@@ -6,6 +6,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { SITE_URL } from '@/utils/consts';
 import './_project-detail.scss';
+import { getLocaleFromHeaders } from '@/i18n/server-utils';
+import { getTranslation } from '@/i18n';
+import { locales, defaultLocale } from '@/i18n/config';
 
 interface ProjectDetailPageProps {
   params: Promise<{
@@ -31,18 +34,30 @@ export async function generateMetadata({
     };
   }
 
-  const title = `${project.name} - Разработанный проект | Torgomyan.Studio`;
+  const locale = await getLocaleFromHeaders();
+  const descriptionKey = `ourWorks.descriptions.${slug}`;
+  const translatedDescription = getTranslation(locale, descriptionKey);
+  const fallbackDescription = `Проект ${project.name}, разработанный командой Torgomyan.Studio. ${project.created}. Посмотрите пример нашей работы и результаты.`;
   const description =
-    project.description ||
-    `Проект ${project.name}, разработанный командой Torgomyan.Studio. ${project.created}. Посмотрите пример нашей работы и результаты.`;
+    translatedDescription || project.description || fallbackDescription;
+
+  const title = `${project.name} - Разработанный проект | Torgomyan.Studio`;
+
+  const alternates: Metadata['alternates'] = {
+    canonical: `https://torgomyan.studio/${locale === defaultLocale ? '' : `${locale}/`}our-works/${slug}`,
+    languages: {},
+  };
+
+  for (const loc of locales) {
+    alternates.languages![loc] =
+      `https://torgomyan.studio/${loc === defaultLocale ? '' : `${loc}/`}our-works/${slug}`;
+  }
 
   return {
     title,
     description,
     keywords: `${project.name}, веб-разработка, сайт, ${project.created}, портфолио, Torgomyan.Studio, пример сайта, разработанный сайт, кейс веб-разработки`,
-    alternates: {
-      canonical: `https://torgomyan.studio/our-works/${slug}`,
-    },
+    alternates,
     openGraph: {
       title,
       description,
@@ -75,11 +90,16 @@ export default async function ProjectDetailPage({
     notFound();
   }
 
+  const locale = await getLocaleFromHeaders();
+  const descriptionKey = `ourWorks.descriptions.${slug}`;
+  const translatedDescription = getTranslation(locale, descriptionKey);
+  const projectDescription = translatedDescription || project.description || '';
+
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'CreativeWork',
     name: project.name,
-    description: project.description,
+    description: projectDescription,
     creator: {
       '@type': 'Organization',
       name: 'Torgomyan.Studio',
@@ -112,8 +132,8 @@ export default async function ProjectDetailPage({
             </div>
             <div className="project-info">
               <h1 className="project-title">{project.name}</h1>
-              {project.description && (
-                <p className="project-description">{project.description}</p>
+              {projectDescription && (
+                <p className="project-description">{projectDescription}</p>
               )}
               <div className="project-tech">
                 <h3>Технологии:</h3>

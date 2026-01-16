@@ -3,22 +3,29 @@
 import Link from 'next/link';
 import { SITE_URL } from '@/utils/consts';
 import './_contact-us.scss';
+import { useLocale } from '@/i18n/use-locale';
+import { getTranslation } from '@/i18n';
+import { addLocaleToPath } from '@/i18n/utils';
 
 function ContactUs() {
+  const locale = useLocale();
+
   return (
     <div className="contact-us" id="contact">
       <div className="container">
-        <h2 className="main-title">Связаться с нами </h2>
+        <h2 className="main-title">
+          {getTranslation(locale, 'contact.title')}
+        </h2>
         <p className="main-subtitle">
-          Обсудим ваш проект? Я — разработчик сайтов
+          {getTranslation(locale, 'contact.subtitle')}
         </p>
         <div className="buttons">
-          <Link href="/schedule-call">
-            Запланировать звонок
+          <Link href={addLocaleToPath('/schedule-call', locale)}>
+            {getTranslation(locale, 'contact.scheduleCall')}
             <img src="/images/link-arrow.svg" alt="" />
           </Link>
           <a href="tel:+37477769668">
-            Звонить
+            {getTranslation(locale, 'contact.call')}
             <img src="/images/link-arrow.svg" alt="" />
           </a>
         </div>
@@ -27,7 +34,7 @@ function ContactUs() {
           <div className="info">
             <p>
               <img src="/images/contact-icon1.svg" alt="" />
-              Армения, Мартуни, Мясникян 62
+              {getTranslation(locale, 'contact.address')}
             </p>
             <a href="tel:+37477769668" className="text">
               <img src="/images/contact-icon2.svg" alt="" />
@@ -51,9 +58,12 @@ function ContactUs() {
               <img src="/images/contact-icon4.svg" alt="" />
               @torgomyan01
             </a>
-            <Link href={SITE_URL.CALCULATOR} className="btn cursor-pointer">
+            <Link
+              href={addLocaleToPath(SITE_URL.CALCULATOR, locale)}
+              className="btn cursor-pointer"
+            >
               <i className="fa-solid fa-calculator mr-2"></i>
-              <span>Калькулятор</span>
+              <span>{getTranslation(locale, 'common.calculator')}</span>
             </Link>
           </div>
           <div id="map">

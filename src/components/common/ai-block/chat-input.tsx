@@ -1,6 +1,8 @@
 'use client';
 
 import { useRef, useEffect } from 'react';
+import { useLocale } from '@/i18n/use-locale';
+import { getTranslation } from '@/i18n';
 
 interface ChatInputProps {
   value: string;
@@ -15,10 +17,13 @@ export default function ChatInput({
   value,
   onChange,
   onSend,
-  placeholder = 'Введите ваш ответ...',
+  placeholder,
   disabled = false,
   autoFocus = false,
 }: ChatInputProps) {
+  const locale = useLocale();
+  const defaultPlaceholder =
+    placeholder || getTranslation(locale, 'aiBlock.inputPlaceholder');
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -41,7 +46,7 @@ export default function ChatInput({
         ref={inputRef}
         type="text"
         className="chat-input"
-        placeholder={placeholder}
+        placeholder={defaultPlaceholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onKeyPress={handleKeyPress}

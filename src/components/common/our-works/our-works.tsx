@@ -6,11 +6,15 @@ import { SITE_URL, Works } from '@/utils/consts';
 import Image from 'next/image';
 import Link from 'next/link';
 import ImageGalleryModal from '@/components/ui/image-gallery-modal';
+import { useLocale } from '@/i18n/use-locale';
+import { getTranslation } from '@/i18n';
+import { addLocaleToPath } from '@/i18n/utils';
 
 function OurWorks() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const displayedWorks = Works.slice(0, 6);
+  const locale = useLocale();
 
   const handleImageClick = (index: number) => {
     setSelectedImageIndex(index);
@@ -34,15 +38,17 @@ function OurWorks() {
   return (
     <div className="our-works">
       <div className="container">
-        <h2 className="main-title">Наши работы</h2>
+        <h2 className="main-title">
+          {getTranslation(locale, 'ourWorks.title')}
+        </h2>
         <p className="main-subtitle">
-          Сайт под ключ, который решает ваши задачи
+          {getTranslation(locale, 'ourWorks.subtitle')}
         </p>
         <div className="our-works-items">
           {displayedWorks.map((work, index) => (
             <Link
               key={work.name}
-              href={`/our-works/${work.slug}`}
+              href={addLocaleToPath(`/our-works/${work.slug}`, locale)}
               className="our-works-item"
             >
               <span
@@ -55,7 +61,7 @@ function OurWorks() {
               >
                 <Image
                   src={`/${work.imgUrl}`}
-                  alt={work.name}
+                  alt={`${getTranslation(locale, 'ourWorks.workExample')} - ${work.name}`}
                   width={200}
                   height={200}
                 />
@@ -66,8 +72,11 @@ function OurWorks() {
             </Link>
           ))}
         </div>
-        <Link href={SITE_URL.OUR_WORKS} className="show-all">
-          <span>Смотреть все</span>
+        <Link
+          href={addLocaleToPath(SITE_URL.OUR_WORKS, locale)}
+          className="show-all"
+        >
+          <span>{getTranslation(locale, 'ourWorks.viewAll')}</span>
           <img src="/images/link-arrow.svg" alt="" />
         </Link>
       </div>

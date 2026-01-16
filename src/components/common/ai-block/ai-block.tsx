@@ -7,8 +7,11 @@ import { useChatLogic } from './hooks/use-chat-logic';
 import SmileyButton from './smiley-button';
 import SpeechBubble from './speech-bubble';
 import ChatContent from './chat-content';
+import { useLocale } from '@/i18n/use-locale';
+import { getTranslation } from '@/i18n';
 
 function AiBlock() {
+  const locale = useLocale();
   const blockRef = useRef<HTMLDivElement>(null);
   const scrollBlockRef = useRef<HTMLDivElement>(null);
   const {
@@ -118,7 +121,7 @@ function AiBlock() {
               className="hover-open-btn"
               onClick={() => setShowChat(true)}
             >
-              Давайте обсудим
+              {getTranslation(locale, 'aiBlock.letsDiscuss')}
             </button>
           </div>
         )}
