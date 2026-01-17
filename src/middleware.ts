@@ -152,5 +152,5 @@ export const config = {
      */
     '/((?!api|_next/static|_next/image|favicon.ico).*)',
   ],
-  runtime: 'edge', // Use Edge Runtime for geolocation support
+  runtime: 'experimental-edge', // Use Edge Runtime for geolocation support
 };
