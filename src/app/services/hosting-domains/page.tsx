@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { headers } from 'next/headers';
 import MainTemplate from '@/components/common/main-template/main-template';
 import ServicesBlock from '@/components/common/services-block/services-block';
 import ServicesHeaderWithContent from '@/components/common/services-header/services-header-with-content';
@@ -6,114 +7,132 @@ import OurWorks from '@/components/common/our-works/our-works';
 import ContactUs from '@/components/common/contact-us/contact-us';
 import DiscussBlock from '@/components/layout/services/discuss-block/discuss-block';
 import SEOMarketingBlocks from '@/components/common/seo-marketing-blocks/seo-marketing-blocks';
+import { getLocaleFromHeaders } from '@/i18n/server-utils';
+import { getTranslations } from '@/i18n';
+import { getPathnameWithoutLocale } from '@/i18n/utils';
+import { locales, defaultLocale } from '@/i18n/config';
 
-export const metadata: Metadata = {
-  title:
-    'Хостинг и Домены | Регистрация Доменов и Хостинг Сайтов | Torgomyan.Studio',
-  description:
-    'Хостинг сайтов и регистрация доменов. Надежный хостинг с высокой скоростью и доступностью 99.9%. Регистрация доменных имен. SSL сертификаты бесплатно. От 500₽/месяц. Заказать хостинг.',
-  keywords:
-    'хостинг сайтов, регистрация доменов, домен, хостинг цена, купить хостинг, регистрация домена, доменное имя, виртуальный хостинг, VPS хостинг, хостинг для сайта, хостинг и домены цена',
-  alternates: {
-    canonical: 'https://torgomyan.studio/services/hosting-domains',
-  },
-  openGraph: {
-    title: 'Хостинг и Домены | Регистрация Доменов и Хостинг Сайтов',
-    description:
-      'Надежный хостинг сайтов с высокой скоростью и доступностью 99.9%. Регистрация доменных имен. SSL сертификаты бесплатно.',
-    type: 'website',
-    locale: 'ru_RU',
-    siteName: 'Torgomyan.Studio',
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const headersList = await headers();
+  const pathname = headersList.get('x-pathname') || '/services/hosting-domains';
+  const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
+  const pathWithoutLocale = getPathnameWithoutLocale(pathname);
 
-export default function HostingDomainsPage() {
+  const baseUrl = 'https://torgomyan-studio.am';
+
+  // Generate hreflang alternates
+  const alternates: Record<string, string> = {};
+  locales.forEach((loc) => {
+    const localePath =
+      loc === defaultLocale ? pathWithoutLocale : `/${loc}${pathWithoutLocale}`;
+    alternates[loc] = `${baseUrl}${localePath === '/' ? '' : localePath}`;
+  });
+
+  return {
+    title: t.hostingDomains.pageTitle,
+    description: t.hostingDomains.pageDescription,
+    keywords: t.hostingDomains.pageKeywords,
+    alternates: {
+      canonical: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
+      languages: alternates,
+    },
+    openGraph: {
+      title: t.hostingDomains.openGraphTitle,
+      description: t.hostingDomains.openGraphDescription,
+      type: 'website',
+      locale: locale === 'hy' ? 'hy_AM' : locale === 'ru' ? 'ru_RU' : 'en_US',
+      siteName: 'Torgomyan.Studio',
+      url: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
+    },
+  };
+}
+
+export default async function HostingDomainsPage() {
+  const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
+
   return (
     <MainTemplate>
       <ServicesHeaderWithContent
-        title="Хостинг и Домены"
-        description="Надежный хостинг сайтов с высокой скоростью и доступностью. Регистрация доменных имен и полное сопровождение. Хостинг и домен — это основа любого сайта в интернете. Домен — это адрес вашего сайта, а хостинг — место, где хранятся файлы сайта и обеспечивается его доступность в интернете. Мы предлагаем надежные решения для хостинга сайтов с высокой скоростью загрузки, стабильностью работы и технической поддержкой."
+        title={t.hostingDomains.title}
+        description={t.hostingDomains.description}
       />
 
       <SEOMarketingBlocks
         stats={[
-          { number: '500₽', label: 'От цены/месяц' },
-          { number: '99.9%', label: 'Uptime' },
-          { number: '24/7', label: 'Поддержка' },
-          { number: 'SSL', label: 'Бесплатно' },
+          { number: '500₽', label: t.hostingDomains.stats.fromPricePerMonth },
+          { number: '99.9%', label: t.hostingDomains.stats.uptime },
+          { number: '24/7', label: t.hostingDomains.stats.support },
+          { number: 'SSL', label: t.hostingDomains.stats.free },
         ]}
         benefits={[
           {
-            title: 'Высокая скорость',
-            description: 'Оптимизированные серверы для быстрой загрузки сайтов',
+            title: t.hostingDomains.benefits.highSpeed.title,
+            description: t.hostingDomains.benefits.highSpeed.description,
             icon: 'fas fa-bolt',
           },
           {
-            title: 'Стабильность',
-            description: 'Гарантия доступности сайта 99.9% времени',
+            title: t.hostingDomains.benefits.stability.title,
+            description: t.hostingDomains.benefits.stability.description,
             icon: 'fas fa-shield-alt',
           },
           {
-            title: 'Безопасность',
-            description: 'Защита от DDoS-атак и других угроз',
+            title: t.hostingDomains.benefits.security.title,
+            description: t.hostingDomains.benefits.security.description,
             icon: 'fas fa-lock',
           },
           {
-            title: 'Техническая поддержка',
-            description:
-              'Квалифицированная помощь в решении технических вопросов',
+            title: t.hostingDomains.benefits.technicalSupport.title,
+            description: t.hostingDomains.benefits.technicalSupport.description,
             icon: 'fas fa-headset',
           },
           {
-            title: 'Резервное копирование',
-            description: 'Автоматическое создание резервных копий данных',
+            title: t.hostingDomains.benefits.backup.title,
+            description: t.hostingDomains.benefits.backup.description,
             icon: 'fas fa-database',
           },
           {
-            title: 'Масштабируемость',
-            description: 'Возможность увеличения ресурсов по мере роста сайта',
+            title: t.hostingDomains.benefits.scalability.title,
+            description: t.hostingDomains.benefits.scalability.description,
             icon: 'fas fa-expand-arrows-alt',
           },
         ]}
         features={[
-          'Регистрация доменных имен',
-          'Виртуальный хостинг',
-          'VPS серверы',
-          'SSL сертификаты',
-          'Резервное копирование',
-          'Защита от DDoS',
-          'Техническая поддержка 24/7',
-          'Панель управления',
-          'Перенос сайтов',
-          'Настройка почты',
+          t.hostingDomains.features.domainRegistration,
+          t.hostingDomains.features.virtualHosting,
+          t.hostingDomains.features.vpsServers,
+          t.hostingDomains.features.sslCertificates,
+          t.hostingDomains.features.backup,
+          t.hostingDomains.features.ddosProtection,
+          t.hostingDomains.features.support247,
+          t.hostingDomains.features.controlPanel,
+          t.hostingDomains.features.siteMigration,
+          t.hostingDomains.features.emailSetup,
         ]}
         faq={[
           {
-            question: 'Какие тарифы хостинга вы предлагаете?',
-            answer:
-              'Мы предлагаем различные тарифы: от виртуального хостинга для небольших сайтов до выделенных серверов для крупных проектов. Стоимость начинается от 500 рублей в месяц. Свяжитесь с нами для подбора оптимального решения.',
+            question: t.hostingDomains.faq.hostingPlans.question,
+            answer: t.hostingDomains.faq.hostingPlans.answer,
           },
           {
-            question: 'Помогаете ли вы с переносом сайта?',
-            answer:
-              'Да, мы бесплатно помогаем с переносом сайта на наш хостинг. Наши специалисты переносят все файлы и настраивают работу сайта на новом хостинге.',
+            question: t.hostingDomains.faq.siteMigration.question,
+            answer: t.hostingDomains.faq.siteMigration.answer,
           },
           {
-            question: 'Включен ли SSL сертификат?',
-            answer:
-              "Да, мы предоставляем бесплатный SSL сертификат Let's Encrypt для всех сайтов на нашем хостинге. Это обеспечивает безопасное соединение HTTPS.",
+            question: t.hostingDomains.faq.sslCertificate.question,
+            answer: t.hostingDomains.faq.sslCertificate.answer,
           },
           {
-            question: 'Какая гарантия доступности?',
-            answer:
-              'Мы гарантируем доступность сайта 99.9% времени. В случае превышения этого показателя предоставляем компенсацию согласно SLA.',
+            question: t.hostingDomains.faq.uptimeGuarantee.question,
+            answer: t.hostingDomains.faq.uptimeGuarantee.answer,
           },
         ]}
       />
 
       <DiscussBlock />
 
-      <ServicesBlock but="Хостинг и домены" />
+      <ServicesBlock but={t.hostingDomains.serviceButton} />
 
       <OurWorks />
 

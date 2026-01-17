@@ -39,3 +39,46 @@ export function addLocaleToPath(pathname: string, locale: Locale): string {
 export function removeLocaleFromPath(pathname: string): string {
   return getPathnameWithoutLocale(pathname);
 }
+
+/**
+ * Get currency symbol for a locale
+ * @param locale - The locale
+ * @returns Currency symbol (₽ for ru, $ for en, ֏ for hy)
+ */
+export function getCurrencySymbol(locale: Locale): string {
+  switch (locale) {
+    case 'ru':
+      return '₽';
+    case 'en':
+      return '$';
+    case 'hy':
+      return '֏';
+    default:
+      return '₽';
+  }
+}
+
+/**
+ * Format price with currency symbol based on locale
+ * @param amount - The amount in base currency (rubles)
+ * @param locale - The locale
+ * @returns Formatted price string with currency symbol
+ */
+export function formatPrice(amount: number, locale: Locale): string {
+  // Convert rubles to other currencies (approximate rates)
+  let convertedAmount = amount;
+  
+  if (locale === 'en') {
+    // 1 USD ≈ 100 RUB (approximate)
+    convertedAmount = Math.round(amount / 100);
+  } else if (locale === 'hy') {
+    // 1 AMD ≈ 0.25 RUB or 400 AMD ≈ 100 RUB (approximate)
+    convertedAmount = Math.round(amount * 4);
+  }
+  
+  const formatted = convertedAmount.toLocaleString(
+    locale === 'ru' ? 'ru-RU' : locale === 'hy' ? 'hy-AM' : 'en-US'
+  );
+  
+  return `${formatted}${getCurrencySymbol(locale)}`;
+}

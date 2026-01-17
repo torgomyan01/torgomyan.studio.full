@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { headers } from 'next/headers';
 import MainTemplate from '@/components/common/main-template/main-template';
 import ServicesBlock from '@/components/common/services-block/services-block';
 import ServicesHeaderWithContent from '@/components/common/services-header/services-header-with-content';
@@ -6,118 +7,140 @@ import OurWorks from '@/components/common/our-works/our-works';
 import ContactUs from '@/components/common/contact-us/contact-us';
 import DiscussBlock from '@/components/layout/services/discuss-block/discuss-block';
 import SEOMarketingBlocks from '@/components/common/seo-marketing-blocks/seo-marketing-blocks';
+import { getLocaleFromHeaders } from '@/i18n/server-utils';
+import { getTranslations, getTranslation } from '@/i18n';
+import { getPathnameWithoutLocale } from '@/i18n/utils';
+import { locales, defaultLocale } from '@/i18n/config';
 
-export const metadata: Metadata = {
-  title:
-    'Разработка Сайтов под Ключ в Армении | Создание Сайтов | Torgomyan.Studio',
-  description:
-    'Профессиональная разработка сайтов под ключ в Армении. Современные технологии (React, Next.js), адаптивный дизайн, SEO-оптимизация. Создаем сайты, которые приносят клиентов. Более 100 успешных проектов. Рассчитать стоимость.',
-  keywords:
-    'разработка сайтов под ключ, создание сайтов Армения, разработка сайтов Ереван, веб-разработка под ключ, создание сайта цена, заказать разработку сайта, профессиональная разработка сайтов, современные сайты, адаптивный сайт, разработка сайтов React, Next.js разработка, стоимость разработки сайта, разработка сайтов для бизнеса, создание корпоративного сайта',
-  alternates: {
-    canonical: 'https://torgomyan.studio/services/website-development',
-  },
-  openGraph: {
-    title: 'Разработка Сайтов под Ключ в Армении | Создание Сайтов',
-    description:
-      'Профессиональная разработка сайтов под ключ в Армении. Современные технологии (React, Next.js), адаптивный дизайн, SEO-оптимизация. Более 100 успешных проектов.',
-    type: 'website',
-    locale: 'ru_RU',
-    siteName: 'Torgomyan.Studio',
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const headersList = await headers();
+  const pathname =
+    headersList.get('x-pathname') || '/services/website-development';
+  const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
+  const pathWithoutLocale = getPathnameWithoutLocale(pathname);
 
-export default function WebsiteDevelopmentPage() {
+  const baseUrl = 'https://torgomyan-studio.am';
+
+  // Generate hreflang alternates
+  const alternates: Record<string, string> = {};
+  locales.forEach((loc) => {
+    const localePath =
+      loc === defaultLocale ? pathWithoutLocale : `/${loc}${pathWithoutLocale}`;
+    alternates[loc] = `${baseUrl}${localePath === '/' ? '' : localePath}`;
+  });
+
+  return {
+    title: t.websiteDevelopment.pageTitle,
+    description: t.websiteDevelopment.pageDescription,
+    keywords: t.websiteDevelopment.pageKeywords,
+    alternates: {
+      canonical: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
+      languages: alternates,
+    },
+    openGraph: {
+      title: t.websiteDevelopment.openGraphTitle,
+      description: t.websiteDevelopment.openGraphDescription,
+      type: 'website',
+      locale: locale === 'hy' ? 'hy_AM' : locale === 'ru' ? 'ru_RU' : 'en_US',
+      siteName: 'Torgomyan.Studio',
+      url: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
+    },
+  };
+}
+
+export default async function WebsiteDevelopmentPage() {
+  const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
+
   return (
     <MainTemplate>
       <ServicesHeaderWithContent
-        title="Разработка Сайтов под Ключ"
-        description="Профессиональная разработка сайтов с использованием современных технологий. Индивидуальный подход к каждому проекту для достижения максимального результата. В современном мире наличие качественного сайта — это не просто необходимость, а ключевой фактор успеха вашего бизнеса. Мы предлагаем полный цикл разработки сайтов под ключ, от концепции до запуска и поддержки. Наша команда специализируется на создании современных, функциональных и эффективных веб-сайтов, которые не только привлекают внимание, но и конвертируют посетителей в клиентов."
+        title={t.websiteDevelopment.title}
+        description={t.websiteDevelopment.description}
       />
 
       <SEOMarketingBlocks
         stats={[
-          { number: '100+', label: 'Успешных проектов' },
-          { number: '50+', label: 'Довольных клиентов' },
-          { number: '5+', label: 'Лет опыта' },
-          { number: '30%', label: 'Рост бизнеса' },
+          {
+            number: '100+',
+            label: t.websiteDevelopment.stats.successfulProjects,
+          },
+          { number: '50+', label: t.websiteDevelopment.stats.satisfiedClients },
+          { number: '5+', label: t.websiteDevelopment.stats.yearsExperience },
+          { number: '30%', label: t.websiteDevelopment.stats.businessGrowth },
         ]}
         benefits={[
           {
-            title: 'Индивидуальный подход',
+            title: t.websiteDevelopment.benefits.individualApproach.title,
             description:
-              'Каждый проект разрабатывается с учетом особенностей вашего бизнеса и целевой аудитории',
+              t.websiteDevelopment.benefits.individualApproach.description,
             icon: 'fas fa-user-tie',
           },
           {
-            title: 'Современные технологии',
+            title: t.websiteDevelopment.benefits.modernTechnologies.title,
             description:
-              'Используем актуальные фреймворки и инструменты для создания быстрых и надежных решений',
+              t.websiteDevelopment.benefits.modernTechnologies.description,
             icon: 'fas fa-laptop-code',
           },
           {
-            title: 'SEO-оптимизация',
+            title: t.websiteDevelopment.benefits.seoOptimization.title,
             description:
-              'Все проекты создаются с учетом требований поисковых систем для лучшей видимости',
+              t.websiteDevelopment.benefits.seoOptimization.description,
             icon: 'fas fa-chart-line',
           },
           {
-            title: 'Адаптивный дизайн',
+            title: t.websiteDevelopment.benefits.responsiveDesign.title,
             description:
-              'Ваш сайт будет отлично выглядеть и работать на всех устройствах — от смартфонов до десктопов',
+              t.websiteDevelopment.benefits.responsiveDesign.description,
             icon: 'fas fa-mobile-alt',
           },
           {
-            title: 'Быстрая загрузка',
-            description:
-              'Оптимизация производительности для обеспечения быстрой загрузки страниц',
+            title: t.websiteDevelopment.benefits.fastLoading.title,
+            description: t.websiteDevelopment.benefits.fastLoading.description,
             icon: 'fas fa-bolt',
           },
           {
-            title: 'Техническая поддержка',
+            title: t.websiteDevelopment.benefits.technicalSupport.title,
             description:
-              'Обеспечиваем постоянную поддержку и сопровождение вашего проекта',
+              t.websiteDevelopment.benefits.technicalSupport.description,
             icon: 'fas fa-headset',
           },
         ]}
         features={[
-          'Анализ бизнеса и целевой аудитории',
-          'Разработка уникального дизайна',
-          'Адаптивная верстка для всех устройств',
-          'Интеграция систем управления контентом',
-          'SEO-оптимизация на этапе разработки',
-          'Настройка аналитики и отслеживания',
-          'Тестирование и оптимизация',
-          'Обучение работе с сайтом',
-          'Техническая поддержка после запуска',
+          t.websiteDevelopment.features.businessAnalysis,
+          t.websiteDevelopment.features.uniqueDesign,
+          t.websiteDevelopment.features.responsiveLayout,
+          t.websiteDevelopment.features.cmsIntegration,
+          t.websiteDevelopment.features.seoOptimization,
+          t.websiteDevelopment.features.analyticsSetup,
+          t.websiteDevelopment.features.testingOptimization,
+          t.websiteDevelopment.features.training,
+          t.websiteDevelopment.features.postLaunchSupport,
         ]}
         faq={[
           {
-            question: 'Сколько времени занимает разработка сайта?',
-            answer:
-              'Срок разработки зависит от сложности проекта. Простой сайт-визитка может быть готов за 1-2 недели, корпоративный сайт — за 3-6 недель, а сложный интернет-магазин — за 2-3 месяца. Мы всегда согласовываем сроки на этапе планирования.',
+            question: t.websiteDevelopment.faq.developmentTime.question,
+            answer: t.websiteDevelopment.faq.developmentTime.answer,
           },
           {
-            question: 'Какая стоимость разработки сайта?',
-            answer:
-              'Стоимость зависит от типа сайта, его функциональности и сложности. Мы предлагаем прозрачное ценообразование и всегда обсуждаем бюджет на этапе консультации. Свяжитесь с нами для получения индивидуального расчета.',
+            question: t.websiteDevelopment.faq.cost.question,
+            answer: t.websiteDevelopment.faq.cost.answer,
           },
           {
-            question: 'Включает ли разработка SEO-оптимизацию?',
-            answer:
-              'Да, мы включаем базовую SEO-оптимизацию во все проекты. Это включает правильную структуру сайта, оптимизацию мета-тегов, создание карты сайта и другие важные элементы для поисковой оптимизации.',
+            question: t.websiteDevelopment.faq.seoIncluded.question,
+            answer: t.websiteDevelopment.faq.seoIncluded.answer,
           },
           {
-            question: 'Можно ли будет редактировать контент самостоятельно?',
-            answer:
-              'Да, мы устанавливаем удобную систему управления контентом (CMS), которая позволяет вам самостоятельно обновлять тексты, добавлять изображения и управлять контентом без технических знаний.',
+            question: t.websiteDevelopment.faq.contentEditing.question,
+            answer: t.websiteDevelopment.faq.contentEditing.answer,
           },
         ]}
       />
 
       <DiscussBlock />
 
-      <ServicesBlock but="Разработка Сайтов" />
+      <ServicesBlock but={t.websiteDevelopment.serviceButton} />
 
       <OurWorks />
 

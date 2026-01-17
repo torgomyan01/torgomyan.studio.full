@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { headers } from 'next/headers';
 import MainTemplate from '@/components/common/main-template/main-template';
 import ServicesBlock from '@/components/common/services-block/services-block';
 import ServicesHeaderWithContent from '@/components/common/services-header/services-header-with-content';
@@ -6,118 +7,133 @@ import OurWorks from '@/components/common/our-works/our-works';
 import ContactUs from '@/components/common/contact-us/contact-us';
 import DiscussBlock from '@/components/layout/services/discuss-block/discuss-block';
 import SEOMarketingBlocks from '@/components/common/seo-marketing-blocks/seo-marketing-blocks';
+import { getLocaleFromHeaders } from '@/i18n/server-utils';
+import { getTranslations } from '@/i18n';
+import { getPathnameWithoutLocale } from '@/i18n/utils';
+import { locales, defaultLocale } from '@/i18n/config';
+import { formatPrice } from '@/i18n/utils';
 
-export const metadata: Metadata = {
-  title:
-    'Разработка Веб-Приложений на Заказ | Создание Веб-Приложений | Torgomyan.Studio',
-  description:
-    'Разработка веб-приложений любой сложности. Современные технологии (React, Next.js, Node.js), индивидуальные решения для бизнеса. От 500,000₽. Заказать веб-приложение.',
-  keywords:
-    'веб приложение, веб-приложение, разработка веб приложений, создание веб приложения, веб приложение на заказ, разработка веб приложений цена, заказать веб приложение, web application, разработка веб приложений React, Next.js приложения, создание веб приложения стоимость',
-  alternates: {
-    canonical: 'https://torgomyan.studio/services/web-applications',
-  },
-  openGraph: {
-    title: 'Разработка Веб-Приложений на Заказ | Создание Веб-Приложений',
-    description:
-      'Профессиональная разработка веб-приложений любой сложности с использованием современных технологий. Индивидуальные решения для бизнеса.',
-    type: 'website',
-    locale: 'ru_RU',
-    siteName: 'Torgomyan.Studio',
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const headersList = await headers();
+  const pathname = headersList.get('x-pathname') || '/services/web-applications';
+  const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
+  const pathWithoutLocale = getPathnameWithoutLocale(pathname);
 
-export default function WebApplicationsPage() {
+  const baseUrl = 'https://torgomyan-studio.am';
+
+  // Generate hreflang alternates
+  const alternates: Record<string, string> = {};
+  locales.forEach((loc) => {
+    const localePath =
+      loc === defaultLocale ? pathWithoutLocale : `/${loc}${pathWithoutLocale}`;
+    alternates[loc] = `${baseUrl}${localePath === '/' ? '' : localePath}`;
+  });
+
+  return {
+    title: t.webApplications.pageTitle,
+    description: t.webApplications.pageDescription,
+    keywords: t.webApplications.pageKeywords,
+    alternates: {
+      canonical: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
+      languages: alternates,
+    },
+    openGraph: {
+      title: t.webApplications.openGraphTitle,
+      description: t.webApplications.openGraphDescription,
+      type: 'website',
+      locale: locale === 'hy' ? 'hy_AM' : locale === 'ru' ? 'ru_RU' : 'en_US',
+      siteName: 'Torgomyan.Studio',
+      url: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
+    },
+  };
+}
+
+export default async function WebApplicationsPage() {
+  const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
+
   return (
     <MainTemplate>
       <ServicesHeaderWithContent
-        title="Разработка Веб-Приложений"
-        description="Создаем веб-приложения любой сложности для автоматизации бизнес-процессов и решения специфических задач вашей компании. Веб-приложение — это программное обеспечение, которое работает в браузере и позволяет решать специфические бизнес-задачи. В отличие от обычных сайтов, веб-приложения имеют сложную логику, интерактивность и могут обрабатывать большие объемы данных."
+        title={t.webApplications.title}
+        description={t.webApplications.description}
       />
 
       <SEOMarketingBlocks
         stats={[
-          { number: '500,000₽', label: 'От цены' },
-          { number: '1-6', label: 'Месяцев разработки' },
-          { number: '50+', label: 'Проектов' },
-          { number: '99.9%', label: 'Uptime' },
+          { number: formatPrice(300000, locale), label: t.webApplications.stats.fromPrice },
+          { number: '1-6', label: t.webApplications.stats.monthsDevelopment },
+          { number: '90+', label: t.webApplications.stats.projects },
+          { number: '99.9%', label: t.webApplications.stats.uptime },
         ]}
         benefits={[
           {
-            title: 'Индивидуальная разработка',
-            description:
-              'Каждое приложение создается под ваши конкретные задачи и требования',
+            title: t.webApplications.benefits.customDevelopment.title,
+            description: t.webApplications.benefits.customDevelopment.description,
             icon: 'fas fa-code',
           },
           {
-            title: 'Современные технологии',
-            description:
-              'Используем актуальные фреймворки и инструменты разработки',
+            title: t.webApplications.benefits.modernTechnologies.title,
+            description: t.webApplications.benefits.modernTechnologies.description,
             icon: 'fas fa-laptop-code',
           },
           {
-            title: 'Высокая производительность',
-            description:
-              'Оптимизация кода для быстрой работы даже с большими объемами данных',
+            title: t.webApplications.benefits.highPerformance.title,
+            description: t.webApplications.benefits.highPerformance.description,
             icon: 'fas fa-bolt',
           },
           {
-            title: 'Безопасность',
-            description:
-              'Внедрение современных методов защиты данных и информации',
+            title: t.webApplications.benefits.security.title,
+            description: t.webApplications.benefits.security.description,
             icon: 'fas fa-shield-alt',
           },
           {
-            title: 'Масштабируемость',
-            description: 'Архитектура, позволяющая легко расширять функционал',
+            title: t.webApplications.benefits.scalability.title,
+            description: t.webApplications.benefits.scalability.description,
             icon: 'fas fa-expand-arrows-alt',
           },
           {
-            title: 'API интеграции',
-            description:
-              'Интеграция с внешними сервисами и системами через API',
+            title: t.webApplications.benefits.apiIntegrations.title,
+            description: t.webApplications.benefits.apiIntegrations.description,
             icon: 'fas fa-plug',
           },
         ]}
         features={[
-          'Анализ требований и проектирование',
-          'Разработка архитектуры приложения',
-          'Создание пользовательского интерфейса',
-          'Разработка серверной части',
-          'Настройка базы данных',
-          'Интеграция с внешними API',
-          'Тестирование и отладка',
-          'Оптимизация производительности',
-          'Развертывание и настройка',
-          'Техническая поддержка',
+          t.webApplications.features.requirementsAnalysis,
+          t.webApplications.features.architectureDevelopment,
+          t.webApplications.features.uiCreation,
+          t.webApplications.features.backendDevelopment,
+          t.webApplications.features.databaseSetup,
+          t.webApplications.features.externalApiIntegration,
+          t.webApplications.features.testingDebugging,
+          t.webApplications.features.performanceOptimization,
+          t.webApplications.features.deploymentSetup,
+          t.webApplications.features.technicalSupport,
         ]}
         faq={[
           {
-            question: 'Какие технологии используются для разработки?',
-            answer:
-              'Мы используем современный стек технологий: React, Next.js, Node.js, TypeScript, MySQL, MongoDB и другие. Выбор технологий зависит от специфики проекта и требований.',
+            question: t.webApplications.faq.technologies.question,
+            answer: t.webApplications.faq.technologies.answer,
           },
           {
-            question: 'Сколько времени занимает разработка веб-приложения?',
-            answer:
-              'Сроки зависят от сложности проекта. Простое приложение может быть готово за 1-2 месяца, сложное — за 3-6 месяцев или более. Мы всегда согласовываем сроки на этапе планирования.',
+            question: t.webApplications.faq.developmentTime.question,
+            answer: t.webApplications.faq.developmentTime.answer,
           },
           {
-            question: 'Какая стоимость разработки веб-приложения?',
-            answer:
-              'Стоимость зависит от сложности функционала, количества модулей и интеграций. Простое приложение начинается от 300,000 рублей, сложное корпоративное приложение — от 500,000 рублей. Свяжитесь с нами для получения детального расчета.',
+            question: t.webApplications.faq.cost.question,
+            answer: t.webApplications.faq.cost.answer,
           },
           {
-            question: 'Предоставляете ли вы техническую поддержку?',
-            answer:
-              'Да, мы предоставляем техническую поддержку и сопровождение приложений. Также можем обучить вашу команду работе с системой.',
+            question: t.webApplications.faq.technicalSupport.question,
+            answer: t.webApplications.faq.technicalSupport.answer,
           },
         ]}
       />
 
       <DiscussBlock />
 
-      <ServicesBlock but="Веб-приложения" />
+      <ServicesBlock but={t.webApplications.serviceButton} />
 
       <OurWorks />
 

@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { headers } from 'next/headers';
 import MainTemplate from '@/components/common/main-template/main-template';
 import ServicesBlock from '@/components/common/services-block/services-block';
 import ServicesHeaderWithContent from '@/components/common/services-header/services-header-with-content';
@@ -6,115 +7,133 @@ import OurWorks from '@/components/common/our-works/our-works';
 import ContactUs from '@/components/common/contact-us/contact-us';
 import DiscussBlock from '@/components/layout/services/discuss-block/discuss-block';
 import SEOMarketingBlocks from '@/components/common/seo-marketing-blocks/seo-marketing-blocks';
+import { getLocaleFromHeaders } from '@/i18n/server-utils';
+import { getTranslations } from '@/i18n';
+import { getPathnameWithoutLocale } from '@/i18n/utils';
+import { locales, defaultLocale } from '@/i18n/config';
+import { formatPrice } from '@/i18n/utils';
 
-export const metadata: Metadata = {
-  title:
-    'Интеграция Платежных Систем | Подключение Оплаты на Сайт | Torgomyan.Studio',
-  description:
-    'Интеграция платежных систем на сайт. Подключение онлайн-оплаты через Яндекс.Кассу, Stripe, PayPal и другие системы. Безопасные платежи, соответствие PCI DSS. От 50,000₽. Заказать интеграцию платежей.',
-  keywords:
-    'интеграция платежных систем, подключение оплаты, онлайн оплата, платежная система, яндекс касса, stripe, paypal, интеграция оплаты цена, заказать интеграцию платежей, подключение платежной системы, интеграция оплаты стоимость',
-  alternates: {
-    canonical: 'https://torgomyan.studio/services/payment-integration',
-  },
-  openGraph: {
-    title: 'Интеграция Платежных Систем | Подключение Оплаты на Сайт',
-    description:
-      'Профессиональная интеграция платежных систем для приема онлайн-платежей на вашем сайте. Безопасные платежи, соответствие PCI DSS.',
-    type: 'website',
-    locale: 'ru_RU',
-    siteName: 'Torgomyan.Studio',
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const headersList = await headers();
+  const pathname = headersList.get('x-pathname') || '/services/payment-integration';
+  const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
+  const pathWithoutLocale = getPathnameWithoutLocale(pathname);
 
-export default function PaymentIntegrationPage() {
+  const baseUrl = 'https://torgomyan-studio.am';
+
+  // Generate hreflang alternates
+  const alternates: Record<string, string> = {};
+  locales.forEach((loc) => {
+    const localePath =
+      loc === defaultLocale ? pathWithoutLocale : `/${loc}${pathWithoutLocale}`;
+    alternates[loc] = `${baseUrl}${localePath === '/' ? '' : localePath}`;
+  });
+
+  return {
+    title: t.paymentIntegration.pageTitle,
+    description: t.paymentIntegration.pageDescription,
+    keywords: t.paymentIntegration.pageKeywords,
+    alternates: {
+      canonical: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
+      languages: alternates,
+    },
+    openGraph: {
+      title: t.paymentIntegration.openGraphTitle,
+      description: t.paymentIntegration.openGraphDescription,
+      type: 'website',
+      locale: locale === 'hy' ? 'hy_AM' : locale === 'ru' ? 'ru_RU' : 'en_US',
+      siteName: 'Torgomyan.Studio',
+      url: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
+    },
+  };
+}
+
+export default async function PaymentIntegrationPage() {
+  const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
+
   return (
     <MainTemplate>
       <ServicesHeaderWithContent
-        title="Интеграция Платежных Систем"
-        description="Подключаем онлайн-оплату на ваш сайт. Интеграция с Яндекс.Кассой, Stripe, PayPal и другими платежными системами для приема платежей. Возможность принимать платежи онлайн — это ключевая функция для интернет-магазинов, сервисов и других коммерческих сайтов. Мы интегрируем различные платежные системы, чтобы ваши клиенты могли легко и безопасно оплачивать товары и услуги."
+        title={t.paymentIntegration.title}
+        description={t.paymentIntegration.description}
       />
 
       <SEOMarketingBlocks
         stats={[
-          { number: '50,000₽', label: 'От цены' },
-          { number: '1-2', label: 'Недели интеграции' },
-          { number: '10+', label: 'Платежных систем' },
-          { number: '100%', label: 'Безопасность' },
+          { number: formatPrice(45000, locale), label: t.paymentIntegration.stats.fromPrice },
+          { number: '1-2', label: t.paymentIntegration.stats.weeksIntegration },
+          { number: '10+', label: t.paymentIntegration.stats.paymentSystems },
+          { number: '100%', label: t.paymentIntegration.stats.security },
         ]}
         benefits={[
           {
-            title: 'Безопасность',
-            description:
-              'Соответствие стандартам PCI DSS и защита данных клиентов',
+            title: t.paymentIntegration.benefits.security.title,
+            description: t.paymentIntegration.benefits.security.description,
             icon: 'fas fa-shield-alt',
           },
           {
-            title: 'Множество систем',
-            description:
-              'Интеграция с различными платежными системами по выбору',
+            title: t.paymentIntegration.benefits.multipleSystems.title,
+            description: t.paymentIntegration.benefits.multipleSystems.description,
             icon: 'fas fa-credit-card',
           },
           {
-            title: 'Быстрое подключение',
-            description: 'Настройка и запуск платежей в кратчайшие сроки',
+            title: t.paymentIntegration.benefits.quickConnection.title,
+            description: t.paymentIntegration.benefits.quickConnection.description,
             icon: 'fas fa-bolt',
           },
           {
-            title: 'Удобство для клиентов',
-            description: 'Простой и понятный процесс оплаты повышает конверсию',
+            title: t.paymentIntegration.benefits.customerConvenience.title,
+            description: t.paymentIntegration.benefits.customerConvenience.description,
             icon: 'fas fa-user-tie',
           },
           {
-            title: 'Мобильная оплата',
-            description: 'Поддержка оплаты с мобильных устройств',
+            title: t.paymentIntegration.benefits.mobilePayment.title,
+            description: t.paymentIntegration.benefits.mobilePayment.description,
             icon: 'fas fa-mobile-alt',
           },
           {
-            title: 'Техническая поддержка',
-            description: 'Помощь в решении вопросов по работе платежей',
+            title: t.paymentIntegration.benefits.technicalSupport.title,
+            description: t.paymentIntegration.benefits.technicalSupport.description,
             icon: 'fas fa-headset',
           },
         ]}
         features={[
-          'Анализ требований и выбор системы',
-          'Настройка платежного шлюза',
-          'Интеграция API платежной системы',
-          'Создание формы оплаты',
-          'Настройка уведомлений',
-          'Обработка успешных платежей',
-          'Обработка возвратов',
-          'Настройка рекуррентных платежей',
-          'Интеграция с CRM',
-          'Тестирование и отладка',
+          t.paymentIntegration.features.requirementsAnalysis,
+          t.paymentIntegration.features.gatewaySetup,
+          t.paymentIntegration.features.apiIntegration,
+          t.paymentIntegration.features.paymentForm,
+          t.paymentIntegration.features.notificationsSetup,
+          t.paymentIntegration.features.successfulPayments,
+          t.paymentIntegration.features.refunds,
+          t.paymentIntegration.features.recurringPayments,
+          t.paymentIntegration.features.crmIntegration,
+          t.paymentIntegration.features.testingDebugging,
         ]}
         faq={[
           {
-            question: 'С какими платежными системами вы работаете?',
-            answer:
-              'Мы работаем с Яндекс.Кассой, Stripe, PayPal, CloudPayments, PayU, Robokassa и другими популярными системами. Помогаем выбрать оптимальное решение для вашего бизнеса.',
+            question: t.paymentIntegration.faq.paymentSystems.question,
+            answer: t.paymentIntegration.faq.paymentSystems.answer,
           },
           {
-            question: 'Сколько стоит интеграция платежной системы?',
-            answer:
-              'Стоимость зависит от выбранной системы и сложности интеграции. Базовая интеграция начинается от 45,000 рублей. Свяжитесь с нами для получения точного расчета.',
+            question: t.paymentIntegration.faq.cost.question,
+            answer: t.paymentIntegration.faq.cost.answer,
           },
           {
-            question: 'Сколько времени занимает интеграция?',
-            answer:
-              'Стандартная интеграция занимает 1-2 недели. Сроки зависят от выбранной платежной системы и сложности проекта.',
+            question: t.paymentIntegration.faq.integrationTime.question,
+            answer: t.paymentIntegration.faq.integrationTime.answer,
           },
           {
-            question: 'Нужно ли отдельно регистрироваться в платежной системе?',
-            answer:
-              'Да, вам нужно будет зарегистрироваться в выбранной платежной системе и получить необходимые ключи API. Мы поможем с процессом регистрации и настройки.',
+            question: t.paymentIntegration.faq.registration.question,
+            answer: t.paymentIntegration.faq.registration.answer,
           },
         ]}
       />
 
       <DiscussBlock />
 
-      <ServicesBlock but="Интеграция платежных систем" />
+      <ServicesBlock but={t.paymentIntegration.serviceButton} />
 
       <OurWorks />
 

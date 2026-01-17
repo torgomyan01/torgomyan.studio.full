@@ -12,6 +12,7 @@ const STORAGE_KEY = 'exit-intent-popup-shown';
 const STORAGE_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
 export default function ExitIntentPopup() {
+  const locale = useLocale();
   const [isOpen, setIsOpen] = useState(false);
   const [hasShown, setHasShown] = useState(false);
 

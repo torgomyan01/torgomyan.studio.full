@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { headers } from 'next/headers';
 import MainTemplate from '@/components/common/main-template/main-template';
 import ServicesBlock from '@/components/common/services-block/services-block';
 import ServicesHeaderWithContent from '@/components/common/services-header/services-header-with-content';
@@ -6,118 +7,132 @@ import OurWorks from '@/components/common/our-works/our-works';
 import ContactUs from '@/components/common/contact-us/contact-us';
 import DiscussBlock from '@/components/layout/services/discuss-block/discuss-block';
 import SEOMarketingBlocks from '@/components/common/seo-marketing-blocks/seo-marketing-blocks';
+import { getLocaleFromHeaders } from '@/i18n/server-utils';
+import { getTranslations } from '@/i18n';
+import { getPathnameWithoutLocale } from '@/i18n/utils';
+import { locales, defaultLocale } from '@/i18n/config';
+import { formatPrice } from '@/i18n/utils';
 
-export const metadata: Metadata = {
-  title:
-    'Создание Лендинга под Ключ | Продающий Лендинг Пейдж | Torgomyan.Studio',
-  description:
-    'Профессиональное создание продающих лендинг пейдж с высокой конверсией. Одностраничные сайты для рекламных кампаний. A/B тестирование, мобильная оптимизация. От 40,000₽. Заказать лендинг.',
-  keywords:
-    'создание лендинга, лендинг пейдж под ключ, продающий лендинг, landing page создание, одностраничный сайт, лендинг цена, заказать лендинг, лендинг для бизнеса, создание лендинга под ключ, продающий лендинг пейдж, лендинг стоимость, лендинг для рекламы, конверсионный лендинг',
-  alternates: {
-    canonical: 'https://torgomyan.studio/services/landing-page',
-  },
-  openGraph: {
-    title: 'Создание Лендинга под Ключ | Продающий Лендинг Пейдж',
-    description:
-      'Профессиональное создание продающих лендинг пейдж с высокой конверсией. Одностраничные сайты для рекламных кампаний. A/B тестирование, мобильная оптимизация.',
-    type: 'website',
-    locale: 'ru_RU',
-    siteName: 'Torgomyan.Studio',
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const headersList = await headers();
+  const pathname = headersList.get('x-pathname') || '/services/landing-page';
+  const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
+  const pathWithoutLocale = getPathnameWithoutLocale(pathname);
 
-export default function LandingPagePage() {
+  const baseUrl = 'https://torgomyan-studio.am';
+
+  // Generate hreflang alternates
+  const alternates: Record<string, string> = {};
+  locales.forEach((loc) => {
+    const localePath =
+      loc === defaultLocale ? pathWithoutLocale : `/${loc}${pathWithoutLocale}`;
+    alternates[loc] = `${baseUrl}${localePath === '/' ? '' : localePath}`;
+  });
+
+  return {
+    title: t.landingPage.pageTitle,
+    description: t.landingPage.pageDescription,
+    keywords: t.landingPage.pageKeywords,
+    alternates: {
+      canonical: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
+      languages: alternates,
+    },
+    openGraph: {
+      title: t.landingPage.openGraphTitle,
+      description: t.landingPage.openGraphDescription,
+      type: 'website',
+      locale: locale === 'hy' ? 'hy_AM' : locale === 'ru' ? 'ru_RU' : 'en_US',
+      siteName: 'Torgomyan.Studio',
+      url: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
+    },
+  };
+}
+
+export default async function LandingPagePage() {
+  const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
+
   return (
     <MainTemplate>
       <ServicesHeaderWithContent
-        title="Лендинг Пейдж для Вашего Бизнеса"
-        description="Создаем продающие одностраничные сайты с высокой конверсией. Лендинг пейдж, который превращает посетителей в клиентов. Лендинг пейдж (landing page) — это специализированная одностраничная страница, созданная для достижения конкретной цели: продажи товара, сбора заявок, регистрации на мероприятие или других целевых действий. Мы создаем лендинги, которые не просто красивы, но и эффективно конвертируют посетителей в клиентов."
+        title={t.landingPage.title}
+        description={t.landingPage.description}
       />
 
       <SEOMarketingBlocks
         stats={[
-          { number: '2-3x', label: 'Выше конверсия' },
-          { number: '1-2', label: 'Недели до запуска' },
-          { number: '50+', label: 'Успешных лендингов' },
-          { number: '95%', label: 'Удовлетворенность' },
+          { number: formatPrice(40000, locale), label: t.landingPage.stats.fromPrice },
+          { number: '2-3x', label: t.landingPage.stats.higherConversion },
+          { number: '1-2', label: t.landingPage.stats.weeksToLaunch },
+          { number: '90+', label: t.landingPage.stats.successfulLandings },
         ]}
         benefits={[
           {
-            title: 'Высокая конверсия',
-            description:
-              'Специализированные лендинги конвертируют в 2-3 раза лучше обычных сайтов',
+            title: t.landingPage.benefits.highConversion.title,
+            description: t.landingPage.benefits.highConversion.description,
             icon: 'fas fa-chart-line',
           },
           {
-            title: 'Быстрый запуск',
-            description:
-              'Лендинг можно запустить уже через 1-2 недели после начала работы',
+            title: t.landingPage.benefits.fastLaunch.title,
+            description: t.landingPage.benefits.fastLaunch.description,
             icon: 'fas fa-bolt',
           },
           {
-            title: 'Фокус на цели',
-            description:
-              'Вся страница направлена на достижение одной конкретной цели',
+            title: t.landingPage.benefits.focusOnGoal.title,
+            description: t.landingPage.benefits.focusOnGoal.description,
             icon: 'fas fa-bullseye',
           },
           {
-            title: 'A/B тестирование',
-            description:
-              'Тестируем различные варианты для максимальной эффективности',
+            title: t.landingPage.benefits.abTesting.title,
+            description: t.landingPage.benefits.abTesting.description,
             icon: 'fas fa-flask',
           },
           {
-            title: 'Мобильная оптимизация',
-            description:
-              'Идеальная работа на всех устройствах, особенно на мобильных',
+            title: t.landingPage.benefits.mobileOptimization.title,
+            description: t.landingPage.benefits.mobileOptimization.description,
             icon: 'fas fa-mobile-alt',
           },
           {
-            title: 'Интеграция с рекламой',
-            description:
-              'Настраиваем интеграцию с рекламными кампаниями для лучших результатов',
+            title: t.landingPage.benefits.adIntegration.title,
+            description: t.landingPage.benefits.adIntegration.description,
             icon: 'fas fa-ad',
           },
         ]}
         features={[
-          'Анализ целевой аудитории и конкурентов',
-          'Разработка уникального дизайна',
-          'Создание убедительных заголовков и текстов',
-          'Оптимизация форм захвата лидов',
-          'Интеграция с системами аналитики',
-          'Настройка A/B тестирования',
-          'Мобильная адаптация',
-          'SEO-оптимизация',
-          'Интеграция с рекламными системами',
+          t.landingPage.features.audienceAnalysis,
+          t.landingPage.features.uniqueDesign,
+          t.landingPage.features.compellingContent,
+          t.landingPage.features.leadForms,
+          t.landingPage.features.analyticsIntegration,
+          t.landingPage.features.abTestingSetup,
+          t.landingPage.features.mobileAdaptation,
+          t.landingPage.features.seoOptimization,
+          t.landingPage.features.adSystemsIntegration,
         ]}
         faq={[
           {
-            question: 'Чем лендинг отличается от обычного сайта?',
-            answer:
-              'Лендинг — это одностраничный сайт, полностью сфокусированный на одной цели (продажа, заявка, регистрация). Обычный сайт содержит множество страниц с разной информацией. Лендинг более эффективен для рекламных кампаний и конкретных предложений.',
+            question: t.landingPage.faq.difference.question,
+            answer: t.landingPage.faq.difference.answer,
           },
           {
-            question: 'Сколько стоит создание лендинга?',
-            answer:
-              'Стоимость лендинга зависит от сложности дизайна, количества блоков и необходимых интеграций. Базовый лендинг начинается от 40,000 рублей, премиум-лендинг с расширенным функционалом — от 80,000 рублей. Свяжитесь с нами для получения точного расчета.',
+            question: t.landingPage.faq.cost.question,
+            answer: t.landingPage.faq.cost.answer,
           },
           {
-            question: 'Как быстро можно запустить лендинг?',
-            answer:
-              'Стандартный лендинг мы можем запустить за 1-2 недели. Срочные проекты возможны за 3-5 дней с доплатой. Сроки всегда согласовываются на этапе планирования.',
+            question: t.landingPage.faq.launchTime.question,
+            answer: t.landingPage.faq.launchTime.answer,
           },
           {
-            question: 'Помогаете ли вы с рекламой для лендинга?',
-            answer:
-              'Да, мы можем помочь с настройкой рекламных кампаний в Яндекс.Директ, Google Ads и социальных сетях. Также мы интегрируем лендинг с системами аналитики для отслеживания эффективности.',
+            question: t.landingPage.faq.adHelp.question,
+            answer: t.landingPage.faq.adHelp.answer,
           },
         ]}
       />
 
       <DiscussBlock />
 
-      <ServicesBlock but="Лендинг" />
+      <ServicesBlock but={t.landingPage.serviceButton} />
 
       <OurWorks />
 

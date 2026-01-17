@@ -138,49 +138,49 @@ export default function Calculator() {
       isOngoing: false,
     };
 
-    // Base price by service type (в рублях, оптимизировано согласно рыночным ценам 2024)
+    // Base price by service type (в рублях, соответствует FAQ "starts from" ценам)
     if (service.includes('Лендинг')) {
-      basePrice = 45000;
+      basePrice = 40000;
       serviceConfig.isWebsite = true;
       complexityMultiplier = 0.8; // Проще чем корпоративный сайт
     } else if (service.includes('Корпоративный сайт')) {
-      basePrice = 130000;
+      basePrice = 120000;
       serviceConfig.isWebsite = true;
       complexityMultiplier = 1.2;
     } else if (service.includes('Сайт-визитка')) {
-      basePrice = 55000;
+      basePrice = 50000;
       serviceConfig.isWebsite = true;
       complexityMultiplier = 0.7;
     } else if (service.includes('Интернет-магазин')) {
-      basePrice = 220000;
+      basePrice = 200000;
       serviceConfig.isWebsite = true;
       serviceConfig.isEcommerce = true;
       complexityMultiplier = 1.5;
     } else if (service.includes('Веб-приложения')) {
-      basePrice = 350000;
+      basePrice = 300000;
       serviceConfig.isApp = true;
       complexityMultiplier = 2.0;
     } else if (service.includes('SEO') || service.includes('Продвижение')) {
-      basePrice = 45000; // Месячная стоимость
+      basePrice = 40000; // Месячная стоимость
       serviceConfig.isOngoing = true;
       isOngoingService = true;
     } else if (service.includes('UI/UX') || service.includes('Дизайн')) {
-      basePrice = 90000;
+      basePrice = 80000;
       serviceConfig.isDesign = true;
       complexityMultiplier = 1.1;
     } else if (service.includes('Техническая поддержка')) {
-      basePrice = 18000; // Месячная стоимость
+      basePrice = 15000; // Месячная стоимость
       serviceConfig.isOngoing = true;
       isOngoingService = true;
     } else if (service.includes('Хостинг') || service.includes('домен')) {
-      basePrice = 1200; // Месячная стоимость
+      basePrice = 500; // Месячная стоимость
       serviceConfig.isOngoing = true;
       isOngoingService = true;
     } else if (service.includes('Интеграция платежных')) {
-      basePrice = 50000;
+      basePrice = 45000;
       complexityMultiplier = 1.3;
     } else if (service.includes('Автоматизация')) {
-      basePrice = 180000;
+      basePrice = 150000;
       complexityMultiplier = 1.8;
     } else if (service.includes('Разработка Сайтов')) {
       basePrice = 90000;

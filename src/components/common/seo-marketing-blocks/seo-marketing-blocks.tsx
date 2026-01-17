@@ -1,10 +1,19 @@
+'use client';
+
 import './_seo-marketing-blocks.scss';
+import { useLocale } from '@/i18n/use-locale';
+import { getTranslation } from '@/i18n';
 
 interface SEOMarketingBlocksProps {
   benefits?: Array<{ title: string; description: string; icon: string }>;
   features?: string[];
   faq?: Array<{ question: string; answer: string }>;
   stats?: Array<{ number: string; label: string }>;
+  sectionTitles?: {
+    features?: string;
+    benefits?: string;
+    faq?: string;
+  };
 }
 
 function SEOMarketingBlocks({
@@ -12,7 +21,26 @@ function SEOMarketingBlocks({
   features,
   faq,
   stats,
+  sectionTitles,
 }: SEOMarketingBlocksProps) {
+  const locale = useLocale();
+
+  // Default section titles with translations
+  const defaultSectionTitles = {
+    features:
+      sectionTitles?.features ||
+      getTranslation(locale, 'common.whatIncluded') ||
+      'Что входит в услугу',
+    benefits:
+      sectionTitles?.benefits ||
+      getTranslation(locale, 'common.whyChooseUs') ||
+      'Почему выбирают нас',
+    faq:
+      sectionTitles?.faq ||
+      getTranslation(locale, 'common.faq') ||
+      'Часто задаваемые вопросы',
+  };
+
   return (
     <>
       {/* Stats Section */}
@@ -35,7 +63,7 @@ function SEOMarketingBlocks({
       {features && features.length > 0 && (
         <section className="seo-features-section">
           <div className="container">
-            <h2 className="section-title">Что входит в услугу</h2>
+            <h2 className="section-title">{defaultSectionTitles.features}</h2>
             <div className="features-list">
               {features.map((feature, index) => (
                 <div key={index} className="feature-item">
@@ -52,7 +80,7 @@ function SEOMarketingBlocks({
       {benefits && benefits.length > 0 && (
         <section className="seo-benefits-section">
           <div className="container">
-            <h2 className="section-title">Почему выбирают нас</h2>
+            <h2 className="section-title">{defaultSectionTitles.benefits}</h2>
             <div className="benefits-grid">
               {benefits.map((benefit, index) => (
                 <div key={index} className="benefit-card">
@@ -72,7 +100,7 @@ function SEOMarketingBlocks({
       {faq && faq.length > 0 && (
         <section className="seo-faq-section">
           <div className="container">
-            <h2 className="section-title">Часто задаваемые вопросы</h2>
+            <h2 className="section-title">{defaultSectionTitles.faq}</h2>
             <div className="faq-list">
               {faq.map((item, index) => (
                 <div key={index} className="faq-item">

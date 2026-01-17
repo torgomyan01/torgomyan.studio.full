@@ -49,7 +49,7 @@ function ServicesHeader() {
 
   // Structured data for SEO (JSON-LD) - оптимизировано для Yandex и Google
   // Using static URL to prevent hydration mismatch
-  const baseUrl = 'https://torgomyan.studio';
+  const baseUrl = 'https://torgomyan-studio.am';
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',

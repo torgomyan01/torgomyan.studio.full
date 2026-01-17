@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { headers } from 'next/headers';
 import MainTemplate from '@/components/common/main-template/main-template';
 import ServicesBlock from '@/components/common/services-block/services-block';
 import ServicesHeaderWithContent from '@/components/common/services-header/services-header-with-content';
@@ -6,115 +7,133 @@ import OurWorks from '@/components/common/our-works/our-works';
 import ContactUs from '@/components/common/contact-us/contact-us';
 import DiscussBlock from '@/components/layout/services/discuss-block/discuss-block';
 import SEOMarketingBlocks from '@/components/common/seo-marketing-blocks/seo-marketing-blocks';
+import { getLocaleFromHeaders } from '@/i18n/server-utils';
+import { getTranslations } from '@/i18n';
+import { getPathnameWithoutLocale } from '@/i18n/utils';
+import { locales, defaultLocale } from '@/i18n/config';
+import { formatPrice } from '@/i18n/utils';
 
-export const metadata: Metadata = {
-  title:
-    'Автоматизация Бизнес-Процессов | Автоматизация Работы Компании | Torgomyan.Studio',
-  description:
-    'Автоматизация бизнес-процессов компании. Внедрение систем автоматизации для повышения эффективности работы. Экономия времени до 30%. От 200,000₽. Заказать автоматизацию.',
-  keywords:
-    'автоматизация бизнес процессов, автоматизация компании, автоматизация работы, внедрение автоматизации, системы автоматизации, автоматизация цена, заказать автоматизацию, автоматизация бизнеса, автоматизация процессов стоимость',
-  alternates: {
-    canonical: 'https://torgomyan.studio/services/business-automation',
-  },
-  openGraph: {
-    title: 'Автоматизация Бизнес-Процессов | Автоматизация Работы Компании',
-    description:
-      'Внедрение систем автоматизации для повышения эффективности работы вашей компании. Экономия времени до 30%.',
-    type: 'website',
-    locale: 'ru_RU',
-    siteName: 'Torgomyan.Studio',
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const headersList = await headers();
+  const pathname = headersList.get('x-pathname') || '/services/business-automation';
+  const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
+  const pathWithoutLocale = getPathnameWithoutLocale(pathname);
 
-export default function BusinessAutomationPage() {
+  const baseUrl = 'https://torgomyan-studio.am';
+
+  // Generate hreflang alternates
+  const alternates: Record<string, string> = {};
+  locales.forEach((loc) => {
+    const localePath =
+      loc === defaultLocale ? pathWithoutLocale : `/${loc}${pathWithoutLocale}`;
+    alternates[loc] = `${baseUrl}${localePath === '/' ? '' : localePath}`;
+  });
+
+  return {
+    title: t.businessAutomation.pageTitle,
+    description: t.businessAutomation.pageDescription,
+    keywords: t.businessAutomation.pageKeywords,
+    alternates: {
+      canonical: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
+      languages: alternates,
+    },
+    openGraph: {
+      title: t.businessAutomation.openGraphTitle,
+      description: t.businessAutomation.openGraphDescription,
+      type: 'website',
+      locale: locale === 'hy' ? 'hy_AM' : locale === 'ru' ? 'ru_RU' : 'en_US',
+      siteName: 'Torgomyan.Studio',
+      url: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
+    },
+  };
+}
+
+export default async function BusinessAutomationPage() {
+  const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
+
   return (
     <MainTemplate>
       <ServicesHeaderWithContent
-        title="Автоматизация Бизнес-Процессов"
-        description="Внедряем системы автоматизации для повышения эффективности работы вашей компании. Снижаем затраты времени и ресурсов на рутинные операции. Автоматизация бизнес-процессов — это внедрение технологических решений для автоматического выполнения рутинных задач, что позволяет повысить эффективность работы компании и снизить операционные расходы."
+        title={t.businessAutomation.title}
+        description={t.businessAutomation.description}
       />
 
       <SEOMarketingBlocks
         stats={[
-          { number: '200,000₽', label: 'От цены' },
-          { number: '30%', label: 'Экономия времени' },
-          { number: '1-6', label: 'Месяцев внедрения' },
-          { number: '50+', label: 'Автоматизированных процессов' },
+          { number: formatPrice(150000, locale), label: t.businessAutomation.stats.fromPrice },
+          { number: '30%', label: t.businessAutomation.stats.timeSavings },
+          { number: '1-6', label: t.businessAutomation.stats.monthsImplementation },
+          { number: '50+', label: t.businessAutomation.stats.automatedProcesses },
         ]}
         benefits={[
           {
-            title: 'Повышение эффективности',
-            description:
-              'Автоматизация рутинных задач освобождает время для важных дел',
+            title: t.businessAutomation.benefits.efficiencyIncrease.title,
+            description: t.businessAutomation.benefits.efficiencyIncrease.description,
             icon: 'fas fa-bolt',
           },
           {
-            title: 'Снижение ошибок',
-            description:
-              'Исключение человеческого фактора снижает количество ошибок',
+            title: t.businessAutomation.benefits.errorReduction.title,
+            description: t.businessAutomation.benefits.errorReduction.description,
             icon: 'fas fa-check-circle',
           },
           {
-            title: 'Экономия ресурсов',
-            description: 'Снижение затрат на выполнение рутинных операций',
+            title: t.businessAutomation.benefits.resourceSavings.title,
+            description: t.businessAutomation.benefits.resourceSavings.description,
             icon: 'fas fa-tag',
           },
           {
-            title: 'Масштабируемость',
-            description: 'Автоматизированные процессы легко масштабируются',
+            title: t.businessAutomation.benefits.scalability.title,
+            description: t.businessAutomation.benefits.scalability.description,
             icon: 'fas fa-expand-arrows-alt',
           },
           {
-            title: 'Аналитика',
-            description: 'Автоматический сбор данных для анализа и отчетности',
+            title: t.businessAutomation.benefits.analytics.title,
+            description: t.businessAutomation.benefits.analytics.description,
             icon: 'fas fa-chart-bar',
           },
           {
-            title: 'Интеграции',
-            description: 'Интеграция с существующими системами компании',
+            title: t.businessAutomation.benefits.integrations.title,
+            description: t.businessAutomation.benefits.integrations.description,
             icon: 'fas fa-plug',
           },
         ]}
         features={[
-          'Анализ бизнес-процессов',
-          'Проектирование системы автоматизации',
-          'Разработка автоматизированных решений',
-          'Интеграция с существующими системами',
-          'Настройка уведомлений и отчетов',
-          'Обучение сотрудников',
-          'Тестирование и оптимизация',
-          'Техническая поддержка',
-          'Мониторинг работы системы',
-          'Постоянное улучшение',
+          t.businessAutomation.features.processAnalysis,
+          t.businessAutomation.features.systemDesign,
+          t.businessAutomation.features.solutionDevelopment,
+          t.businessAutomation.features.systemIntegration,
+          t.businessAutomation.features.notificationsReports,
+          t.businessAutomation.features.staffTraining,
+          t.businessAutomation.features.testingOptimization,
+          t.businessAutomation.features.technicalSupport,
+          t.businessAutomation.features.systemMonitoring,
+          t.businessAutomation.features.continuousImprovement,
         ]}
         faq={[
           {
-            question: 'Какие процессы можно автоматизировать?',
-            answer:
-              'Можно автоматизировать множество процессов: обработку заказов, управление клиентами, отправку уведомлений, формирование отчетов, синхронизацию данных между системами и многое другое. Мы анализируем ваши процессы и предлагаем оптимальные решения.',
+            question: t.businessAutomation.faq.processesToAutomate.question,
+            answer: t.businessAutomation.faq.processesToAutomate.answer,
           },
           {
-            question: 'Сколько стоит автоматизация бизнес-процессов?',
-            answer:
-              'Стоимость зависит от сложности процессов и объема работ. Простая автоматизация начинается от 150,000 рублей, комплексная автоматизация бизнеса — от 300,000 рублей. Свяжитесь с нами для получения детального расчета.',
+            question: t.businessAutomation.faq.cost.question,
+            answer: t.businessAutomation.faq.cost.answer,
           },
           {
-            question: 'Сколько времени занимает внедрение?',
-            answer:
-              'Сроки зависят от сложности проекта. Простая автоматизация может быть внедрена за 1-2 месяца, сложная система — за 3-6 месяцев. Мы всегда согласовываем сроки на этапе планирования.',
+            question: t.businessAutomation.faq.implementationTime.question,
+            answer: t.businessAutomation.faq.implementationTime.answer,
           },
           {
-            question: 'Нужно ли менять существующие системы?',
-            answer:
-              'Не обязательно. Мы можем интегрировать автоматизацию с существующими системами компании, не требуя их замены. Это позволяет сохранить инвестиции в текущие решения.',
+            question: t.businessAutomation.faq.existingSystems.question,
+            answer: t.businessAutomation.faq.existingSystems.answer,
           },
         ]}
       />
 
       <DiscussBlock />
 
-      <ServicesBlock but="Автоматизация бизнес-процессов" />
+      <ServicesBlock but={t.businessAutomation.serviceButton} />
 
       <OurWorks />
 

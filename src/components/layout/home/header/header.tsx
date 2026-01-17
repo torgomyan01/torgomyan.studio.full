@@ -77,7 +77,7 @@ function Header() {
   };
 
   // Structured data for SEO (JSON-LD)
-  const baseUrl = 'https://torgomyan.studio';
+  const baseUrl = 'https://torgomyan-studio.am';
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',

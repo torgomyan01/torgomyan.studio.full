@@ -7,8 +7,9 @@ import Link from 'next/link';
 import { SITE_URL } from '@/utils/consts';
 import './_project-detail.scss';
 import { getLocaleFromHeaders } from '@/i18n/server-utils';
-import { getTranslation } from '@/i18n';
+import { getTranslation, getTranslations } from '@/i18n';
 import { locales, defaultLocale } from '@/i18n/config';
+import { addLocaleToPath } from '@/i18n/utils';
 
 interface ProjectDetailPageProps {
   params: Promise<{
@@ -28,40 +29,54 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = Works.find((w) => w.slug === slug);
 
+  const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
+
   if (!project) {
     return {
-      title: 'Проект не найден | Torgomyan.Studio',
+      title: t.ourWorks.projectDetail.notFoundTitle,
     };
   }
 
-  const locale = await getLocaleFromHeaders();
   const descriptionKey = `ourWorks.descriptions.${slug}`;
   const translatedDescription = getTranslation(locale, descriptionKey);
-  const fallbackDescription = `Проект ${project.name}, разработанный командой Torgomyan.Studio. ${project.created}. Посмотрите пример нашей работы и результаты.`;
+  const fallbackDescription = t.ourWorks.projectDetail.fallbackDescription
+    .replace('{{projectName}}', project.name)
+    .replace('{{technologies}}', project.created);
   const description =
     translatedDescription || project.description || fallbackDescription;
 
-  const title = `${project.name} - Разработанный проект | Torgomyan.Studio`;
+  const title = t.ourWorks.projectDetail.titleTemplate.replace(
+    '{{projectName}}',
+    project.name
+  );
 
   const alternates: Metadata['alternates'] = {
-    canonical: `https://torgomyan.studio/${locale === defaultLocale ? '' : `${locale}/`}our-works/${slug}`,
+    canonical: `https://torgomyan-studio.am/${locale === defaultLocale ? '' : `${locale}/`}our-works/${slug}`,
     languages: {},
   };
 
   for (const loc of locales) {
     alternates.languages![loc] =
-      `https://torgomyan.studio/${loc === defaultLocale ? '' : `${loc}/`}our-works/${slug}`;
+      `https://torgomyan-studio.am/${loc === defaultLocale ? '' : `${loc}/`}our-works/${slug}`;
   }
+
+  const keywords = t.ourWorks.projectDetail.keywordsTemplate
+    .replace('{{projectName}}', project.name)
+    .replace('{{technologies}}', project.created);
 
   return {
     title,
     description,
-    keywords: `${project.name}, веб-разработка, сайт, ${project.created}, портфолио, Torgomyan.Studio, пример сайта, разработанный сайт, кейс веб-разработки`,
+    keywords,
     alternates,
     openGraph: {
       title,
       description,
       type: 'website',
+      locale: locale === 'hy' ? 'hy_AM' : locale === 'ru' ? 'ru_RU' : 'en_US',
+      siteName: 'Torgomyan.Studio',
+      url: `https://torgomyan-studio.am/${locale === defaultLocale ? '' : `${locale}/`}our-works/${slug}`,
       images: [
         {
           url: `/${project.imgUrl}`,
@@ -91,6 +106,7 @@ export default async function ProjectDetailPage({
   }
 
   const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
   const descriptionKey = `ourWorks.descriptions.${slug}`;
   const translatedDescription = getTranslation(locale, descriptionKey);
   const projectDescription = translatedDescription || project.description || '';
@@ -103,9 +119,9 @@ export default async function ProjectDetailPage({
     creator: {
       '@type': 'Organization',
       name: 'Torgomyan.Studio',
-      url: 'https://torgomyan.studio',
+      url: 'https://torgomyan-studio.am',
     },
-    image: `https://torgomyan.studio/${project.imgUrl}`,
+    image: `https://torgomyan-studio.am/${project.imgUrl}`,
     ...(project.links.length > 0 && {
       url: project.links[0].url,
     }),
@@ -136,7 +152,7 @@ export default async function ProjectDetailPage({
                 <p className="project-description">{projectDescription}</p>
               )}
               <div className="project-tech">
-                <h3>Технологии:</h3>
+                <h3>{t.ourWorks.projectDetail.technologiesTitle}</h3>
                 <p>{project.created}</p>
               </div>
             </div>
@@ -144,7 +160,7 @@ export default async function ProjectDetailPage({
 
           {project.links.length > 0 && (
             <div className="project-links-section">
-              <h2>Ссылки на проект:</h2>
+              <h2>{t.ourWorks.projectDetail.projectLinksTitle}</h2>
               <div className="project-links-grid">
                 {project.links.map((link, index) => (
                   <a
@@ -166,21 +182,30 @@ export default async function ProjectDetailPage({
           )}
 
           <div className="project-cta">
-            <h2>Хотите такой же проект?</h2>
-            <p>Свяжитесь с нами, и мы создадим для вас уникальное решение</p>
+            <h2>{t.ourWorks.projectDetail.ctaTitle}</h2>
+            <p>{t.ourWorks.projectDetail.ctaDescription}</p>
             <div className="cta-buttons">
-              <Link href={SITE_URL.CONTACT} className="cta-button primary">
-                Связаться с нами
+              <Link
+                href={addLocaleToPath(SITE_URL.CONTACT, locale)}
+                className="cta-button primary"
+              >
+                {t.ourWorks.projectDetail.contactButton}
               </Link>
-              <Link href={SITE_URL.CALCULATOR} className="cta-button secondary">
-                Рассчитать стоимость
+              <Link
+                href={addLocaleToPath(SITE_URL.CALCULATOR, locale)}
+                className="cta-button secondary"
+              >
+                {t.ourWorks.projectDetail.calculateButton}
               </Link>
             </div>
           </div>
 
           <div className="project-navigation">
-            <Link href={SITE_URL.OUR_WORKS} className="back-link">
-              ← Вернуться к портфолио
+            <Link
+              href={addLocaleToPath(SITE_URL.OUR_WORKS, locale)}
+              className="back-link"
+            >
+              {t.ourWorks.projectDetail.backToPortfolio}
             </Link>
           </div>
         </div>

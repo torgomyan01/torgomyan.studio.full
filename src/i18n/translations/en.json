@@ -28,8 +28,15 @@
     "project": "Project",
     "gallery": "Portfolio Gallery",
     "forCompanies": "for companies and entrepreneurs",
+    "currency": {
+      "symbol": "$",
+      "name": "dollar"
+    },
     "privacyPolicy": "Privacy Policy",
-    "allRightsReserved": "All rights reserved"
+    "allRightsReserved": "All rights reserved",
+    "whatIncluded": "What's Included",
+    "whyChooseUs": "Why Choose Us",
+    "faq": "Frequently Asked Questions"
   },
   "home": {
     "title": "We create websites for your business",
@@ -51,6 +58,52 @@
     "paymentIntegration": "Payment System Integration",
     "businessAutomation": "Business Process Automation"
   },
+  "servicesPage": {
+    "pageTitle": "Web Development Services | Website Development, SEO, Design | Torgomyan.Studio",
+    "pageDescription": "Full range of web development services: full-service website creation, online stores, landing pages, corporate websites. SEO promotion in Yandex and Google. UI/UX design. Technical support and hosting. Over 100 successful projects.",
+    "pageKeywords": "web development services, full-service website development, online store creation, landing page, corporate website, SEO website promotion, UI/UX design, web applications, website technical support, hosting and domains, order website, website development cost, web studio services",
+    "openGraphTitle": "Web Development Services | Website Development, SEO, Design",
+    "openGraphDescription": "Full range of web development services: full-service website creation, online stores, landing pages, corporate websites. SEO promotion in Yandex and Google.",
+    "title": "Our Services",
+    "subtitle": "Full range of web services for your business development. From website creation to promotion and technical support — we provide a comprehensive approach to your digital presence.",
+    "stats": {
+      "successfulProjects": "Successful Projects",
+      "satisfiedClients": "Satisfied Clients",
+      "yearsExperience": "Years of Experience"
+    },
+    "benefits": {
+      "title": "Why Choose Us",
+      "individualApproach": {
+        "title": "Individual Approach",
+        "description": "Each project is developed taking into account the specifics of your business and target audience"
+      },
+      "modernTechnologies": {
+        "title": "Modern Technologies",
+        "description": "We use current frameworks and tools to create fast and reliable solutions"
+      },
+      "seoOptimization": {
+        "title": "SEO Optimization",
+        "description": "All projects are created with search engine requirements in mind for better online visibility"
+      },
+      "support247": {
+        "title": "24/7 Support",
+        "description": "We provide technical support and maintenance for your project at all stages"
+      },
+      "transparentPrices": {
+        "title": "Transparent Prices",
+        "description": "Clear pricing without hidden fees. You know what you're paying for"
+      },
+      "deadlineCompliance": {
+        "title": "Deadline Compliance",
+        "description": "We guarantee work completion within agreed deadlines without compromising quality"
+      }
+    },
+    "structuredData": {
+      "name": "Website and Web Application Development Services",
+      "description": "Professional services for website development, web applications, SEO promotion, interface design and technical support",
+      "catalogName": "Web Services"
+    }
+  },
   "promotion": {
     "badge": "Promotion",
     "discount": "25% discount",
@@ -71,6 +124,36 @@
     "subtitle": "Full-service website that solves your tasks",
     "viewAll": "View All",
     "workExample": "Work Example",
+    "pageTitle": "Portfolio - Examples of Developed Websites | Our Works | Torgomyan.Studio",
+    "pageDescription": "Our portfolio: over 100 successfully completed projects. Examples of websites, online stores, landing pages and web applications. View case studies and results of our clients.",
+    "pageKeywords": "web studio portfolio, website examples, our works, developed websites, website development portfolio, online store examples, web development cases, landing page examples, created website examples, web application portfolio",
+    "openGraphTitle": "Portfolio - Examples of Developed Websites | Our Works",
+    "openGraphDescription": "Our portfolio: over 100 successfully completed projects. Examples of websites, online stores, landing pages and web applications.",
+    "pageHeaderTitle": "Our Works",
+    "pageHeaderDescription": "We are proud of every project we have created. Our portfolio features over 100+ successfully completed projects: from simple landing pages to complex web applications and online stores. Each project is the result of meticulous work, attention to detail and pursuit of excellence. We create not just websites, but digital solutions that help businesses grow and develop.",
+    "structuredData": {
+      "name": "Our Works - Portfolio",
+      "description": "Portfolio of developed websites and web applications by Torgomyan.Studio",
+      "portfolioName": "Project Portfolio"
+    },
+    "projectDetail": {
+      "notFoundTitle": "Project Not Found | Torgomyan.Studio",
+      "titleTemplate": "{{projectName}} - Developed Project | Torgomyan.Studio",
+      "fallbackDescription": "Project {{projectName}}, developed by Torgomyan.Studio team. {{technologies}}. See an example of our work and results.",
+      "keywordsTemplate": "{{projectName}}, web development, website, {{technologies}}, portfolio, Torgomyan.Studio, website example, developed website, web development case",
+      "technologiesTitle": "Technologies:",
+      "projectLinksTitle": "Project Links:",
+      "ctaTitle": "Want a similar project?",
+      "ctaDescription": "Contact us and we will create a unique solution for you",
+      "contactButton": "Contact Us",
+      "calculateButton": "Calculate Cost",
+      "backToPortfolio": "← Back to Portfolio"
+    },
+    "allWorks": {
+      "showLinks": "Show Links",
+      "hideLinks": "Hide Links",
+      "projectLinksTitle": "Project Links:"
+    },
     "descriptions": {
       "arakelians-drive": "Arakelians Drive is one of the most successful driving schools in Armenia, specializing in obtaining driver's licenses. Our driving school offers a comprehensive training program that includes both theoretical and practical classes. 98% of our students successfully pass the driver's license exam on their first attempt thanks to our professional approach and high-quality training. We use an effective methodology that allows students to quickly and reliably master driving skills. Our driving school is equipped with modern cars with dual control systems, ensuring safe training. Our instructors are experienced specialists with many years of experience who use an individual approach and help each student achieve success. We offer flexible schedules, affordable prices, and guaranteed results.",
       "galamat": "A major Kazakhstani company specializing in providing modern digital solutions for business. Known in the Kazakhstan market as a reliable partner in technology and innovation.",
@@ -110,291 +193,6 @@
     "title": "Client Reviews",
     "subtitle": "What our clients say about working with us"
   },
-  "blog": {
-    "title": "Blog",
-    "subtitle": "Useful articles about web development, website creation and SEO optimization",
-    "viewAllArticles": "View All Articles",
-    "readMore": "Read More",
-    "tips": "Tips",
-    "min": "min",
-    "pageTitle": "Web Development Blog | Articles on Website Creation and SEO | Torgomyan.Studio",
-    "pageDescription": "Expert articles on web development, website creation, SEO optimization, and choosing a web studio. Practical tips and guides from professionals. Read our blog.",
-    "pageKeywords": "web development blog, website creation articles, how to choose a web studio, SEO articles, web design articles, website creation mistakes, website creation guide, website promotion articles, web studio blog",
-    "structuredDataName": "Torgomyan.Studio Blog",
-    "structuredDataDescription": "Useful articles about web development and SEO",
-    "backToBlog": "← Back to Blog",
-    "labels": {
-      "problem": "Problem:",
-      "consequences": "Consequences:",
-      "solution": "Solution:"
-    },
-    "categories": {
-      "tips": "Tips",
-      "errors": "Errors",
-      "seo": "SEO",
-      "design": "Design",
-      "technologies": "Technologies",
-      "optimization": "Optimization"
-    },
-    "articles": {
-      "kak-vybrat-veb-studiyu": {
-        "title": "How to Choose a Web Studio",
-        "description": "Guide to choosing a reliable web studio for your project. What to pay attention to when choosing a contractor.",
-        "category": "tips"
-      },
-      "10-oshibok-pri-sozdanii-sajta": {
-        "title": "10 Mistakes When Creating a Website",
-        "description": "Top 10 common mistakes made when creating a website. How to avoid problems and create a successful project.",
-        "category": "errors"
-      },
-      "seo-optimizaciya-sajta": {
-        "title": "SEO Website Optimization: Basics and Practice",
-        "description": "Complete guide to SEO website optimization. Learn how to improve positions in search engines and attract organic traffic.",
-        "category": "seo"
-      },
-      "kak-sozdat-uspeshnyj-lending": {
-        "title": "How to Create a Successful Landing Page",
-        "description": "Step-by-step guide to creating an effective landing page that converts visitors into customers.",
-        "category": "design"
-      },
-      "kak-vybrat-cms": {
-        "title": "How to Choose a CMS for Your Website",
-        "description": "Comparison of popular CMS systems. Which platform to choose for your project: WordPress, Tilda, Webflow, or custom development?",
-        "category": "technologies"
-      },
-      "optimizaciya-skorosti-sajta": {
-        "title": "Website Loading Speed Optimization",
-        "description": "Practical tips for speeding up your website. How to reduce loading time and improve user experience.",
-        "category": "optimization"
-      },
-      "trendy-veb-dizajna": {
-        "title": "Web Design Trends 2024",
-        "description": "Current trends in web design for 2024. What will be popular and how to create a modern website.",
-        "category": "design"
-      }
-    },
-    "articlePages": {
-      "kak-vybrat-veb-studiyu": {
-        "pageTitle": "How to Choose a Web Studio - 2024 Guide | Torgomyan.Studio",
-        "pageDescription": "Detailed guide to choosing a reliable web studio for your project. What to pay attention to when choosing a contractor, how to evaluate a portfolio and avoid mistakes. Practical tips from professionals.",
-        "pageKeywords": "how to choose a web studio, choosing a web studio, web studio selection criteria, what to look for when choosing a web studio, how to choose a contractor for a website, guide to choosing a web studio, how to choose a website developer",
-        "openGraphTitle": "How to Choose a Web Studio - 2024 Guide",
-        "openGraphDescription": "Detailed guide to choosing a reliable web studio for your project. Practical tips from professionals.",
-        "structuredDataHeadline": "How to Choose a Web Studio",
-        "structuredDataDescription": "Detailed guide to choosing a reliable web studio for your project",
-        "subtitle": "Guide to choosing a reliable web studio for your project"
-      },
-      "10-oshibok-pri-sozdanii-sajta": {
-        "pageTitle": "10 Mistakes When Creating a Website - How to Avoid Problems | Torgomyan.Studio",
-        "pageDescription": "Top 10 common mistakes made when creating a website. Learn how to avoid problems and create a successful project that will attract customers. Practical tips from professionals.",
-        "pageKeywords": "mistakes when creating a website, typical web development mistakes, problems when developing a website, how to avoid mistakes when creating a website, web design mistakes, common mistakes when developing a website, website creation mistakes",
-        "openGraphTitle": "10 Mistakes When Creating a Website - How to Avoid Problems",
-        "openGraphDescription": "Top 10 common mistakes made when creating a website. Learn how to avoid problems and create a successful project.",
-        "structuredDataHeadline": "10 Mistakes When Creating a Website",
-        "structuredDataDescription": "Top 10 common mistakes made when creating a website",
-        "subtitle": "Top 10 common mistakes made when creating a website. How to avoid problems and create a successful project.",
-        "content": {
-          "introduction": {
-            "title": "Introduction",
-            "text": "Creating a website is a complex process that requires attention to detail and understanding of user needs. Many entrepreneurs and companies make typical mistakes that can negatively impact the effectiveness of a website. In this article, we will look at the 10 most common mistakes and tell you how to avoid them."
-          },
-          "mistake1": {
-            "title": "1. Lack of Clear Goals and Strategy",
-            "problem": "The website is created without understanding the goals and objectives of the business.",
-            "consequences": "Unclear structure, lack of focus, low conversion.",
-            "solution": "Before starting development, clearly define:",
-            "solutionList": [
-              "Target audience",
-              "Main goals of the website (sales, leads, information)",
-              "Key user actions",
-              "Success metrics"
-            ]
-          },
-          "mistake2": {
-            "title": "2. Ignoring Mobile Version",
-            "problem": "The website is not adapted for mobile devices or the adaptation is done poorly.",
-            "consequences": "Loss of a significant portion of the audience, poor user experience, decrease in search rankings.",
-            "solution": "Use responsive design that displays correctly on all devices. Test the website on various screens before launch."
-          },
-          "mistake3": {
-            "title": "3. Slow Page Loading",
-            "problem": "Large images, unoptimized code, unnecessary plugins slow down loading.",
-            "consequences": "High bounce rate, decrease in search rankings, loss of potential customers.",
-            "solution": "",
-            "solutionList": [
-              "Optimize images (compression, correct formats)",
-              "Minify CSS and JavaScript",
-              "Use caching",
-              "Choose quality hosting",
-              "Remove unused plugins and scripts"
-            ]
-          },
-          "mistake4": {
-            "title": "4. Poor Navigation and Structure",
-            "problem": "Complex navigation, unclear website structure, difficulties finding information.",
-            "consequences": "Users cannot find the information they need, high bounce rate.",
-            "solution": "",
-            "solutionList": [
-              "Create a logical and clear structure",
-              "Use clear section names",
-              "Add breadcrumbs",
-              "Implement site search",
-              "Limit the number of menu items (5-7 maximum)"
-            ]
-          },
-          "mistake5": {
-            "title": "5. Ignoring SEO Optimization",
-            "problem": "The website is created without considering search engine requirements.",
-            "consequences": "Low search rankings, lack of organic traffic.",
-            "solution": "",
-            "solutionList": [
-              "Proper heading structure (H1, H2, H3)",
-              "Optimization of meta tags (title, description)",
-              "Use semantic markup",
-              "Optimize URLs",
-              "Create a sitemap (sitemap.xml)",
-              "Optimize images (alt tags)"
-            ]
-          },
-          "mistake6": {
-            "title": "6. Lack of Call-to-Actions (CTA)",
-            "problem": "Users don't understand what to do next after viewing a page.",
-            "consequences": "Low conversion, loss of potential customers.",
-            "solution": "Place clear and noticeable calls to action:",
-            "solutionList": [
-              "\"Order consultation\"",
-              "\"Buy now\"",
-              "\"Download catalog\"",
-              "\"Book a meeting\""
-            ],
-            "solutionNote": "CTAs should be visually highlighted and placed in strategically important places on the page."
-          },
-          "mistake7": {
-            "title": "7. Poor Content and Copywriting",
-            "problem": "Poor quality text, errors, information overload or, conversely, lack of information.",
-            "consequences": "Low user trust, poor SEO, decrease in conversion.",
-            "solution": "",
-            "solutionList": [
-              "Write in a language understandable to the target audience",
-              "Use structured text (headings, lists)",
-              "Avoid errors and typos",
-              "Focus on benefits for the client",
-              "Add visual elements (images, video)"
-            ]
-          },
-          "mistake8": {
-            "title": "8. Lack of Contact Information",
-            "problem": "It's difficult to find company contacts or the contact form doesn't work.",
-            "consequences": "Loss of potential customers, decrease in trust.",
-            "solution": "",
-            "solutionList": [
-              "Place contacts in a visible location",
-              "Add multiple ways to contact (phone, email, form)",
-              "Make sure forms work correctly",
-              "Add a map if there's an office",
-              "Specify working hours"
-            ]
-          },
-          "mistake9": {
-            "title": "9. Ignoring Security",
-            "problem": "The website is not protected from hacking, data leaks, spam.",
-            "consequences": "Compromise of customer data, website blocking, loss of reputation.",
-            "solution": "",
-            "solutionList": [
-              "Use HTTPS (SSL certificate)",
-              "Regularly update CMS and plugins",
-              "Use strong passwords",
-              "Set up spam protection",
-              "Regularly make backups",
-              "Use DDoS attack protection"
-            ]
-          },
-          "mistake10": {
-            "title": "10. Lack of Analytics and Testing",
-            "problem": "Performance indicators are not tracked, tests are not conducted.",
-            "consequences": "Inability to improve the website, ineffective solutions.",
-            "solution": "",
-            "solutionList": [
-              "Set up Google Analytics or Yandex.Metrica",
-              "Track key metrics (conversion, bounce rate, time on site)",
-              "Conduct A/B testing",
-              "Collect user feedback",
-              "Regularly analyze data and make improvements"
-            ]
-          },
-          "conclusion": {
-            "title": "Conclusion",
-            "text1": "By avoiding these common mistakes, you will significantly increase your chances of creating a successful website that will attract customers and grow your business. Remember that creating a website is not a one-time event, but a constant process of improvement and optimization.",
-            "text2": "If you're planning to create a website or want to improve an existing one, contact professionals. We will help you avoid these mistakes and create an effective website for your business."
-          },
-          "tags": {
-            "webDevelopment": "Web Development",
-            "errors": "Errors",
-            "tips": "Tips",
-            "seo": "SEO"
-          }
-        }
-      },
-      "seo-optimizaciya-sajta": {
-        "pageTitle": "SEO Website Optimization: Basics and Practice | Torgomyan.Studio",
-        "pageDescription": "Complete guide to SEO website optimization. Learn how to improve positions in search engines and attract organic traffic. Practical tips and tools for optimization.",
-        "pageKeywords": "SEO optimization, website SEO, search engine optimization, website promotion, SEO promotion, website optimization for search engines, SEO tips, how to optimize a website",
-        "openGraphTitle": "SEO Website Optimization: Basics and Practice",
-        "openGraphDescription": "Complete guide to SEO website optimization. Learn how to improve positions in search engines and attract organic traffic.",
-        "structuredDataHeadline": "SEO Website Optimization: Basics and Practice",
-        "structuredDataDescription": "Complete guide to SEO website optimization",
-        "subtitle": "Complete guide to SEO website optimization. Learn how to improve positions in search engines and attract organic traffic."
-      },
-      "kak-sozdat-uspeshnyj-lending": {
-        "pageTitle": "How to Create a Successful Landing Page | Torgomyan.Studio",
-        "pageDescription": "Step-by-step guide to creating an effective landing page that converts visitors into customers. Practical tips on design, content, and conversion optimization.",
-        "pageKeywords": "landing page, landing creation, effective landing, landing conversion, how to create a landing, selling landing, landing page creation, conversion landing",
-        "openGraphTitle": "How to Create a Successful Landing Page",
-        "openGraphDescription": "Step-by-step guide to creating an effective landing page that converts visitors into customers.",
-        "structuredDataHeadline": "How to Create a Successful Landing Page",
-        "structuredDataDescription": "Step-by-step guide to creating an effective landing page",
-        "subtitle": "Step-by-step guide to creating an effective landing page that converts visitors into customers."
-      },
-      "kak-vybrat-cms": {
-        "pageTitle": "How to Choose a CMS for Your Website | Torgomyan.Studio",
-        "pageDescription": "Comparison of popular CMS systems. Which platform to choose for your project: WordPress, Tilda, Webflow, or custom development? Practical tips and recommendations.",
-        "pageKeywords": "how to choose CMS, CMS selection, CMS comparison, WordPress, Tilda, Webflow, content management system, which CMS is better, choosing a platform for a website",
-        "openGraphTitle": "How to Choose a CMS for Your Website",
-        "openGraphDescription": "Comparison of popular CMS systems and recommendations for choosing the optimal platform",
-        "structuredDataHeadline": "How to Choose a CMS for Your Website",
-        "structuredDataDescription": "Comparison of popular CMS systems and selection recommendations",
-        "subtitle": "Comparison of popular CMS systems and recommendations for choosing the optimal platform for your project"
-      },
-      "optimizaciya-skorosti-sajta": {
-        "pageTitle": "Website Loading Speed Optimization | Torgomyan.Studio",
-        "pageDescription": "Practical tips for speeding up your website. How to reduce loading time and improve user experience. Tools and methods for performance optimization.",
-        "pageKeywords": "website speed optimization, website acceleration, website loading speed, performance optimization, how to speed up a website, website loading optimization, website performance",
-        "openGraphTitle": "Website Loading Speed Optimization",
-        "openGraphDescription": "Practical tips for speeding up your website. How to reduce loading time and improve user experience.",
-        "structuredDataHeadline": "Website Loading Speed Optimization",
-        "structuredDataDescription": "Practical tips for speeding up your website",
-        "subtitle": "Practical tips for speeding up your website. How to reduce loading time and improve user experience."
-      },
-      "trendy-veb-dizajna": {
-        "pageTitle": "Web Design Trends 2024 | Torgomyan.Studio",
-        "pageDescription": "Current trends in web design for 2024. What will be popular and how to create a modern website. Design trends that will help your website stand out.",
-        "pageKeywords": "web design trends, web design 2024, modern website design, design trends, current design, trendy web design, website design 2024",
-        "openGraphTitle": "Web Design Trends 2024",
-        "openGraphDescription": "Current trends in web design for 2024. What will be popular and how to create a modern website.",
-        "structuredDataHeadline": "Web Design Trends 2024",
-        "structuredDataDescription": "Current trends in web design for 2024",
-        "subtitle": "Current trends in web design for 2024. What will be popular and how to create a modern website."
-      }
-    },
-    "article1": {
-      "title": "How to Choose a Web Studio",
-      "description": "Guide to choosing a reliable web studio for your project. What to pay attention to when choosing a contractor."
-    },
-    "article2": {
-      "title": "SEO Website Optimization: Basics and Practice",
-      "description": "Complete guide to SEO website optimization. Learn how to improve positions in search engines and attract organic traffic."
-    }
-  },
   "contact": {
     "title": "Contact Us",
     "subtitle": "Let's discuss your project? I am a website developer",
@@ -408,6 +206,33 @@
     "headerDescription": "We are always ready to answer your questions and discuss your project. Contact us in a convenient way: by phone, via WhatsApp, Telegram or fill out the contact form. Our team works to help you realize your ideas and achieve your business goals.",
     "structuredDataName": "Contact - Torgomyan.Studio Contacts",
     "structuredDataDescription": "Contact page of Torgomyan.Studio web studio"
+  },
+  "scheduleCallPage": {
+    "pageTitle": "Schedule Call | Choose Time for Consultation | Torgomyan.Studio",
+    "pageDescription": "Choose a convenient time for a call. Free consultation on website development, web applications and digital marketing. We will contact you at the specified time.",
+    "pageKeywords": "schedule call, choose time for call, website development consultation, free consultation, contact web studio, order call from web studio",
+    "openGraphTitle": "Schedule Call | Choose Time for Consultation",
+    "openGraphDescription": "Choose a convenient time for a call. Free consultation on website development, web applications and digital marketing.",
+    "title": "Schedule Call",
+    "subtitle": "Choose a convenient time for you, and we will contact you",
+    "selectDate": "Select Date",
+    "selectTime": "Select Time",
+    "time": "Time",
+    "name": "Name",
+    "namePlaceholder": "Enter your name",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "phone": "Phone",
+    "submitting": "Submitting...",
+    "schedule": "Schedule",
+    "errors": {
+      "selectDateAndTime": "Please select date and time",
+      "enterName": "Please enter your name",
+      "enterEmail": "Please enter your email",
+      "enterPhone": "Please enter your phone",
+      "general": "An error occurred while scheduling the call"
+    },
+    "success": "Call successfully scheduled! We will contact you at the specified time."
   },
   "video": {
     "title": "What to Expect from Us",
@@ -425,6 +250,12 @@
     "getDiscount": "Get",
     "dontLeave": "Don't Leave!",
     "getFreeConsultationTitle": "Get a free consultation on website creation"
+  },
+  "discussBlock": {
+    "title": "Do you also need such websites?",
+    "socialProof": "clients contacted this month",
+    "discountText": "Free consultation + project estimate",
+    "buttonText": "Let's Discuss"
   },
   "aiBlock": {
     "letsDiscuss": "Let's Discuss",
@@ -780,5 +611,868 @@
     "title": "Full-Service Website Development | Torgomyan.Studio - Web Studio",
     "description": "Professional full-service website development. Creation of websites, online stores, landing pages and web applications. SEO promotion, UI/UX design. Over 100 successful projects. Order a website.",
     "keywords": "full-service website development, website creation Armenia, web studio Yerevan, website development, online store creation, landing page, corporate website, SEO promotion, web design, web application development, order website, website development cost, professional website development"
+  },
+  "websiteDevelopment": {
+    "pageTitle": "Full-Service Website Development in Armenia | Website Creation | Torgomyan.Studio",
+    "pageDescription": "Professional full-service website development in Armenia. Modern technologies (React, Next.js), responsive design, SEO optimization. We create websites that bring customers. Over 100 successful projects. Calculate cost.",
+    "pageKeywords": "full-service website development, website creation Armenia, website development Yerevan, full-service web development, website creation price, order website development, professional website development, modern websites, responsive website, React website development, Next.js development, website development cost, business website development, corporate website creation",
+    "openGraphTitle": "Full-Service Website Development in Armenia | Website Creation",
+    "openGraphDescription": "Professional full-service website development in Armenia. Modern technologies (React, Next.js), responsive design, SEO optimization. Over 100 successful projects.",
+    "title": "Full-Service Website Development",
+    "description": "Professional website development using modern technologies. Individual approach to each project to achieve maximum results. In the modern world, having a quality website is not just a necessity, but a key factor in your business success. We offer a full cycle of full-service website development, from concept to launch and support. Our team specializes in creating modern, functional and effective websites that not only attract attention but also convert visitors into customers.",
+    "stats": {
+      "successfulProjects": "Successful Projects",
+      "satisfiedClients": "Satisfied Clients",
+      "yearsExperience": "Years of Experience",
+      "businessGrowth": "Business Growth"
+    },
+    "benefits": {
+      "individualApproach": {
+        "title": "Individual Approach",
+        "description": "Each project is developed taking into account the specifics of your business and target audience"
+      },
+      "modernTechnologies": {
+        "title": "Modern Technologies",
+        "description": "We use current frameworks and tools to create fast and reliable solutions"
+      },
+      "seoOptimization": {
+        "title": "SEO Optimization",
+        "description": "All projects are created with search engine requirements in mind for better visibility"
+      },
+      "responsiveDesign": {
+        "title": "Responsive Design",
+        "description": "Your website will look great and work perfectly on all devices — from smartphones to desktops"
+      },
+      "fastLoading": {
+        "title": "Fast Loading",
+        "description": "Performance optimization to ensure fast page loading"
+      },
+      "technicalSupport": {
+        "title": "Technical Support",
+        "description": "We provide ongoing support and maintenance for your project"
+      }
+    },
+    "features": {
+      "businessAnalysis": "Business and target audience analysis",
+      "uniqueDesign": "Unique design development",
+      "responsiveLayout": "Responsive layout for all devices",
+      "cmsIntegration": "Content management system integration",
+      "seoOptimization": "SEO optimization during development",
+      "analyticsSetup": "Analytics and tracking setup",
+      "testingOptimization": "Testing and optimization",
+      "training": "Website management training",
+      "postLaunchSupport": "Technical support after launch"
+    },
+    "faq": {
+      "developmentTime": {
+        "question": "How long does it take to develop a website?",
+        "answer": "Development time depends on the complexity of the project. A simple business card website can be ready in 1-2 weeks, a corporate website — in 3-6 weeks, and a complex online store — in 2-3 months. We always agree on timelines at the planning stage."
+      },
+      "cost": {
+        "question": "What is the cost of website development?",
+        "answer": "The cost depends on the type of website, its functionality and complexity. We offer transparent pricing and always discuss the budget at the consultation stage. Contact us for an individual quote."
+      },
+      "seoIncluded": {
+        "question": "Does development include SEO optimization?",
+        "answer": "Yes, we include basic SEO optimization in all projects. This includes proper website structure, meta tag optimization, sitemap creation and other important elements for search engine optimization."
+      },
+      "contentEditing": {
+        "question": "Will I be able to edit content independently?",
+        "answer": "Yes, we install a convenient content management system (CMS) that allows you to independently update texts, add images and manage content without technical knowledge."
+      }
+    },
+    "serviceButton": "Website Development"
+  },
+  "landingPage": {
+    "pageTitle": "Full-Service Landing Page Creation | Converting Landing Page | Torgomyan.Studio",
+    "pageDescription": "Professional creation of high-converting landing pages. Single-page sites for advertising campaigns. A/B testing, mobile optimization. From 40,000₽. Order landing page.",
+    "pageKeywords": "landing page creation, full-service landing page, converting landing page, landing page creation, single-page site, landing page price, order landing page, landing page for business, full-service landing page creation, converting landing page, landing page cost, landing page for advertising, conversion landing page",
+    "openGraphTitle": "Full-Service Landing Page Creation | Converting Landing Page",
+    "openGraphDescription": "Professional creation of high-converting landing pages. Single-page sites for advertising campaigns. A/B testing, mobile optimization.",
+    "title": "Landing Page for Your Business",
+    "description": "We create high-converting single-page sites. Landing pages that turn visitors into customers. A landing page (landing page) is a specialized single-page site created to achieve a specific goal: selling a product, collecting leads, event registration, or other targeted actions. We create landing pages that are not just beautiful, but effectively convert visitors into customers.",
+    "stats": {
+      "fromPrice": "From Price",
+      "higherConversion": "Higher Conversion",
+      "weeksToLaunch": "Weeks to Launch",
+      "successfulLandings": "Successful Landings",
+      "satisfaction": "Satisfaction"
+    },
+    "benefits": {
+      "highConversion": {
+        "title": "High Conversion",
+        "description": "Specialized landing pages convert 2-3 times better than regular websites"
+      },
+      "fastLaunch": {
+        "title": "Fast Launch",
+        "description": "Landing page can be launched in just 1-2 weeks after starting work"
+      },
+      "focusOnGoal": {
+        "title": "Focus on Goal",
+        "description": "The entire page is focused on achieving one specific goal"
+      },
+      "abTesting": {
+        "title": "A/B Testing",
+        "description": "We test different variants for maximum effectiveness"
+      },
+      "mobileOptimization": {
+        "title": "Mobile Optimization",
+        "description": "Perfect performance on all devices, especially mobile"
+      },
+      "adIntegration": {
+        "title": "Advertising Integration",
+        "description": "We set up integration with advertising campaigns for better results"
+      }
+    },
+    "features": {
+      "audienceAnalysis": "Target audience and competitor analysis",
+      "uniqueDesign": "Unique design development",
+      "compellingContent": "Creating compelling headlines and texts",
+      "leadForms": "Lead capture form optimization",
+      "analyticsIntegration": "Analytics system integration",
+      "abTestingSetup": "A/B testing setup",
+      "mobileAdaptation": "Mobile adaptation",
+      "seoOptimization": "SEO optimization",
+      "adSystemsIntegration": "Advertising system integration"
+    },
+    "faq": {
+      "difference": {
+        "question": "How is a landing page different from a regular website?",
+        "answer": "A landing page is a single-page site completely focused on one goal (sale, lead, registration). A regular website contains multiple pages with different information. Landing pages are more effective for advertising campaigns and specific offers."
+      },
+      "cost": {
+        "question": "How much does landing page creation cost?",
+        "answer": "Landing page cost depends on design complexity, number of blocks, and required integrations. Basic landing page starts from 40,000 rubles, premium landing page with extended functionality — from 80,000 rubles. Contact us for an accurate quote."
+      },
+      "launchTime": {
+        "question": "How quickly can a landing page be launched?",
+        "answer": "We can launch a standard landing page in 1-2 weeks. Urgent projects are possible in 3-5 days with an additional fee. Deadlines are always agreed upon at the planning stage."
+      },
+      "adHelp": {
+        "question": "Do you help with advertising for landing pages?",
+        "answer": "Yes, we can help set up advertising campaigns in Yandex.Direct, Google Ads, and social networks. We also integrate the landing page with analytics systems to track effectiveness."
+      }
+    },
+    "serviceButton": "Landing Page"
+  },
+  "businessCardWebsite": {
+    "pageTitle": "Business Card Website Creation | Simple Business Website | Torgomyan.Studio",
+    "pageDescription": "Business card website creation for small businesses. Simple, fast and effective website at an affordable price. Perfect for starting a business online. From 80,000₽. Order business card website.",
+    "pageKeywords": "business card website, business card site, business card website creation, simple website, website for small business, business card website price, order business card website, cheap website, full-service website, business card website creation price, business card website cost",
+    "openGraphTitle": "Business Card Website Creation | Simple Business Website",
+    "openGraphDescription": "Business card website creation for small businesses at an affordable price. Simple, fast and effective website. Perfect solution for starting online.",
+    "title": "Business Card Website for Your Business",
+    "description": "Simple, fast and effective business card website at an affordable price. Perfect solution for small businesses and starting online. A business card website is an excellent solution for small businesses, freelancers and aspiring entrepreneurs who want to quickly and inexpensively establish their presence online. This is a compact website, usually consisting of 3-5 pages, that contains basic information about your business: services, contacts, portfolio or product catalog.",
+    "stats": {
+      "fromPrice": "From Price",
+      "weeksToLaunch": "Weeks to Launch",
+      "pagesIncluded": "Pages Included",
+      "readyToWork": "Ready to Work"
+    },
+    "benefits": {
+      "affordablePrice": {
+        "title": "Affordable Price",
+        "description": "Perfect price-quality ratio for small businesses"
+      },
+      "fastLaunch": {
+        "title": "Fast Launch",
+        "description": "Website ready to launch in just 1-2 weeks"
+      },
+      "easyManagement": {
+        "title": "Easy Management",
+        "description": "Easy to update content independently without technical knowledge"
+      },
+      "mobileAdaptation": {
+        "title": "Mobile Adaptation",
+        "description": "Looks great and works perfectly on all devices"
+      },
+      "seoOptimization": {
+        "title": "SEO Optimization",
+        "description": "Basic optimization for search engines included"
+      },
+      "professionalLook": {
+        "title": "Professional Look",
+        "description": "Modern design that builds trust"
+      }
+    },
+    "features": {
+      "designDevelopment": "Design development",
+      "createPages": "Creating 3-5 main pages",
+      "responsiveLayout": "Responsive layout",
+      "cms": "Content management system",
+      "contactForm": "Contact form",
+      "mapIntegration": "Map and contacts integration",
+      "seoOptimization": "Basic SEO optimization",
+      "training": "Website management training"
+    },
+    "faq": {
+      "pagesCount": {
+        "question": "How many pages does a business card website include?",
+        "answer": "Usually a business card website includes 3-5 pages: home, about company/services, portfolio/catalog, contacts. The number of pages may vary depending on your needs."
+      },
+      "cost": {
+        "question": "What is the cost of a business card website?",
+        "answer": "Business card website cost starts from 50,000 rubles. Price depends on the number of pages, design complexity and additional features. Contact us for an accurate quote."
+      },
+      "expandable": {
+        "question": "Can a business card website be expanded later?",
+        "answer": "Yes, of course! A business card website can be easily expanded to a corporate website or online store as your business grows. We will help with project development."
+      },
+      "creationTime": {
+        "question": "How long does it take to create?",
+        "answer": "A standard business card website is ready to launch in 1-2 weeks. Deadlines depend on the speed of content provision and design approval."
+      }
+    },
+    "serviceButton": "Business Card Website"
+  },
+  "corporateWebsite": {
+    "pageTitle": "Corporate Website Development | Company Website Creation | Torgomyan.Studio",
+    "pageDescription": "Professional corporate website development for companies. Multi-page websites with full functionality, CRM integration, multilingual support. From 120,000₽. Order corporate website.",
+    "pageKeywords": "corporate website, corporate website development, corporate website creation, company website, corporate website price, order corporate website, business website, corporate web site, business website creation, corporate website cost, company website development",
+    "openGraphTitle": "Corporate Website Development | Company Website Creation",
+    "openGraphDescription": "Professional corporate website development for companies. Multi-page websites with full functionality, CRM integration, multilingual support.",
+    "title": "Corporate Website for Your Company",
+    "description": "Professional corporate website development with full functionality. Modern solutions for businesses of any scale. A corporate website is your company's business card on the internet. It is a multifunctional platform that presents your business, products and services, helps attract customers and build trust. We create corporate websites that are not only beautiful but also functional.",
+    "stats": {
+      "fromPrice": "From Price",
+      "pagesIncluded": "Pages Included",
+      "weeksDevelopment": "Weeks Development",
+      "support": "Support"
+    },
+    "benefits": {
+      "fullFunctionality": {
+        "title": "Full Functionality",
+        "description": "All necessary sections and modules for full company operation online"
+      },
+      "corporateStyle": {
+        "title": "Corporate Style",
+        "description": "Compliance with company brand identity and brand book"
+      },
+      "scalability": {
+        "title": "Scalability",
+        "description": "Ability to expand functionality as business grows"
+      },
+      "multilingual": {
+        "title": "Multilingual",
+        "description": "Support for multiple languages for international business"
+      },
+      "integrations": {
+        "title": "Integrations",
+        "description": "Integration with CRM, analytics systems and other services"
+      },
+      "security": {
+        "title": "Security",
+        "description": "High level of data and company information protection"
+      }
+    },
+    "features": {
+      "structureDevelopment": "Website structure development",
+      "uniqueDesign": "Unique design creation",
+      "sectionsDevelopment": "Development of all necessary sections",
+      "cms": "Content management system",
+      "multilingualSupport": "Multilingual support",
+      "crmIntegration": "CRM and analytics integration",
+      "contactForms": "Contact forms and applications",
+      "blogNews": "Blog and news feed",
+      "galleryPortfolio": "Gallery and portfolio",
+      "seoOptimization": "SEO optimization",
+      "technicalSupport": "Technical support"
+    },
+    "faq": {
+      "pagesCount": {
+        "question": "How many pages does a corporate website include?",
+        "answer": "The number of pages depends on your business specifics. Usually a corporate website includes 10-30 pages: home, about company, services/products, news/blog, contacts and other sections as needed."
+      },
+      "cost": {
+        "question": "What is the cost of a corporate website?",
+        "answer": "Cost depends on the number of pages, design complexity, functionality and integrations. Basic corporate website starts from 120,000 rubles, premium solution with extended functionality — from 250,000 rubles. Contact us for a detailed quote."
+      },
+      "crmIntegration": {
+        "question": "Can the website be integrated with our CRM?",
+        "answer": "Yes, we can integrate the website with popular CRM systems (amoCRM, Bitrix24, Salesforce, etc.) to automate customer relationship management."
+      },
+      "multilingual": {
+        "question": "Is multilingual support available?",
+        "answer": "Yes, we can create a multilingual version of the website. This is especially important for companies operating in international markets."
+      }
+    },
+    "serviceButton": "Corporate Website"
+  },
+  "onlineShop": {
+    "pageTitle": "Online Store Creation Turnkey | E-commerce Development | Torgomyan.Studio",
+    "pageDescription": "Professional turnkey online store creation with payment, delivery and CRM integration. Full-featured e-commerce stores for sales. From 200,000₽. Order online store.",
+    "pageKeywords": "online store creation, turnkey online store, online store development, ecommerce store creation, online store price, order online store, ecommerce development, online store cost, online store creation price, online store for business, online store development, online store from scratch",
+    "openGraphTitle": "Online Store Creation Turnkey | E-commerce Development",
+    "openGraphDescription": "Professional turnkey online store creation with payment, delivery and CRM integration. Full-featured e-commerce stores for sales.",
+    "title": "Online Store Turnkey",
+    "description": "We create full-featured online stores with payment, delivery and product management integration. Professional solutions for online sales. An online store is a powerful tool for growing your business online. We create modern, functional and convenient online stores that help increase sales and attract new customers.",
+    "stats": {
+      "fromPrice": "From Price",
+      "monthsDevelopment": "Months Development",
+      "onlineShops": "Online Stores",
+      "salesGrowth": "Sales Growth"
+    },
+    "benefits": {
+      "fullFunctionality": {
+        "title": "Full Functionality",
+        "description": "Product catalog, shopping cart, order checkout, user account and much more"
+      },
+      "paymentIntegration": {
+        "title": "Payment Integration",
+        "description": "Connection of various payment systems for online payment processing"
+      },
+      "productManagement": {
+        "title": "Product Management",
+        "description": "Convenient admin panel for managing catalog, orders and customers"
+      },
+      "mobileVersion": {
+        "title": "Mobile Version",
+        "description": "Responsive design for comfortable shopping from mobile devices"
+      },
+      "seoOptimization": {
+        "title": "SEO Optimization",
+        "description": "Optimization for search engines to attract organic traffic"
+      },
+      "deliveryIntegration": {
+        "title": "Delivery Integration",
+        "description": "Connection of delivery services and delivery cost calculation"
+      }
+    },
+    "features": {
+      "productCatalog": "Product catalog with filters",
+      "cartCheckout": "Shopping cart and order checkout",
+      "userAccount": "Customer account",
+      "paymentSystems": "Payment systems integration",
+      "orderManagement": "Order management",
+      "discountsPromocodes": "Discount and promo code system",
+      "deliveryIntegration": "Delivery integration",
+      "reviewsRatings": "Reviews and ratings",
+      "catalogSearch": "Catalog search",
+      "seoOptimization": "SEO optimization",
+      "analyticsReports": "Analytics and reports"
+    },
+    "faq": {
+      "cost": {
+        "question": "How much does it cost to create an online store?",
+        "answer": "Cost depends on the number of products, functionality and integrations. Basic online store starts from 200,000 rubles, extended store with full functionality — from 350,000 rubles. Contact us for a detailed quote."
+      },
+      "developmentTime": {
+        "question": "How long does development take?",
+        "answer": "A standard online store is developed in 2-3 months. Deadlines depend on project complexity and number of products. We always agree on deadlines at the planning stage."
+      },
+      "selfManagement": {
+        "question": "Can I manage products independently?",
+        "answer": "Yes, we create a convenient admin panel that allows you to independently add products, manage orders, set prices and discounts without technical knowledge."
+      },
+      "paymentSystems": {
+        "question": "What payment systems can be connected?",
+        "answer": "We can integrate YooKassa, Stripe, PayPal, CloudPayments and other popular payment systems. We help you choose the optimal solution for your business."
+      }
+    },
+    "serviceButton": "Online Store"
+  },
+  "webApplications": {
+    "pageTitle": "Custom Web Application Development | Web Application Creation | Torgomyan.Studio",
+    "pageDescription": "Web application development of any complexity. Modern technologies (React, Next.js, Node.js), custom business solutions. From 300,000₽. Order web application.",
+    "pageKeywords": "web application, web app, web application development, create web application, custom web application, web application development price, order web application, web application development React, Next.js applications, web application development cost",
+    "openGraphTitle": "Custom Web Application Development | Web Application Creation",
+    "openGraphDescription": "Professional web application development of any complexity using modern technologies. Custom business solutions.",
+    "title": "Web Application Development",
+    "description": "We create web applications of any complexity for automating business processes and solving specific tasks of your company. A web application is software that runs in a browser and allows you to solve specific business tasks. Unlike regular websites, web applications have complex logic, interactivity and can process large amounts of data.",
+    "stats": {
+      "fromPrice": "From Price",
+      "monthsDevelopment": "Months Development",
+      "projects": "Projects",
+      "uptime": "Uptime"
+    },
+    "benefits": {
+      "customDevelopment": {
+        "title": "Custom Development",
+        "description": "Each application is created for your specific tasks and requirements"
+      },
+      "modernTechnologies": {
+        "title": "Modern Technologies",
+        "description": "We use current frameworks and development tools"
+      },
+      "highPerformance": {
+        "title": "High Performance",
+        "description": "Code optimization for fast operation even with large amounts of data"
+      },
+      "security": {
+        "title": "Security",
+        "description": "Implementation of modern data and information protection methods"
+      },
+      "scalability": {
+        "title": "Scalability",
+        "description": "Architecture that allows easy expansion of functionality"
+      },
+      "apiIntegrations": {
+        "title": "API Integrations",
+        "description": "Integration with external services and systems via API"
+      }
+    },
+    "features": {
+      "requirementsAnalysis": "Requirements analysis and design",
+      "architectureDevelopment": "Application architecture development",
+      "uiCreation": "User interface creation",
+      "backendDevelopment": "Backend development",
+      "databaseSetup": "Database setup",
+      "externalApiIntegration": "External API integration",
+      "testingDebugging": "Testing and debugging",
+      "performanceOptimization": "Performance optimization",
+      "deploymentSetup": "Deployment and setup",
+      "technicalSupport": "Technical support"
+    },
+    "faq": {
+      "technologies": {
+        "question": "What technologies are used for development?",
+        "answer": "We use modern technology stack: React, Next.js, Node.js, TypeScript, MySQL, MongoDB and others. Technology choice depends on project specifics and requirements."
+      },
+      "developmentTime": {
+        "question": "How long does web application development take?",
+        "answer": "Timelines depend on project complexity. A simple application can be ready in 1-2 months, a complex one — in 3-6 months or more. We always agree on timelines at the planning stage."
+      },
+      "cost": {
+        "question": "What is the cost of web application development?",
+        "answer": "Cost depends on functionality complexity, number of modules and integrations. A simple application starts from 300,000 rubles, a complex corporate application — from 500,000 rubles. Contact us for a detailed quote."
+      },
+      "technicalSupport": {
+        "question": "Do you provide technical support?",
+        "answer": "Yes, we provide technical support and application maintenance. We can also train your team to work with the system."
+      }
+    },
+    "serviceButton": "Web Applications"
+  },
+  "seo": {
+    "pageTitle": "SEO Website Promotion in Yandex and Google | Website Promotion | Torgomyan.Studio",
+    "pageDescription": "Professional SEO website promotion in Yandex and Google. Increase organic traffic and top-10 positions. Technical SEO optimization, content work, link building. From 40,000₽/month. Order SEO.",
+    "pageKeywords": "SEO website promotion, website promotion Yandex, website promotion Google, SEO website optimization, SEO services, order SEO promotion, SEO price, search engine optimization, technical SEO, website promotion price, SEO promotion cost, website traffic increase, website position increase, SEO website audit",
+    "openGraphTitle": "SEO Website Promotion in Yandex and Google | Website Promotion",
+    "openGraphDescription": "Professional SEO website promotion in Yandex and Google. Increase organic traffic and top-10 positions. Technical SEO optimization.",
+    "title": "SEO Website Promotion",
+    "description": "Professional website promotion in Yandex and Google. We increase traffic and positions in search results for your business growth. SEO (Search Engine Optimization) is a set of measures to optimize a website for search engines in order to improve its positions in search results for target queries. A well-optimized website receives organic traffic from search engines, which is one of the most effective and long-term ways to attract customers.",
+    "stats": {
+      "fromPricePerMonth": "From Price/Month",
+      "monthsToResults": "Months to Results",
+      "promotedSites": "Promoted Sites",
+      "trafficGrowth": "Traffic Growth"
+    },
+    "benefits": {
+      "organicTraffic": {
+        "title": "Organic Traffic",
+        "description": "Attracting targeted visitors from search engines without paying per click"
+      },
+      "longTermResult": {
+        "title": "Long-term Result",
+        "description": "Search positions work constantly, unlike advertising"
+      },
+      "conversionGrowth": {
+        "title": "Conversion Growth",
+        "description": "Search traffic has high conversion to leads and sales"
+      },
+      "technicalOptimization": {
+        "title": "Technical Optimization",
+        "description": "Improving technical parameters of the website for better indexing"
+      },
+      "contentWork": {
+        "title": "Content Work",
+        "description": "Creating and optimizing content for search queries"
+      },
+      "regularReporting": {
+        "title": "Regular Reporting",
+        "description": "Monthly reports on work done and results"
+      }
+    },
+    "features": {
+      "siteCompetitorAudit": "Site and competitor audit",
+      "keywordResearch": "Keyword research",
+      "technicalOptimization": "Technical optimization",
+      "contentOptimization": "Content optimization",
+      "newContentCreation": "New content creation",
+      "internalLinking": "Internal linking",
+      "externalLinks": "External link work",
+      "analyticsSetup": "Analytics setup",
+      "positionMonitoring": "Position monitoring",
+      "monthlyReporting": "Monthly reporting"
+    },
+    "faq": {
+      "resultsTime": {
+        "question": "How long does it take to see results?",
+        "answer": "First results are usually visible after 2-3 months. Significant traffic and position growth occurs after 4-6 months of regular work. SEO is a long-term strategy."
+      },
+      "cost": {
+        "question": "What is the cost of SEO promotion?",
+        "answer": "Cost depends on niche competitiveness, current website condition and scope of work. Monthly cost starts from 40,000 rubles. Contact us for a custom quote."
+      },
+      "yandexGoogle": {
+        "question": "Do you work with Yandex and Google?",
+        "answer": "Yes, we promote websites in both search engines. We consider the features of each system's algorithms for maximum effectiveness."
+      },
+      "advertisingCombination": {
+        "question": "Do I need to pay for advertising alongside SEO?",
+        "answer": "Not necessarily, but a combination of SEO and contextual advertising gives better results. SEO provides long-term traffic, while advertising provides quick results."
+      }
+    },
+    "serviceButton": "Website Promotion (SEO)"
+  },
+  "uiUxDesign": {
+    "pageTitle": "UI/UX Interface Design | Website and Application Design | Torgomyan.Studio",
+    "pageDescription": "Professional UI/UX interface design. Creating convenient and beautiful interfaces for websites and applications. Conversion increase by 20-40%. From 80,000₽. Order interface design.",
+    "pageKeywords": "UI UX design, interface design, UI design, UX design, website design, application design, user interface, interface design price, order UI design, web design, website design, interface design creation",
+    "openGraphTitle": "UI/UX Interface Design | Website and Application Design",
+    "openGraphDescription": "Professional UI/UX design for creating convenient and beautiful interfaces. Conversion increase by 20-40%.",
+    "title": "UI/UX Interface Design",
+    "description": "We create convenient and beautiful interfaces that users love and increase conversion. Professional design for websites and applications. UI/UX design is the creation of interfaces that are not only beautiful but also convenient to use. UI (User Interface) is responsible for the visual part, while UX (User Experience) is responsible for user experience and usability.",
+    "stats": {
+      "fromPrice": "From Price",
+      "conversionGrowth": "Conversion Growth",
+      "weeksDevelopment": "Weeks Development",
+      "designProjects": "Design Projects"
+    },
+    "benefits": {
+      "conversionIncrease": {
+        "title": "Conversion Increase",
+        "description": "A properly designed interface increases conversion by 20-40%"
+      },
+      "usability": {
+        "title": "Usability",
+        "description": "An intuitive interface reduces bounce rate and increases engagement"
+      },
+      "modernDesign": {
+        "title": "Modern Design",
+        "description": "Current trends and best practices in interface design"
+      },
+      "responsiveness": {
+        "title": "Responsiveness",
+        "description": "Design that works perfectly on all devices"
+      },
+      "userResearch": {
+        "title": "User Research",
+        "description": "Design based on analysis of user behavior and needs"
+      },
+      "prototyping": {
+        "title": "Prototyping",
+        "description": "Creating interactive prototypes for testing before development"
+      }
+    },
+    "features": {
+      "audienceAnalysis": "Target audience analysis",
+      "competitorResearch": "Competitor research",
+      "userScenarios": "User scenario creation",
+      "wireframes": "Wireframe development",
+      "visualDesign": "Visual design creation",
+      "designSystem": "Design system development",
+      "interactivePrototypes": "Interactive prototype creation",
+      "responsiveDesign": "Responsive design",
+      "mockupsPreparation": "Mockup preparation for development",
+      "testingIterations": "Testing and iterations"
+    },
+    "faq": {
+      "uiUxDifference": {
+        "question": "What is the difference between UI and UX design?",
+        "answer": "UI (User Interface) is the visual design of the interface: colors, fonts, buttons, icons. UX (User Experience) is the design of user experience: usability, interaction logic, user scenarios. Both aspects are important for creating a quality interface."
+      },
+      "cost": {
+        "question": "What is the cost of interface design?",
+        "answer": "Cost depends on project complexity and number of screens. Design for a simple website starts from 80,000 rubles, for a complex application — from 500,000 rubles. Contact us for an accurate quote."
+      },
+      "developmentTime": {
+        "question": "How long does design development take?",
+        "answer": "Timelines depend on scope of work. Design for a simple website — 2-3 weeks, for a complex application — 1-2 months. We always agree on timelines at the planning stage."
+      },
+      "designSystem": {
+        "question": "Do you provide a design system?",
+        "answer": "Yes, we create a design system with components, styles and guidelines that simplifies further development and project maintenance."
+      }
+    },
+    "serviceButton": "Interface Design (UI/UX)"
+  },
+  "technicalSupport": {
+    "pageTitle": "Website Technical Support | Maintenance and Support | Torgomyan.Studio",
+    "pageDescription": "24/7 website technical support and maintenance. Content updates, bug fixes, backups. 99.9% uptime guarantee. From 15,000₽/month. Order website technical support.",
+    "pageKeywords": "website technical support, website maintenance, website support, technical support price, website maintenance, web site support, website administration, 24/7 website technical support, website maintenance price",
+    "openGraphTitle": "Website Technical Support | Maintenance and Support",
+    "openGraphDescription": "Professional 24/7 website technical support and maintenance for stable business operation. 99.9% uptime guarantee.",
+    "title": "Website Technical Support",
+    "description": "We ensure stable operation of your website 24/7. Content updates, bug fixes, backups and full technical support. After website launch, it's important to ensure its stable operation, regular updates and technical support. We offer comprehensive website maintenance that includes all necessary services for uninterrupted operation of your online presence.",
+    "stats": {
+      "fromPricePerMonth": "From Price/Month",
+      "support": "Support",
+      "reactionTime": "Reaction Time",
+      "uptime": "Uptime"
+    },
+    "benefits": {
+      "roundTheClockSupport": {
+        "title": "Round-the-Clock Support",
+        "description": "24/7 specialist availability for urgent issues"
+      },
+      "fastReaction": {
+        "title": "Fast Reaction",
+        "description": "Quick resolution of problems and errors on the website"
+      },
+      "regularUpdates": {
+        "title": "Regular Updates",
+        "description": "Timely content and functionality updates"
+      },
+      "backup": {
+        "title": "Backup",
+        "description": "Regular backup creation for data security"
+      },
+      "monitoring": {
+        "title": "Monitoring",
+        "description": "Continuous monitoring of performance and productivity"
+      },
+      "security": {
+        "title": "Security",
+        "description": "Protection against viruses, hacker attacks and other threats"
+      }
+    },
+    "features": {
+      "siteMonitoring": "Website performance monitoring",
+      "bugFixes": "Bug fixes and error correction",
+      "contentUpdates": "Content updates",
+      "backup": "Backup",
+      "cmsUpdates": "CMS and plugin updates",
+      "virusProtection": "Virus and attack protection",
+      "performanceOptimization": "Performance optimization",
+      "consultations": "Website operation consultations",
+      "technicalDocumentation": "Technical documentation",
+      "monthlyReports": "Monthly reports"
+    },
+    "faq": {
+      "servicesIncluded": {
+        "question": "What services are included in technical support?",
+        "answer": "The basic package includes website monitoring, bug fixes, content updates, backups and consultations. Extended packages may include new feature development, SEO optimization and other services."
+      },
+      "cost": {
+        "question": "How much does technical support cost?",
+        "answer": "Cost depends on scope of work and website complexity. Basic package starts from 15,000 rubles per month. Contact us for a custom quote."
+      },
+      "reactionTime": {
+        "question": "How quickly do you react to problems?",
+        "answer": "Critical issues are resolved within 1-2 hours, regular tasks — within a business day. Extended support clients have access to round-the-clock support."
+      },
+      "differentCms": {
+        "question": "Do you work with websites on different CMS?",
+        "answer": "Yes, we work with various content management systems: WordPress, Bitrix, MODX, Laravel and others. Experience with most popular platforms."
+      }
+    },
+    "serviceButton": "Technical Support"
+  },
+  "hostingDomains": {
+    "pageTitle": "Hosting & Domains | Domain Registration and Website Hosting | Torgomyan.Studio",
+    "pageDescription": "Website hosting and domain registration. Reliable hosting with high speed and 99.9% availability. Domain name registration. Free SSL certificates. From 500₽/month. Order hosting.",
+    "pageKeywords": "website hosting, domain registration, domain, hosting price, buy hosting, domain registration, domain name, virtual hosting, VPS hosting, website hosting, hosting and domains price",
+    "openGraphTitle": "Hosting & Domains | Domain Registration and Website Hosting",
+    "openGraphDescription": "Reliable website hosting with high speed and 99.9% availability. Domain name registration. Free SSL certificates.",
+    "title": "Hosting & Domains",
+    "description": "Reliable website hosting with high speed and availability. Domain name registration and full support. Hosting and domain are the foundation of any website on the internet. A domain is your website's address, and hosting is where website files are stored and its availability on the internet is ensured. We offer reliable hosting solutions with high loading speed, stable operation and technical support.",
+    "stats": {
+      "fromPricePerMonth": "From Price/Month",
+      "uptime": "Uptime",
+      "support": "Support",
+      "free": "Free"
+    },
+    "benefits": {
+      "highSpeed": {
+        "title": "High Speed",
+        "description": "Optimized servers for fast website loading"
+      },
+      "stability": {
+        "title": "Stability",
+        "description": "99.9% website availability guarantee"
+      },
+      "security": {
+        "title": "Security",
+        "description": "Protection against DDoS attacks and other threats"
+      },
+      "technicalSupport": {
+        "title": "Technical Support",
+        "description": "Qualified assistance in solving technical issues"
+      },
+      "backup": {
+        "title": "Backup",
+        "description": "Automatic backup creation"
+      },
+      "scalability": {
+        "title": "Scalability",
+        "description": "Ability to increase resources as website grows"
+      }
+    },
+    "features": {
+      "domainRegistration": "Domain name registration",
+      "virtualHosting": "Virtual hosting",
+      "vpsServers": "VPS servers",
+      "sslCertificates": "SSL certificates",
+      "backup": "Backup",
+      "ddosProtection": "DDoS protection",
+      "support247": "24/7 technical support",
+      "controlPanel": "Control panel",
+      "siteMigration": "Website migration",
+      "emailSetup": "Email setup"
+    },
+    "faq": {
+      "hostingPlans": {
+        "question": "What hosting plans do you offer?",
+        "answer": "We offer various plans: from virtual hosting for small websites to dedicated servers for large projects. Cost starts from 500 rubles per month. Contact us to find the optimal solution."
+      },
+      "siteMigration": {
+        "question": "Do you help with website migration?",
+        "answer": "Yes, we provide free assistance with website migration to our hosting. Our specialists migrate all files and configure website operation on the new hosting."
+      },
+      "sslCertificate": {
+        "question": "Is SSL certificate included?",
+        "answer": "Yes, we provide free Let's Encrypt SSL certificate for all websites on our hosting. This ensures secure HTTPS connection."
+      },
+      "uptimeGuarantee": {
+        "question": "What is the uptime guarantee?",
+        "answer": "We guarantee 99.9% website availability. If this indicator is exceeded, we provide compensation according to SLA."
+      }
+    },
+    "serviceButton": "Hosting & Domains"
+  },
+  "paymentIntegration": {
+    "pageTitle": "Payment System Integration | Payment Gateway Setup | Torgomyan.Studio",
+    "pageDescription": "Payment system integration for websites. Online payment setup via YooKassa, Stripe, and other systems. Secure payments, PCI DSS compliance. From 45,000₽. Order payment integration.",
+    "pageKeywords": "payment system integration, payment setup, online payment, payment gateway, yookassa, stripe, paypal, payment integration price, order payment integration, payment system setup, payment integration cost",
+    "openGraphTitle": "Payment System Integration | Payment Gateway Setup",
+    "openGraphDescription": "Professional payment system integration for accepting online payments on your website. Secure payments, PCI DSS compliance.",
+    "title": "Payment System Integration",
+    "description": "We set up online payment on your website. Integration with YooKassa, Stripe, and other payment systems for accepting payments. The ability to accept online payments is a key feature for online stores, services and other commercial websites. We integrate various payment systems so your customers can easily and securely pay for goods and services.",
+    "stats": {
+      "fromPrice": "From Price",
+      "weeksIntegration": "Weeks Integration",
+      "paymentSystems": "Payment Systems",
+      "security": "Security"
+    },
+    "benefits": {
+      "security": {
+        "title": "Security",
+        "description": "PCI DSS compliance and customer data protection"
+      },
+      "multipleSystems": {
+        "title": "Multiple Systems",
+        "description": "Integration with various payment systems of your choice"
+      },
+      "quickConnection": {
+        "title": "Quick Connection",
+        "description": "Setup and launch payments in the shortest time"
+      },
+      "customerConvenience": {
+        "title": "Customer Convenience",
+        "description": "Simple and clear payment process increases conversion"
+      },
+      "mobilePayment": {
+        "title": "Mobile Payment",
+        "description": "Support for payment from mobile devices"
+      },
+      "technicalSupport": {
+        "title": "Technical Support",
+        "description": "Assistance in resolving payment operation issues"
+      }
+    },
+    "features": {
+      "requirementsAnalysis": "Requirements analysis and system selection",
+      "gatewaySetup": "Payment gateway setup",
+      "apiIntegration": "Payment system API integration",
+      "paymentForm": "Payment form creation",
+      "notificationsSetup": "Notifications setup",
+      "successfulPayments": "Successful payment processing",
+      "refunds": "Refund processing",
+      "recurringPayments": "Recurring payment setup",
+      "crmIntegration": "CRM integration",
+      "testingDebugging": "Testing and debugging"
+    },
+    "faq": {
+      "paymentSystems": {
+        "question": "What payment systems do you work with?",
+        "answer": "We work with YooKassa, Stripe, PayPal, CloudPayments, PayU, Robokassa and other popular systems. We help you choose the optimal solution for your business."
+      },
+      "cost": {
+        "question": "How much does payment system integration cost?",
+        "answer": "Cost depends on the selected system and integration complexity. Basic integration starts from 45,000 rubles. Contact us for an accurate quote."
+      },
+      "integrationTime": {
+        "question": "How long does integration take?",
+        "answer": "Standard integration takes 1-2 weeks. Timelines depend on the selected payment system and project complexity."
+      },
+      "registration": {
+        "question": "Do I need to register separately in the payment system?",
+        "answer": "Yes, you will need to register in the selected payment system and obtain the necessary API keys. We will help with the registration and setup process."
+      }
+    },
+    "serviceButton": "Payment System Integration"
+  },
+  "businessAutomation": {
+    "pageTitle": "Business Process Automation | Company Automation | Torgomyan.Studio",
+    "pageDescription": "Business process automation for companies. Implementation of automation systems to improve work efficiency. Time savings up to 30%. From 150,000₽. Order automation.",
+    "pageKeywords": "business process automation, company automation, work automation, automation implementation, automation systems, automation price, order automation, business automation, process automation cost",
+    "openGraphTitle": "Business Process Automation | Company Automation",
+    "openGraphDescription": "Implementation of automation systems to improve your company's work efficiency. Time savings up to 30%.",
+    "title": "Business Process Automation",
+    "description": "We implement automation systems to improve your company's work efficiency. We reduce time and resource costs for routine operations. Business process automation is the implementation of technological solutions for automatic execution of routine tasks, which allows to improve company efficiency and reduce operational costs.",
+    "stats": {
+      "fromPrice": "From Price",
+      "timeSavings": "Time Savings",
+      "monthsImplementation": "Months Implementation",
+      "automatedProcesses": "Automated Processes"
+    },
+    "benefits": {
+      "efficiencyIncrease": {
+        "title": "Efficiency Increase",
+        "description": "Automation of routine tasks frees up time for important matters"
+      },
+      "errorReduction": {
+        "title": "Error Reduction",
+        "description": "Eliminating human factor reduces number of errors"
+      },
+      "resourceSavings": {
+        "title": "Resource Savings",
+        "description": "Reducing costs for routine operations"
+      },
+      "scalability": {
+        "title": "Scalability",
+        "description": "Automated processes scale easily"
+      },
+      "analytics": {
+        "title": "Analytics",
+        "description": "Automatic data collection for analysis and reporting"
+      },
+      "integrations": {
+        "title": "Integrations",
+        "description": "Integration with existing company systems"
+      }
+    },
+    "features": {
+      "processAnalysis": "Business process analysis",
+      "systemDesign": "Automation system design",
+      "solutionDevelopment": "Automated solution development",
+      "systemIntegration": "Integration with existing systems",
+      "notificationsReports": "Notifications and reports setup",
+      "staffTraining": "Staff training",
+      "testingOptimization": "Testing and optimization",
+      "technicalSupport": "Technical support",
+      "systemMonitoring": "System operation monitoring",
+      "continuousImprovement": "Continuous improvement"
+    },
+    "faq": {
+      "processesToAutomate": {
+        "question": "What processes can be automated?",
+        "answer": "Many processes can be automated: order processing, customer management, notification sending, report generation, data synchronization between systems and much more. We analyze your processes and offer optimal solutions."
+      },
+      "cost": {
+        "question": "How much does business process automation cost?",
+        "answer": "Cost depends on process complexity and scope of work. Simple automation starts from 150,000 rubles, comprehensive business automation — from 300,000 rubles. Contact us for a detailed quote."
+      },
+      "implementationTime": {
+        "question": "How long does implementation take?",
+        "answer": "Timelines depend on project complexity. Simple automation can be implemented in 1-2 months, complex system — in 3-6 months. We always agree on timelines at the planning stage."
+      },
+      "existingSystems": {
+        "question": "Do I need to change existing systems?",
+        "answer": "Not necessarily. We can integrate automation with existing company systems without requiring their replacement. This allows preserving investments in current solutions."
+      }
+    },
+    "serviceButton": "Business Process Automation"
   }
 }

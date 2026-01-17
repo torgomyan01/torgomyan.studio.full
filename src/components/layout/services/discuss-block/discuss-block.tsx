@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { trackButtonClick } from '@/utils/analytics';
+import { useLocale } from '@/i18n/use-locale';
+import { getTranslation } from '@/i18n';
+import { addLocaleToPath } from '@/i18n/utils';
 import './_services.scss';
 
 // Social proof counter - generates realistic number
@@ -12,6 +15,7 @@ const getSocialProofCount = () => {
 };
 
 function DiscussBlock() {
+  const locale = useLocale();
   const [socialProofCount, setSocialProofCount] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [showDiscount, setShowDiscount] = useState(false);
@@ -57,7 +61,7 @@ function DiscussBlock() {
     // Track marketing event
     trackButtonClick('discuss_project', 'discuss_block');
 
-    window.location.href = '/schedule-call';
+    window.location.href = addLocaleToPath('/schedule-call', locale);
   };
 
   return (
@@ -69,19 +73,19 @@ function DiscussBlock() {
           onMouseLeave={() => setIsHovered(false)}
         >
           <div className="info-content">
-            <h3>Вам нужен также такие сайты ?</h3>
+            <h3>{getTranslation(locale, 'discussBlock.title')}</h3>
             <div className="social-proof">
               <span className="social-proof-icon">👥</span>
               <span className="social-proof-text">
-                <strong>{socialProofCount}+</strong> клиентов обратились в этом
-                месяце
+                <strong>{socialProofCount}+</strong>{' '}
+                {getTranslation(locale, 'discussBlock.socialProof')}
               </span>
             </div>
             {showDiscount && (
               <div className="discount-badge">
                 <span className="discount-icon">🎁</span>
                 <span className="discount-text">
-                  Бесплатная консультация + смета проекта
+                  {getTranslation(locale, 'discussBlock.discountText')}
                 </span>
               </div>
             )}
@@ -91,7 +95,9 @@ function DiscussBlock() {
             className={`btn mt-0! ${isHovered ? 'hovered' : ''}`}
             onClick={handleDiscussClick}
           >
-            <span className="btn-text">Давайте обсудим</span>
+            <span className="btn-text">
+              {getTranslation(locale, 'discussBlock.buttonText')}
+            </span>
             <span className="btn-arrow">
               <img src="/images/link-arrow.svg" alt="" />
             </span>

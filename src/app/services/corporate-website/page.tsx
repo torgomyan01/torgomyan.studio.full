@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { headers } from 'next/headers';
 import MainTemplate from '@/components/common/main-template/main-template';
 import ServicesBlock from '@/components/common/services-block/services-block';
 import ServicesHeaderWithContent from '@/components/common/services-header/services-header-with-content';
@@ -6,118 +7,136 @@ import OurWorks from '@/components/common/our-works/our-works';
 import ContactUs from '@/components/common/contact-us/contact-us';
 import DiscussBlock from '@/components/layout/services/discuss-block/discuss-block';
 import SEOMarketingBlocks from '@/components/common/seo-marketing-blocks/seo-marketing-blocks';
+import { getLocaleFromHeaders } from '@/i18n/server-utils';
+import { getTranslations } from '@/i18n';
+import { getPathnameWithoutLocale } from '@/i18n/utils';
+import { locales, defaultLocale } from '@/i18n/config';
+import { formatPrice } from '@/i18n/utils';
 
-export const metadata: Metadata = {
-  title:
-    'Разработка Корпоративного Сайта | Создание Сайта для Компании | Torgomyan.Studio',
-  description:
-    'Профессиональная разработка корпоративных сайтов для компаний. Многостраничные сайты с полным функционалом, интеграцией CRM, многоязычностью. От 120,000₽. Заказать корпоративный сайт.',
-  keywords:
-    'корпоративный сайт, разработка корпоративного сайта, создание корпоративного сайта, сайт для компании, корпоративный сайт цена, заказать корпоративный сайт, сайт компании, бизнес сайт, корпоративный веб-сайт, создание сайта для бизнеса, корпоративный сайт стоимость, разработка сайта компании',
-  alternates: {
-    canonical: 'https://torgomyan.studio/services/corporate-website',
-  },
-  openGraph: {
-    title: 'Разработка Корпоративного Сайта | Создание Сайта для Компании',
-    description:
-      'Профессиональная разработка корпоративных сайтов для компаний. Многостраничные сайты с полным функционалом, интеграцией CRM, многоязычностью.',
-    type: 'website',
-    locale: 'ru_RU',
-    siteName: 'Torgomyan.Studio',
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const headersList = await headers();
+  const pathname =
+    headersList.get('x-pathname') || '/services/corporate-website';
+  const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
+  const pathWithoutLocale = getPathnameWithoutLocale(pathname);
 
-export default function CorporateWebsitePage() {
+  const baseUrl = 'https://torgomyan-studio.am';
+
+  // Generate hreflang alternates
+  const alternates: Record<string, string> = {};
+  locales.forEach((loc) => {
+    const localePath =
+      loc === defaultLocale ? pathWithoutLocale : `/${loc}${pathWithoutLocale}`;
+    alternates[loc] = `${baseUrl}${localePath === '/' ? '' : localePath}`;
+  });
+
+  return {
+    title: t.corporateWebsite.pageTitle,
+    description: t.corporateWebsite.pageDescription,
+    keywords: t.corporateWebsite.pageKeywords,
+    alternates: {
+      canonical: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
+      languages: alternates,
+    },
+    openGraph: {
+      title: t.corporateWebsite.openGraphTitle,
+      description: t.corporateWebsite.openGraphDescription,
+      type: 'website',
+      locale: locale === 'hy' ? 'hy_AM' : locale === 'ru' ? 'ru_RU' : 'en_US',
+      siteName: 'Torgomyan.Studio',
+      url: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
+    },
+  };
+}
+
+export default async function CorporateWebsitePage() {
+  const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
+
   return (
     <MainTemplate>
       <ServicesHeaderWithContent
-        title="Корпоративный Сайт для Вашей Компании"
-        description="Профессиональная разработка корпоративных сайтов с полным функционалом. Современные решения для бизнеса любого масштаба. Корпоративный сайт — это визитная карточка вашей компании в интернете. Это многофункциональная платформа, которая представляет ваш бизнес, продукты и услуги, помогает привлекать клиентов и строить доверие. Мы создаем корпоративные сайты, которые не только красивы, но и функциональны."
+        title={t.corporateWebsite.title}
+        description={t.corporateWebsite.description}
       />
 
       <SEOMarketingBlocks
         stats={[
-          { number: '300,000₽', label: 'От цены' },
-          { number: '10-30', label: 'Страниц включено' },
-          { number: '3-6', label: 'Недель разработки' },
-          { number: '24/7', label: 'Поддержка' },
+          { number: formatPrice(120000, locale), label: t.corporateWebsite.stats.fromPrice },
+          { number: '10-30', label: t.corporateWebsite.stats.pagesIncluded },
+          { number: '3-6', label: t.corporateWebsite.stats.weeksDevelopment },
+          { number: '24/7', label: t.corporateWebsite.stats.support },
         ]}
         benefits={[
           {
-            title: 'Полный функционал',
+            title: t.corporateWebsite.benefits.fullFunctionality.title,
             description:
-              'Все необходимые разделы и модули для полноценной работы компании в интернете',
+              t.corporateWebsite.benefits.fullFunctionality.description,
             icon: 'fas fa-briefcase',
           },
           {
-            title: 'Корпоративный стиль',
-            description: 'Соблюдение фирменного стиля и брендбука компании',
+            title: t.corporateWebsite.benefits.corporateStyle.title,
+            description: t.corporateWebsite.benefits.corporateStyle.description,
             icon: 'fas fa-palette',
           },
           {
-            title: 'Масштабируемость',
-            description:
-              'Возможность расширения функционала по мере роста бизнеса',
+            title: t.corporateWebsite.benefits.scalability.title,
+            description: t.corporateWebsite.benefits.scalability.description,
             icon: 'fas fa-chart-line',
           },
           {
-            title: 'Многоязычность',
-            description:
-              'Поддержка нескольких языков для международного бизнеса',
+            title: t.corporateWebsite.benefits.multilingual.title,
+            description: t.corporateWebsite.benefits.multilingual.description,
             icon: 'fas fa-globe',
           },
           {
-            title: 'Интеграции',
-            description:
-              'Интеграция с CRM, системами аналитики и другими сервисами',
+            title: t.corporateWebsite.benefits.integrations.title,
+            description: t.corporateWebsite.benefits.integrations.description,
             icon: 'fas fa-plug',
           },
           {
-            title: 'Безопасность',
-            description: 'Высокий уровень защиты данных и информации компании',
+            title: t.corporateWebsite.benefits.security.title,
+            description: t.corporateWebsite.benefits.security.description,
             icon: 'fas fa-shield-alt',
           },
         ]}
         features={[
-          'Разработка структуры сайта',
-          'Создание уникального дизайна',
-          'Разработка всех необходимых разделов',
-          'Система управления контентом',
-          'Многоязычная поддержка',
-          'Интеграция с CRM и аналитикой',
-          'Формы обратной связи и заявок',
-          'Блог и новостная лента',
-          'Галерея и портфолио',
-          'SEO-оптимизация',
-          'Техническая поддержка',
+          t.corporateWebsite.features.structureDevelopment,
+          t.corporateWebsite.features.uniqueDesign,
+          t.corporateWebsite.features.sectionsDevelopment,
+          t.corporateWebsite.features.cms,
+          t.corporateWebsite.features.multilingualSupport,
+          t.corporateWebsite.features.crmIntegration,
+          t.corporateWebsite.features.contactForms,
+          t.corporateWebsite.features.blogNews,
+          t.corporateWebsite.features.galleryPortfolio,
+          t.corporateWebsite.features.seoOptimization,
+          t.corporateWebsite.features.technicalSupport,
         ]}
         faq={[
           {
-            question: 'Сколько страниц включает корпоративный сайт?',
-            answer:
-              'Количество страниц зависит от специфики вашего бизнеса. Обычно корпоративный сайт включает 10-30 страниц: главная, о компании, услуги/продукты, новости/блог, контакты и другие разделы по необходимости.',
+            question: t.corporateWebsite.faq.pagesCount.question,
+            answer: t.corporateWebsite.faq.pagesCount.answer,
           },
           {
-            question: 'Какая стоимость корпоративного сайта?',
-            answer:
-              'Стоимость зависит от количества страниц, сложности дизайна, функциональности и интеграций. Базовый корпоративный сайт начинается от 120,000 рублей, премиум-решение с расширенным функционалом — от 250,000 рублей. Свяжитесь с нами для получения детального расчета.',
+            question: t.corporateWebsite.faq.cost.question,
+            answer: t.corporateWebsite.faq.cost.answer,
           },
           {
-            question: 'Можно ли интегрировать сайт с нашей CRM?',
-            answer:
-              'Да, мы можем интегрировать сайт с популярными CRM-системами (amoCRM, Битрикс24, Salesforce и др.) для автоматизации работы с клиентами.',
+            question: t.corporateWebsite.faq.crmIntegration.question,
+            answer: t.corporateWebsite.faq.crmIntegration.answer,
           },
           {
-            question: 'Поддерживается ли многоязычность?',
-            answer:
-              'Да, мы можем создать многоязычную версию сайта. Это особенно важно для компаний, работающих на международном рынке.',
+            question: t.corporateWebsite.faq.multilingual.question,
+            answer: t.corporateWebsite.faq.multilingual.answer,
           },
         ]}
       />
 
       <DiscussBlock />
 
-      <ServicesBlock but="Корпоративный сайт" />
+      <ServicesBlock but={t.corporateWebsite.serviceButton} />
 
       <OurWorks />
 

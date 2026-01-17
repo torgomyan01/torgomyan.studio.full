@@ -241,11 +241,11 @@ export async function generateMetadata(): Promise<Metadata> {
       title: 'Torgomyan.Studio - Создаем сайты для вашего бизнеса',
       description:
         'Профессиональная разработка сайтов, веб-приложений и цифровых решений',
-      url: 'https://torgomyan.studio',
+      url: 'https://torgomyan-studio.am',
       siteName: 'Torgomyan.Studio',
       images: [
         {
-          url: 'https://torgomyan.studio/images/og-image.jpg',
+          url: 'https://torgomyan-studio.am/images/og-image.jpg',
           width: 1200,
           height: 630,
           alt: 'Torgomyan.Studio',
@@ -258,7 +258,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: 'summary_large_image',
       title: 'Torgomyan.Studio - Создаем сайты для вашего бизнеса',
       description: 'Профессиональная разработка сайтов и веб-приложений',
-      images: ['https://torgomyan.studio/images/twitter-card.jpg'],
+      images: ['https://torgomyan-studio.am/images/twitter-card.jpg'],
     },
   };
 }

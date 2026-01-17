@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { headers } from 'next/headers';
 import MainTemplate from '@/components/common/main-template/main-template';
 import ServicesBlock from '@/components/common/services-block/services-block';
 import OurWorks from '@/components/common/our-works/our-works';
@@ -6,36 +7,58 @@ import ContactUs from '@/components/common/contact-us/contact-us';
 import DiscussBlock from '@/components/layout/services/discuss-block/discuss-block';
 import AiBlock from '@/components/common/ai-block/ai-block';
 import { services } from '@/utils/consts';
+import { getLocaleFromHeaders } from '@/i18n/server-utils';
+import { getTranslations, getTranslation } from '@/i18n';
+import { getPathnameWithoutLocale } from '@/i18n/utils';
+import { locales, defaultLocale } from '@/i18n/config';
 import './_services-page.scss';
 
-export const metadata: Metadata = {
-  title:
-    'Услуги Веб-Разработки | Разработка Сайтов, SEO, Дизайн | Torgomyan.Studio',
-  description:
-    'Полный спектр услуг веб-разработки: создание сайтов под ключ, интернет-магазинов, лендингов, корпоративных сайтов. SEO-продвижение в Яндекс и Google. Дизайн UI/UX. Техническая поддержка и хостинг. Более 100 успешных проектов.',
-  keywords:
-    'услуги веб-разработки, разработка сайтов под ключ, создание интернет-магазина, лендинг пейдж, корпоративный сайт, SEO продвижение сайтов, дизайн UI/UX, веб-приложения, техническая поддержка сайтов, хостинг и домены, заказать сайт, стоимость разработки сайта, веб-студия услуги',
-  alternates: {
-    canonical: 'https://torgomyan.studio/services',
-  },
-  openGraph: {
-    title: 'Услуги Веб-Разработки | Разработка Сайтов, SEO, Дизайн',
-    description:
-      'Полный спектр услуг веб-разработки: создание сайтов под ключ, интернет-магазинов, лендингов, корпоративных сайтов. SEO-продвижение в Яндекс и Google.',
-    type: 'website',
-    locale: 'ru_RU',
-    siteName: 'Torgomyan.Studio',
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const headersList = await headers();
+  const pathname = headersList.get('x-pathname') || '/services';
+  const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
+  const pathWithoutLocale = getPathnameWithoutLocale(pathname);
 
-export default function ServicesPage() {
+  const baseUrl = 'https://torgomyan-studio.am';
+
+  // Generate hreflang alternates
+  const alternates: Record<string, string> = {};
+  locales.forEach((loc) => {
+    const localePath =
+      loc === defaultLocale ? pathWithoutLocale : `/${loc}${pathWithoutLocale}`;
+    alternates[loc] = `${baseUrl}${localePath === '/' ? '' : localePath}`;
+  });
+
+  return {
+    title: t.servicesPage.pageTitle,
+    description: t.servicesPage.pageDescription,
+    keywords: t.servicesPage.pageKeywords,
+    alternates: {
+      canonical: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
+      languages: alternates,
+    },
+    openGraph: {
+      title: t.servicesPage.openGraphTitle,
+      description: t.servicesPage.openGraphDescription,
+      type: 'website',
+      locale: locale === 'hy' ? 'hy_AM' : locale === 'ru' ? 'ru_RU' : 'en_US',
+      siteName: 'Torgomyan.Studio',
+      url: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
+    },
+  };
+}
+
+export default async function ServicesPage() {
+  const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
+
   // Structured data for SEO (JSON-LD) - оптимизировано для Yandex и Google
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    name: 'Услуги по разработке сайтов и веб-приложений',
-    description:
-      'Профессиональные услуги по разработке сайтов, веб-приложений, SEO-продвижению, дизайну интерфейсов и технической поддержке',
+    name: t.servicesPage.structuredData.name,
+    description: t.servicesPage.structuredData.description,
     provider: {
       '@type': 'Organization',
       name: 'Torgomyan.Studio',
@@ -46,7 +69,7 @@ export default function ServicesPage() {
     },
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
-      name: 'Веб-услуги',
+      name: t.servicesPage.structuredData.catalogName,
       itemListElement: services.map((service, index) => ({
         '@type': 'Offer',
         itemOffered: {
@@ -71,25 +94,29 @@ export default function ServicesPage() {
           <div className="container">
             <div className="hero-content">
               <h1 className="main-title" itemProp="name">
-                Наши услуги
+                {t.servicesPage.title}
               </h1>
               <p className="main-subtitle" itemProp="description">
-                Полный спектр веб-услуг для развития вашего бизнеса. От создания
-                сайта до продвижения и технической поддержки — мы обеспечиваем
-                комплексный подход к вашему цифровому присутствию.
+                {t.servicesPage.subtitle}
               </p>
               <div className="hero-stats">
                 <div className="stat-item">
                   <span className="stat-number">100+</span>
-                  <span className="stat-label">Успешных проектов</span>
+                  <span className="stat-label">
+                    {t.servicesPage.stats.successfulProjects}
+                  </span>
                 </div>
                 <div className="stat-item">
-                  <span className="stat-number">50+</span>
-                  <span className="stat-label">Довольных клиентов</span>
+                  <span className="stat-number">90+</span>
+                  <span className="stat-label">
+                    {t.servicesPage.stats.satisfiedClients}
+                  </span>
                 </div>
                 <div className="stat-item">
                   <span className="stat-number">7+</span>
-                  <span className="stat-label">Лет опыта</span>
+                  <span className="stat-label">
+                    {t.servicesPage.stats.yearsExperience}
+                  </span>
                 </div>
               </div>
             </div>
@@ -105,66 +132,72 @@ export default function ServicesPage() {
         {/* Benefits Section */}
         <section className="services-benefits">
           <div className="container">
-            <h2 className="section-title">Почему выбирают нас</h2>
+            <h2 className="section-title">{t.servicesPage.benefits.title}</h2>
             <div className="benefits-grid">
               <div className="benefit-card">
                 <div className="benefit-icon">
                   <i className="fas fa-user-tie" aria-hidden="true"></i>
                 </div>
-                <h3 className="benefit-title">Индивидуальный подход</h3>
+                <h3 className="benefit-title">
+                  {t.servicesPage.benefits.individualApproach.title}
+                </h3>
                 <p className="benefit-text">
-                  Каждый проект разрабатывается с учетом особенностей вашего
-                  бизнеса и целевой аудитории
+                  {t.servicesPage.benefits.individualApproach.description}
                 </p>
               </div>
               <div className="benefit-card">
                 <div className="benefit-icon">
                   <i className="fas fa-laptop-code" aria-hidden="true"></i>
                 </div>
-                <h3 className="benefit-title">Современные технологии</h3>
+                <h3 className="benefit-title">
+                  {t.servicesPage.benefits.modernTechnologies.title}
+                </h3>
                 <p className="benefit-text">
-                  Используем актуальные фреймворки и инструменты для создания
-                  быстрых и надежных решений
+                  {t.servicesPage.benefits.modernTechnologies.description}
                 </p>
               </div>
               <div className="benefit-card">
                 <div className="benefit-icon">
                   <i className="fas fa-chart-line" aria-hidden="true"></i>
                 </div>
-                <h3 className="benefit-title">SEO-оптимизация</h3>
+                <h3 className="benefit-title">
+                  {t.servicesPage.benefits.seoOptimization.title}
+                </h3>
                 <p className="benefit-text">
-                  Все проекты создаются с учетом требований поисковых систем для
-                  лучшей видимости в интернете
+                  {t.servicesPage.benefits.seoOptimization.description}
                 </p>
               </div>
               <div className="benefit-card">
                 <div className="benefit-icon">
                   <i className="fas fa-headset" aria-hidden="true"></i>
                 </div>
-                <h3 className="benefit-title">Поддержка 24/7</h3>
+                <h3 className="benefit-title">
+                  {t.servicesPage.benefits.support247.title}
+                </h3>
                 <p className="benefit-text">
-                  Обеспечиваем техническую поддержку и сопровождение вашего
-                  проекта на всех этапах
+                  {t.servicesPage.benefits.support247.description}
                 </p>
               </div>
               <div className="benefit-card">
                 <div className="benefit-icon">
                   <i className="fas fa-tag" aria-hidden="true"></i>
                 </div>
-                <h3 className="benefit-title">Прозрачные цены</h3>
+                <h3 className="benefit-title">
+                  {t.servicesPage.benefits.transparentPrices.title}
+                </h3>
                 <p className="benefit-text">
-                  Четкое ценообразование без скрытых платежей. Вы знаете, за что
-                  платите
+                  {t.servicesPage.benefits.transparentPrices.description}
                 </p>
               </div>
               <div className="benefit-card">
                 <div className="benefit-icon">
                   <i className="fas fa-calendar-check" aria-hidden="true"></i>
                 </div>
-                <h3 className="benefit-title">Соблюдение сроков</h3>
+                <h3 className="benefit-title">
+                  {t.servicesPage.benefits.deadlineCompliance.title}
+                </h3>
                 <p className="benefit-text">
-                  Гарантируем выполнение работ в оговоренные сроки без
-                  компромиссов в качестве
+                  {t.servicesPage.benefits.deadlineCompliance.description}
                 </p>
               </div>
             </div>

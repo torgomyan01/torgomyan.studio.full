@@ -2,7 +2,7 @@
   position: fixed;
   top: 20px;
   right: 20px;
-  z-index: 9999;
+  z-index: 10000;
   display: inline-block;
 
   &-button {
@@ -63,6 +63,10 @@
     display: flex;
     align-items: center;
     white-space: nowrap;
+
+    @media (max-width: 1460px) {
+      display: none;
+    }
   }
 
   &-arrow {
@@ -160,11 +164,14 @@
   }
 }
 
-// Mobile responsive
+// Mobile responsive - hide in header, show in mobile menu
+// Mobile menu version styles are handled in navbar styles
+// These styles only apply when language-switcher is NOT inside mobile menu
 @media (max-width: 768px) {
   .language-switcher {
-    top: 15px;
-    right: 15px;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-40px);
 
     &-button {
       padding: 8px 12px;
@@ -187,6 +194,13 @@
       gap: 10px;
     }
   }
+
+  // Override for mobile menu version (handled in navbar styles)
+  .mobile-language-switcher-wrapper .language-switcher {
+    top: auto;
+    left: auto;
+    transform: none;
+  }
 }
 
 @media (max-width: 480px) {
@@ -205,5 +219,11 @@
         }
       }
     }
+  }
+
+  // Override for mobile menu version
+  .mobile-language-switcher-wrapper .language-switcher {
+    top: auto;
+    right: auto;
   }
 }

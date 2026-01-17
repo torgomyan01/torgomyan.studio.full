@@ -93,7 +93,7 @@ export default function Breadcrumbs() {
       '@type': 'ListItem',
       position: index + 1,
       name: item.label,
-      item: `https://torgomyan.studio${item.href}`,
+      item: `https://torgomyan-studio.am${item.href}`,
     })),
   };
 

@@ -15,10 +15,15 @@ import {
 } from '@internationalized/date';
 import { scheduleCallAction } from '@/app/actions/chat-inquiry';
 import MainTemplate from '@/components/common/main-template/main-template';
+import { useLocale } from '@/i18n/use-locale';
+import { getTranslations } from '@/i18n';
 import '@/components/common/contact-us/_contact-us.scss';
 import './_schedule-call.scss';
 
 export default function ScheduleCallPage() {
+  const locale = useLocale();
+  const t = getTranslations(locale);
+
   const [selectedDate, setSelectedDate] = useState<CalendarDate | null>(null);
   const [selectedTime, setSelectedTime] = useState<CalendarDateTime | null>(
     null
@@ -51,7 +56,7 @@ export default function ScheduleCallPage() {
     if (!selectedDate || !selectedTime) {
       setSubmitMessage({
         type: 'error',
-        text: 'Пожалуйста, выберите дату и время',
+        text: t.scheduleCallPage.errors.selectDateAndTime,
       });
       return;
     }
@@ -59,7 +64,7 @@ export default function ScheduleCallPage() {
     if (!name.trim()) {
       setSubmitMessage({
         type: 'error',
-        text: 'Пожалуйста, введите ваше имя',
+        text: t.scheduleCallPage.errors.enterName,
       });
       return;
     }
@@ -67,7 +72,7 @@ export default function ScheduleCallPage() {
     if (!email.trim()) {
       setSubmitMessage({
         type: 'error',
-        text: 'Пожалуйста, введите ваш email',
+        text: t.scheduleCallPage.errors.enterEmail,
       });
       return;
     }
@@ -75,7 +80,7 @@ export default function ScheduleCallPage() {
     if (!phone.trim()) {
       setSubmitMessage({
         type: 'error',
-        text: 'Пожалуйста, введите ваш телефон',
+        text: t.scheduleCallPage.errors.enterPhone,
       });
       return;
     }
@@ -134,7 +139,7 @@ export default function ScheduleCallPage() {
       if (result.success) {
         setSubmitMessage({
           type: 'success',
-          text: 'Звонок успешно запланирован! Мы свяжемся с вами в указанное время.',
+          text: t.scheduleCallPage.success,
         });
         // Reset form after success
         setTimeout(() => {
@@ -148,13 +153,13 @@ export default function ScheduleCallPage() {
       } else {
         setSubmitMessage({
           type: 'error',
-          text: result.error || 'Произошла ошибка при планировании звонка',
+          text: result.error || t.scheduleCallPage.errors.general,
         });
       }
     } catch (error) {
       setSubmitMessage({
         type: 'error',
-        text: 'Произошла ошибка при планировании звонка',
+        text: t.scheduleCallPage.errors.general,
       });
     } finally {
       setIsSubmitting(false);
@@ -166,15 +171,15 @@ export default function ScheduleCallPage() {
       <div className="schedule-call-page">
         <div className="container">
           <div className="schedule-call-content">
-            <h1 className="page-title">Запланировать звонок</h1>
-            <p className="page-subtitle">
-              Выберите удобное для вас время, и мы свяжемся с вами
-            </p>
+            <h1 className="page-title">{t.scheduleCallPage.title}</h1>
+            <p className="page-subtitle">{t.scheduleCallPage.subtitle}</p>
 
             <div className="schedule-call-form">
               <div className="calendar-time-wrapper">
                 <div className="calendar-section">
-                  <h3 className="section-label">Выберите дату</h3>
+                  <h3 className="section-label">
+                    {t.scheduleCallPage.selectDate}
+                  </h3>
                   <CustomCalendar
                     value={selectedDate}
                     onChange={setSelectedDate}
@@ -182,9 +187,11 @@ export default function ScheduleCallPage() {
                   />
                 </div>
                 <div className="time-section">
-                  <h3 className="section-label">Выберите время</h3>
+                  <h3 className="section-label">
+                    {t.scheduleCallPage.selectTime}
+                  </h3>
                   <CustomTimeInput
-                    label="Время"
+                    label={t.scheduleCallPage.time}
                     value={selectedTime}
                     onChange={setSelectedTime}
                     hourCycle={24}
@@ -205,22 +212,22 @@ export default function ScheduleCallPage() {
                 </div>
               </div>
               <CustomInput
-                label="Имя"
-                placeholder="Введите ваше имя"
+                label={t.scheduleCallPage.name}
+                placeholder={t.scheduleCallPage.namePlaceholder}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
               />
               <CustomInput
-                label="Email"
-                placeholder="Введите ваш email"
+                label={t.scheduleCallPage.email}
+                placeholder={t.scheduleCallPage.emailPlaceholder}
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
               <CustomPhoneInput
-                label="Телефон"
+                label={t.scheduleCallPage.phone}
                 value={phone}
                 onChange={setPhone}
                 required
@@ -244,11 +251,11 @@ export default function ScheduleCallPage() {
                   {isSubmitting ? (
                     <span className="button-loading">
                       <span className="spinner"></span>
-                      Отправка...
+                      {t.scheduleCallPage.submitting}
                     </span>
                   ) : (
                     <>
-                      <span>Запланировать</span>
+                      <span>{t.scheduleCallPage.schedule}</span>
                     </>
                   )}
                 </button>

@@ -1,39 +1,62 @@
 import { Metadata } from 'next';
+import { headers } from 'next/headers';
 import MainTemplate from '@/components/common/main-template/main-template';
 import ServicesHeaderWithContent from '@/components/common/services-header/services-header-with-content';
 import ContactUs from '@/components/common/contact-us/contact-us';
 import AllWorks from '@/components/common/all-works/all-works';
+import { getLocaleFromHeaders } from '@/i18n/server-utils';
+import { getTranslations } from '@/i18n';
+import { getPathnameWithoutLocale } from '@/i18n/utils';
+import { locales, defaultLocale } from '@/i18n/config';
 
-export const metadata: Metadata = {
-  title:
-    'Портфолио - Примеры Разработанных Сайтов | Наши Работы | Torgomyan.Studio',
-  description:
-    'Портфолио наших работ: более 100 успешно реализованных проектов. Примеры сайтов, интернет-магазинов, лендингов и веб-приложений. Посмотрите кейсы и результаты наших клиентов.',
-  keywords:
-    'портфолио веб-студии, примеры сайтов, наши работы, разработанные сайты, портфолио разработки сайтов, примеры интернет-магазинов, кейсы веб-разработки, примеры лендингов, созданные сайты примеры, портфолио веб-приложений',
-  alternates: {
-    canonical: 'https://torgomyan.studio/our-works',
-  },
-  openGraph: {
-    title: 'Портфолио - Примеры Разработанных Сайтов | Наши Работы',
-    description:
-      'Портфолио наших работ: более 100 успешно реализованных проектов. Примеры сайтов, интернет-магазинов, лендингов и веб-приложений.',
-    type: 'website',
-    locale: 'ru_RU',
-    siteName: 'Torgomyan.Studio',
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const headersList = await headers();
+  const pathname = headersList.get('x-pathname') || '/our-works';
+  const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
+  const pathWithoutLocale = getPathnameWithoutLocale(pathname);
 
-export default function OurWorksPage() {
+  const baseUrl = 'https://torgomyan-studio.am';
+
+  // Generate hreflang alternates
+  const alternates: Record<string, string> = {};
+  locales.forEach((loc) => {
+    const localePath =
+      loc === defaultLocale ? pathWithoutLocale : `/${loc}${pathWithoutLocale}`;
+    alternates[loc] = `${baseUrl}${localePath === '/' ? '' : localePath}`;
+  });
+
+  return {
+    title: t.ourWorks.pageTitle,
+    description: t.ourWorks.pageDescription,
+    keywords: t.ourWorks.pageKeywords,
+    alternates: {
+      canonical: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
+      languages: alternates,
+    },
+    openGraph: {
+      title: t.ourWorks.openGraphTitle,
+      description: t.ourWorks.openGraphDescription,
+      type: 'website',
+      locale: locale === 'hy' ? 'hy_AM' : locale === 'ru' ? 'ru_RU' : 'en_US',
+      siteName: 'Torgomyan.Studio',
+      url: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
+    },
+  };
+}
+
+export default async function OurWorksPage() {
+  const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
+
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'Наши Работы - Портфолио',
-    description:
-      'Портфолио разработанных сайтов и веб-приложений Torgomyan.Studio',
+    name: t.ourWorks.structuredData.name,
+    description: t.ourWorks.structuredData.description,
     mainEntity: {
       '@type': 'ItemList',
-      name: 'Портфолио проектов',
+      name: t.ourWorks.structuredData.portfolioName,
     },
   };
 
@@ -44,8 +67,8 @@ export default function OurWorksPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       <ServicesHeaderWithContent
-        title="Наши Работы"
-        description="Мы гордимся каждым проектом, который создали. В нашем портфолио представлены более 60 успешно реализованных проектов: от простых лендингов до сложных веб-приложений и интернет-магазинов. Каждый проект — это результат тщательной работы, внимания к деталям и стремления к совершенству. Мы создаем не просто сайты, а цифровые решения, которые помогают бизнесу расти и развиваться."
+        title={t.ourWorks.pageHeaderTitle}
+        description={t.ourWorks.pageHeaderDescription}
       />
 
       <AllWorks />

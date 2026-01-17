@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useLocale } from '@/i18n/use-locale';
+import { addLocaleToPath } from '@/i18n/utils';
 import './_ui-components.scss';
 
 interface Work {
@@ -31,6 +33,7 @@ export default function ImageGalleryModal({
 }: ImageGalleryModalProps) {
   const currentWork = works[currentIndex];
   const [isImageLoading, setIsImageLoading] = useState(true);
+  const locale = useLocale();
 
   // Reset loading state when image changes
   useEffect(() => {
@@ -115,7 +118,7 @@ export default function ImageGalleryModal({
                     ✕
                   </button>
                   <Link
-                    href="/schedule-call"
+                    href={addLocaleToPath('/schedule-call', locale)}
                     className="schedule-call-btn"
                     aria-label="Запланировать звонок"
                   >

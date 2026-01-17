@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const t = getTranslations(locale);
   const pathWithoutLocale = getPathnameWithoutLocale(pathname);
 
-  const baseUrl = 'https://torgomyan.studio';
+  const baseUrl = 'https://torgomyan-studio.am';
 
   // Generate hreflang alternates
   const alternates: Record<string, string> = {};
@@ -73,7 +73,7 @@ export default async function ContactPage() {
               : 'Myasnikyan 62',
       },
       telephone: '+37477769668',
-      url: 'https://torgomyan.studio',
+      url: 'https://torgomyan-studio.am',
     },
   };
 

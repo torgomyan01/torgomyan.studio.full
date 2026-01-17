@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   keywords:
     'калькулятор стоимости сайта, рассчитать цену сайта, стоимость разработки сайта, цена создания сайта, калькулятор цены сайта, стоимость веб-разработки, цена лендинга, стоимость интернет-магазина, рассчитать стоимость сайта онлайн, калькулятор цены веб-сайта, стоимость сайта под ключ',
   alternates: {
-    canonical: 'https://torgomyan.studio/calculator',
+    canonical: 'https://torgomyan-studio.am/calculator',
   },
   openGraph: {
     title: 'Калькулятор Стоимости Сайта | Рассчитать Цену Разработки',
@@ -39,7 +39,7 @@ export default function CalculatorPage() {
     provider: {
       '@type': 'Organization',
       name: 'Torgomyan.Studio',
-      url: 'https://torgomyan.studio',
+      url: 'https://torgomyan-studio.am',
     },
   };
 

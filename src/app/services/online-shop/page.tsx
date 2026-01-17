@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { headers } from 'next/headers';
 import MainTemplate from '@/components/common/main-template/main-template';
 import ServicesBlock from '@/components/common/services-block/services-block';
 import ServicesHeaderWithContent from '@/components/common/services-header/services-header-with-content';
@@ -6,120 +7,134 @@ import OurWorks from '@/components/common/our-works/our-works';
 import ContactUs from '@/components/common/contact-us/contact-us';
 import DiscussBlock from '@/components/layout/services/discuss-block/discuss-block';
 import SEOMarketingBlocks from '@/components/common/seo-marketing-blocks/seo-marketing-blocks';
+import { getLocaleFromHeaders } from '@/i18n/server-utils';
+import { getTranslations } from '@/i18n';
+import { getPathnameWithoutLocale } from '@/i18n/utils';
+import { locales, defaultLocale } from '@/i18n/config';
+import { formatPrice } from '@/i18n/utils';
 
-export const metadata: Metadata = {
-  title:
-    'Создание Интернет-Магазина под Ключ | Разработка Онлайн-Магазина | Torgomyan.Studio',
-  description:
-    'Профессиональное создание интернет-магазинов под ключ с интеграцией платежей, доставки и CRM. Полнофункциональные онлайн-магазины для продаж. От 200,000₽. Заказать интернет-магазин.',
-  keywords:
-    'создание интернет магазина, интернет магазин под ключ, разработка интернет магазина, онлайн магазин создание, интернет магазин цена, заказать интернет магазин, ecommerce разработка, интернет магазин стоимость, создание интернет магазина цена, интернет магазин для бизнеса, разработка онлайн магазина, интернет магазин с нуля',
-  alternates: {
-    canonical: 'https://torgomyan.studio/services/online-shop',
-  },
-  openGraph: {
-    title: 'Создание Интернет-Магазина под Ключ | Разработка Онлайн-Магазина',
-    description:
-      'Профессиональное создание интернет-магазинов под ключ с интеграцией платежей, доставки и CRM. Полнофункциональные онлайн-магазины для продаж.',
-    type: 'website',
-    locale: 'ru_RU',
-    siteName: 'Torgomyan.Studio',
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const headersList = await headers();
+  const pathname = headersList.get('x-pathname') || '/services/online-shop';
+  const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
+  const pathWithoutLocale = getPathnameWithoutLocale(pathname);
 
-export default function OnlineShopPage() {
+  const baseUrl = 'https://torgomyan-studio.am';
+
+  // Generate hreflang alternates
+  const alternates: Record<string, string> = {};
+  locales.forEach((loc) => {
+    const localePath =
+      loc === defaultLocale ? pathWithoutLocale : `/${loc}${pathWithoutLocale}`;
+    alternates[loc] = `${baseUrl}${localePath === '/' ? '' : localePath}`;
+  });
+
+  return {
+    title: t.onlineShop.pageTitle,
+    description: t.onlineShop.pageDescription,
+    keywords: t.onlineShop.pageKeywords,
+    alternates: {
+      canonical: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
+      languages: alternates,
+    },
+    openGraph: {
+      title: t.onlineShop.openGraphTitle,
+      description: t.onlineShop.openGraphDescription,
+      type: 'website',
+      locale: locale === 'hy' ? 'hy_AM' : locale === 'ru' ? 'ru_RU' : 'en_US',
+      siteName: 'Torgomyan.Studio',
+      url: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
+    },
+  };
+}
+
+export default async function OnlineShopPage() {
+  const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
+
   return (
     <MainTemplate>
       <ServicesHeaderWithContent
-        title="Интернет-Магазин под Ключ"
-        description="Создаем полнофункциональные интернет-магазины с интеграцией платежей, доставки и управления товарами. Профессиональные решения для онлайн-продаж. Интернет-магазин — это мощный инструмент для развития вашего бизнеса в онлайн. Мы создаем современные, функциональные и удобные интернет-магазины, которые помогают увеличивать продажи и привлекать новых клиентов."
+        title={t.onlineShop.title}
+        description={t.onlineShop.description}
       />
 
       <SEOMarketingBlocks
         stats={[
-          { number: '400,000₽', label: 'От цены' },
-          { number: '2-3', label: 'Месяца разработки' },
-          { number: '50+', label: 'Интернет-магазинов' },
-          { number: '30%', label: 'Рост продаж' },
+          { number: formatPrice(200000, locale), label: t.onlineShop.stats.fromPrice },
+          { number: '2-3', label: t.onlineShop.stats.monthsDevelopment },
+          { number: '50+', label: t.onlineShop.stats.onlineShops },
+          { number: '30%', label: t.onlineShop.stats.salesGrowth },
         ]}
         benefits={[
           {
-            title: 'Полный функционал',
-            description:
-              'Каталог товаров, корзина, оформление заказов, личный кабинет и многое другое',
+            title: t.onlineShop.benefits.fullFunctionality.title,
+            description: t.onlineShop.benefits.fullFunctionality.description,
             icon: 'fas fa-shopping-cart',
           },
           {
-            title: 'Интеграция платежей',
-            description:
-              'Подключение различных платежных систем для приема оплаты онлайн',
+            title: t.onlineShop.benefits.paymentIntegration.title,
+            description: t.onlineShop.benefits.paymentIntegration.description,
             icon: 'fas fa-credit-card',
           },
           {
-            title: 'Управление товарами',
-            description:
-              'Удобная админ-панель для управления каталогом, заказами и клиентами',
+            title: t.onlineShop.benefits.productManagement.title,
+            description: t.onlineShop.benefits.productManagement.description,
             icon: 'fas fa-cogs',
           },
           {
-            title: 'Мобильная версия',
-            description:
-              'Адаптивный дизайн для комфортных покупок с мобильных устройств',
+            title: t.onlineShop.benefits.mobileVersion.title,
+            description: t.onlineShop.benefits.mobileVersion.description,
             icon: 'fas fa-mobile-alt',
           },
           {
-            title: 'SEO-оптимизация',
-            description:
-              'Оптимизация для поисковых систем для привлечения органического трафика',
+            title: t.onlineShop.benefits.seoOptimization.title,
+            description: t.onlineShop.benefits.seoOptimization.description,
             icon: 'fas fa-chart-line',
           },
           {
-            title: 'Интеграция доставки',
-            description:
-              'Подключение служб доставки и расчет стоимости доставки',
+            title: t.onlineShop.benefits.deliveryIntegration.title,
+            description: t.onlineShop.benefits.deliveryIntegration.description,
             icon: 'fas fa-truck',
           },
         ]}
         features={[
-          'Каталог товаров с фильтрами',
-          'Корзина и оформление заказов',
-          'Личный кабинет покупателя',
-          'Интеграция платежных систем',
-          'Управление заказами',
-          'Система скидок и промокодов',
-          'Интеграция с доставкой',
-          'Отзывы и рейтинги',
-          'Поиск по каталогу',
-          'SEO-оптимизация',
-          'Аналитика и отчеты',
+          t.onlineShop.features.productCatalog,
+          t.onlineShop.features.cartCheckout,
+          t.onlineShop.features.userAccount,
+          t.onlineShop.features.paymentSystems,
+          t.onlineShop.features.orderManagement,
+          t.onlineShop.features.discountsPromocodes,
+          t.onlineShop.features.deliveryIntegration,
+          t.onlineShop.features.reviewsRatings,
+          t.onlineShop.features.catalogSearch,
+          t.onlineShop.features.seoOptimization,
+          t.onlineShop.features.analyticsReports,
         ]}
         faq={[
           {
-            question: 'Сколько стоит создание интернет-магазина?',
-            answer:
-              'Стоимость зависит от количества товаров, функциональности и интеграций. Базовый интернет-магазин начинается от 200,000 рублей, расширенный магазин с полным функционалом — от 350,000 рублей. Свяжитесь с нами для получения детального расчета.',
+            question: t.onlineShop.faq.cost.question,
+            answer: t.onlineShop.faq.cost.answer,
           },
           {
-            question: 'Сколько времени занимает разработка?',
-            answer:
-              'Стандартный интернет-магазин разрабатывается за 2-3 месяца. Сроки зависят от сложности проекта и количества товаров. Мы всегда согласовываем сроки на этапе планирования.',
+            question: t.onlineShop.faq.developmentTime.question,
+            answer: t.onlineShop.faq.developmentTime.answer,
           },
           {
-            question: 'Можно ли управлять товарами самостоятельно?',
-            answer:
-              'Да, мы создаем удобную админ-панель, которая позволяет самостоятельно добавлять товары, управлять заказами, настраивать цены и скидки без технических знаний.',
+            question: t.onlineShop.faq.selfManagement.question,
+            answer: t.onlineShop.faq.selfManagement.answer,
           },
           {
-            question: 'Какие платежные системы можно подключить?',
-            answer:
-              'Мы можем интегрировать Яндекс.Кассу, Stripe, PayPal, CloudPayments и другие популярные платежные системы. Помогаем выбрать оптимальное решение для вашего бизнеса.',
+            question: t.onlineShop.faq.paymentSystems.question,
+            answer: t.onlineShop.faq.paymentSystems.answer,
           },
         ]}
       />
 
       <DiscussBlock />
 
-      <ServicesBlock but="Интернет-магазин" />
+      <ServicesBlock but={t.onlineShop.serviceButton} />
 
       <OurWorks />
 

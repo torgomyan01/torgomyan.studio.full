@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { headers } from 'next/headers';
 import MainTemplate from '@/components/common/main-template/main-template';
 import ServicesBlock from '@/components/common/services-block/services-block';
 import ServicesHeaderWithContent from '@/components/common/services-header/services-header-with-content';
@@ -6,112 +7,137 @@ import OurWorks from '@/components/common/our-works/our-works';
 import ContactUs from '@/components/common/contact-us/contact-us';
 import DiscussBlock from '@/components/layout/services/discuss-block/discuss-block';
 import SEOMarketingBlocks from '@/components/common/seo-marketing-blocks/seo-marketing-blocks';
+import { getLocaleFromHeaders } from '@/i18n/server-utils';
+import { getTranslations } from '@/i18n';
+import { getPathnameWithoutLocale } from '@/i18n/utils';
+import { locales, defaultLocale } from '@/i18n/config';
+import { formatPrice } from '@/i18n/utils';
 
-export const metadata: Metadata = {
-  title: 'Создание Сайта-Визитки | Простой Сайт для Бизнеса | Torgomyan.Studio',
-  description:
-    'Создание сайта-визитки для малого бизнеса. Простой, быстрый и эффективный сайт по доступной цене. Идеально для старта бизнеса в интернете. От 80,000₽. Заказать сайт-визитку.',
-  keywords:
-    'сайт визитка, сайт-визитка, создание сайта визитки, простой сайт, сайт для малого бизнеса, сайт визитка цена, заказать сайт визитку, дешевый сайт, сайт под ключ, создание сайта визитки цена, сайт визитка стоимость',
-  alternates: {
-    canonical: 'https://torgomyan.studio/services/business-card-website',
-  },
-  openGraph: {
-    title: 'Создание Сайта-Визитки | Простой Сайт для Бизнеса',
-    description:
-      'Создание сайта-визитки для малого бизнеса по доступной цене. Простой, быстрый и эффективный сайт. Идеальное решение для старта в интернете.',
-    type: 'website',
-    locale: 'ru_RU',
-    siteName: 'Torgomyan.Studio',
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const headersList = await headers();
+  const pathname =
+    headersList.get('x-pathname') || '/services/business-card-website';
+  const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
+  const pathWithoutLocale = getPathnameWithoutLocale(pathname);
 
-export default function BusinessCardWebsitePage() {
+  const baseUrl = 'https://torgomyan-studio.am';
+
+  // Generate hreflang alternates
+  const alternates: Record<string, string> = {};
+  locales.forEach((loc) => {
+    const localePath =
+      loc === defaultLocale ? pathWithoutLocale : `/${loc}${pathWithoutLocale}`;
+    alternates[loc] = `${baseUrl}${localePath === '/' ? '' : localePath}`;
+  });
+
+  return {
+    title: t.businessCardWebsite.pageTitle,
+    description: t.businessCardWebsite.pageDescription,
+    keywords: t.businessCardWebsite.pageKeywords,
+    alternates: {
+      canonical: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
+      languages: alternates,
+    },
+    openGraph: {
+      title: t.businessCardWebsite.openGraphTitle,
+      description: t.businessCardWebsite.openGraphDescription,
+      type: 'website',
+      locale: locale === 'hy' ? 'hy_AM' : locale === 'ru' ? 'ru_RU' : 'en_US',
+      siteName: 'Torgomyan.Studio',
+      url: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
+    },
+  };
+}
+
+export default async function BusinessCardWebsitePage() {
+  const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
+
   return (
     <MainTemplate>
       <ServicesHeaderWithContent
-        title="Сайт-Визитка для Вашего Бизнеса"
-        description="Простой, быстрый и эффективный сайт-визитка по доступной цене. Идеальное решение для малого бизнеса и старта в интернете. Сайт-визитка — это отличное решение для малого бизнеса, фрилансеров и начинающих предпринимателей, которые хотят быстро и недорого заявить о себе в интернете. Это компактный сайт, обычно состоящий из 3-5 страниц, который содержит основную информацию о вашем бизнесе: услуги, контакты, портфолио или каталог товаров."
+        title={t.businessCardWebsite.title}
+        description={t.businessCardWebsite.description}
       />
 
       <SEOMarketingBlocks
         stats={[
-          { number: '80,000₽', label: 'От цены' },
-          { number: '1-2', label: 'Недели до запуска' },
-          { number: '3-5', label: 'Страниц включено' },
-          { number: '100%', label: 'Готов к работе' },
+          { number: formatPrice(50000, locale), label: t.businessCardWebsite.stats.fromPrice },
+          { number: '1-2', label: t.businessCardWebsite.stats.weeksToLaunch },
+          { number: '3-5', label: t.businessCardWebsite.stats.pagesIncluded },
+          { number: '100%', label: t.businessCardWebsite.stats.readyToWork },
         ]}
         benefits={[
           {
-            title: 'Доступная цена',
+            title: t.businessCardWebsite.benefits.affordablePrice.title,
             description:
-              'Идеальное соотношение цена-качество для малого бизнеса',
+              t.businessCardWebsite.benefits.affordablePrice.description,
             icon: 'fas fa-tag',
           },
           {
-            title: 'Быстрый запуск',
-            description: 'Сайт готов к запуску уже через 1-2 недели',
+            title: t.businessCardWebsite.benefits.fastLaunch.title,
+            description: t.businessCardWebsite.benefits.fastLaunch.description,
             icon: 'fas fa-bolt',
           },
           {
-            title: 'Простота управления',
+            title: t.businessCardWebsite.benefits.easyManagement.title,
             description:
-              'Легко обновлять контент самостоятельно без технических знаний',
+              t.businessCardWebsite.benefits.easyManagement.description,
             icon: 'fas fa-user-tie',
           },
           {
-            title: 'Мобильная адаптация',
-            description: 'Отлично выглядит и работает на всех устройствах',
+            title: t.businessCardWebsite.benefits.mobileAdaptation.title,
+            description:
+              t.businessCardWebsite.benefits.mobileAdaptation.description,
             icon: 'fas fa-mobile-alt',
           },
           {
-            title: 'SEO-оптимизация',
-            description: 'Базовая оптимизация для поисковых систем включена',
+            title: t.businessCardWebsite.benefits.seoOptimization.title,
+            description:
+              t.businessCardWebsite.benefits.seoOptimization.description,
             icon: 'fas fa-chart-line',
           },
           {
-            title: 'Профессиональный вид',
-            description: 'Современный дизайн, который вызывает доверие',
+            title: t.businessCardWebsite.benefits.professionalLook.title,
+            description:
+              t.businessCardWebsite.benefits.professionalLook.description,
             icon: 'fas fa-palette',
           },
         ]}
         features={[
-          'Разработка дизайна',
-          'Создание 3-5 основных страниц',
-          'Адаптивная верстка',
-          'Система управления контентом',
-          'Форма обратной связи',
-          'Интеграция карты и контактов',
-          'Базовая SEO-оптимизация',
-          'Обучение работе с сайтом',
+          t.businessCardWebsite.features.designDevelopment,
+          t.businessCardWebsite.features.createPages,
+          t.businessCardWebsite.features.responsiveLayout,
+          t.businessCardWebsite.features.cms,
+          t.businessCardWebsite.features.contactForm,
+          t.businessCardWebsite.features.mapIntegration,
+          t.businessCardWebsite.features.seoOptimization,
+          t.businessCardWebsite.features.training,
         ]}
         faq={[
           {
-            question: 'Сколько страниц включает сайт-визитка?',
-            answer:
-              'Обычно сайт-визитка включает 3-5 страниц: главная, о компании/услугах, портфолио/каталог, контакты. Количество страниц может варьироваться в зависимости от ваших потребностей.',
+            question: t.businessCardWebsite.faq.pagesCount.question,
+            answer: t.businessCardWebsite.faq.pagesCount.answer,
           },
           {
-            question: 'Какова стоимость сайта-визитки?',
-            answer:
-              'Стоимость сайта-визитки начинается от 50,000 рублей. Цена зависит от количества страниц, сложности дизайна и дополнительных функций. Свяжитесь с нами для получения точного расчета.',
+            question: t.businessCardWebsite.faq.cost.question,
+            answer: t.businessCardWebsite.faq.cost.answer,
           },
           {
-            question: 'Можно ли потом расширить сайт-визитку?',
-            answer:
-              'Да, конечно! Сайт-визитка может быть легко расширена до корпоративного сайта или интернет-магазина по мере роста вашего бизнеса. Мы поможем с развитием проекта.',
+            question: t.businessCardWebsite.faq.expandable.question,
+            answer: t.businessCardWebsite.faq.expandable.answer,
           },
           {
-            question: 'Сколько времени занимает создание?',
-            answer:
-              'Стандартный сайт-визитка готов к запуску за 1-2 недели. Сроки зависят от скорости предоставления контента и согласования дизайна.',
+            question: t.businessCardWebsite.faq.creationTime.question,
+            answer: t.businessCardWebsite.faq.creationTime.answer,
           },
         ]}
       />
 
       <DiscussBlock />
 
-      <ServicesBlock but="Сайт-визитка" />
+      <ServicesBlock but={t.businessCardWebsite.serviceButton} />
 
       <OurWorks />
 

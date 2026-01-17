@@ -38,7 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const t = getTranslations(locale as any);
   const pathWithoutLocale = getPathnameWithoutLocale(pathname);
 
-  const baseUrl = 'https://torgomyan.studio';
+  const baseUrl = 'https://torgomyan-studio.am';
 
   // Generate hreflang alternates
   const alternates: Record<string, string> = {};

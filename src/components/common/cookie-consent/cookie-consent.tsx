@@ -2,11 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
+import { useLocale } from '@/i18n/use-locale';
+import { addLocaleToPath } from '@/i18n/utils';
 import { localStorageKeys } from '@/utils/consts';
 import './_cookie-consent.scss';
 
 export default function CookieConsent() {
   const [isVisible, setIsVisible] = useState(false);
+  const locale = useLocale();
 
   useEffect(() => {
     // Check if user has already given consent
@@ -67,14 +71,14 @@ export default function CookieConsent() {
                 Мы используем cookies для улучшения работы сайта и
                 персонализации контента. Продолжая использовать сайт, вы
                 соглашаетесь с нашей{' '}
-                <a
-                  href="/privacy-policy"
+                <Link
+                  href={addLocaleToPath('/privacy-policy', locale)}
                   className="cookie-consent-link"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   политикой конфиденциальности
-                </a>
+                </Link>
                 .
               </p>
             </div>

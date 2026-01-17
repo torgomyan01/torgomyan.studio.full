@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { headers } from 'next/headers';
 import MainTemplate from '@/components/common/main-template/main-template';
 import ServicesBlock from '@/components/common/services-block/services-block';
 import ServicesHeaderWithContent from '@/components/common/services-header/services-header-with-content';
@@ -6,118 +7,133 @@ import OurWorks from '@/components/common/our-works/our-works';
 import ContactUs from '@/components/common/contact-us/contact-us';
 import DiscussBlock from '@/components/layout/services/discuss-block/discuss-block';
 import SEOMarketingBlocks from '@/components/common/seo-marketing-blocks/seo-marketing-blocks';
+import { getLocaleFromHeaders } from '@/i18n/server-utils';
+import { getTranslations } from '@/i18n';
+import { getPathnameWithoutLocale } from '@/i18n/utils';
+import { locales, defaultLocale } from '@/i18n/config';
+import { formatPrice } from '@/i18n/utils';
 
-export const metadata: Metadata = {
-  title:
-    'UI/UX Дизайн Интерфейсов | Дизайн Сайтов и Приложений | Torgomyan.Studio',
-  description:
-    'Профессиональный UI/UX дизайн интерфейсов. Создание удобных и красивых интерфейсов для сайтов и приложений. Повышение конверсии на 20-40%. От 150,000₽. Заказать дизайн интерфейса.',
-  keywords:
-    'UI UX дизайн, дизайн интерфейсов, UI дизайн, UX дизайн, дизайн сайта, дизайн приложения, пользовательский интерфейс, дизайн интерфейса цена, заказать UI дизайн, веб-дизайн, дизайн сайтов, создание дизайна интерфейса',
-  alternates: {
-    canonical: 'https://torgomyan.studio/services/ui-ux-design',
-  },
-  openGraph: {
-    title: 'UI/UX Дизайн Интерфейсов | Дизайн Сайтов и Приложений',
-    description:
-      'Профессиональный UI/UX дизайн для создания удобных и красивых интерфейсов. Повышение конверсии на 20-40%.',
-    type: 'website',
-    locale: 'ru_RU',
-    siteName: 'Torgomyan.Studio',
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const headersList = await headers();
+  const pathname = headersList.get('x-pathname') || '/services/ui-ux-design';
+  const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
+  const pathWithoutLocale = getPathnameWithoutLocale(pathname);
 
-export default function UIUXDesignPage() {
+  const baseUrl = 'https://torgomyan-studio.am';
+
+  // Generate hreflang alternates
+  const alternates: Record<string, string> = {};
+  locales.forEach((loc) => {
+    const localePath =
+      loc === defaultLocale ? pathWithoutLocale : `/${loc}${pathWithoutLocale}`;
+    alternates[loc] = `${baseUrl}${localePath === '/' ? '' : localePath}`;
+  });
+
+  return {
+    title: t.uiUxDesign.pageTitle,
+    description: t.uiUxDesign.pageDescription,
+    keywords: t.uiUxDesign.pageKeywords,
+    alternates: {
+      canonical: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
+      languages: alternates,
+    },
+    openGraph: {
+      title: t.uiUxDesign.openGraphTitle,
+      description: t.uiUxDesign.openGraphDescription,
+      type: 'website',
+      locale: locale === 'hy' ? 'hy_AM' : locale === 'ru' ? 'ru_RU' : 'en_US',
+      siteName: 'Torgomyan.Studio',
+      url: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
+    },
+  };
+}
+
+export default async function UIUXDesignPage() {
+  const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
+
   return (
     <MainTemplate>
       <ServicesHeaderWithContent
-        title="UI/UX Дизайн Интерфейсов"
-        description="Создаем удобные и красивые интерфейсы, которые нравятся пользователям и повышают конверсию. Профессиональный дизайн для сайтов и приложений. UI/UX дизайн — это создание интерфейсов, которые не только красивы, но и удобны в использовании. UI (User Interface) отвечает за визуальную часть, а UX (User Experience) — за пользовательский опыт и удобство использования."
+        title={t.uiUxDesign.title}
+        description={t.uiUxDesign.description}
       />
 
       <SEOMarketingBlocks
         stats={[
-          { number: '150,000₽', label: 'От цены' },
-          { number: '20-40%', label: 'Рост конверсии' },
-          { number: '2-3', label: 'Недели разработки' },
-          { number: '100+', label: 'Дизайн проектов' },
+          { number: formatPrice(80000, locale), label: t.uiUxDesign.stats.fromPrice },
+          { number: '20-40%', label: t.uiUxDesign.stats.conversionGrowth },
+          { number: '2-3', label: t.uiUxDesign.stats.weeksDevelopment },
+          { number: '100+', label: t.uiUxDesign.stats.designProjects },
         ]}
         benefits={[
           {
-            title: 'Повышение конверсии',
-            description:
-              'Правильно спроектированный интерфейс увеличивает конверсию на 20-40%',
+            title: t.uiUxDesign.benefits.conversionIncrease.title,
+            description: t.uiUxDesign.benefits.conversionIncrease.description,
             icon: 'fas fa-chart-line',
           },
           {
-            title: 'Удобство использования',
-            description:
-              'Интуитивно понятный интерфейс снижает отказы и повышает вовлеченность',
+            title: t.uiUxDesign.benefits.usability.title,
+            description: t.uiUxDesign.benefits.usability.description,
             icon: 'fas fa-user-tie',
           },
           {
-            title: 'Современный дизайн',
-            description:
-              'Актуальные тренды и лучшие практики дизайна интерфейсов',
+            title: t.uiUxDesign.benefits.modernDesign.title,
+            description: t.uiUxDesign.benefits.modernDesign.description,
             icon: 'fas fa-palette',
           },
           {
-            title: 'Адаптивность',
-            description: 'Дизайн, который отлично работает на всех устройствах',
+            title: t.uiUxDesign.benefits.responsiveness.title,
+            description: t.uiUxDesign.benefits.responsiveness.description,
             icon: 'fas fa-mobile-alt',
           },
           {
-            title: 'Исследования пользователей',
-            description:
-              'Дизайн основан на анализе поведения и потребностей пользователей',
+            title: t.uiUxDesign.benefits.userResearch.title,
+            description: t.uiUxDesign.benefits.userResearch.description,
             icon: 'fas fa-search',
           },
           {
-            title: 'Прототипирование',
-            description:
-              'Создание интерактивных прототипов для тестирования перед разработкой',
+            title: t.uiUxDesign.benefits.prototyping.title,
+            description: t.uiUxDesign.benefits.prototyping.description,
             icon: 'fas fa-drafting-compass',
           },
         ]}
         features={[
-          'Анализ целевой аудитории',
-          'Исследование конкурентов',
-          'Создание пользовательских сценариев',
-          'Разработка wireframes',
-          'Создание визуального дизайна',
-          'Разработка дизайн-системы',
-          'Создание интерактивных прототипов',
-          'Адаптивный дизайн',
-          'Подготовка макетов для разработки',
-          'Тестирование и итерации',
+          t.uiUxDesign.features.audienceAnalysis,
+          t.uiUxDesign.features.competitorResearch,
+          t.uiUxDesign.features.userScenarios,
+          t.uiUxDesign.features.wireframes,
+          t.uiUxDesign.features.visualDesign,
+          t.uiUxDesign.features.designSystem,
+          t.uiUxDesign.features.interactivePrototypes,
+          t.uiUxDesign.features.responsiveDesign,
+          t.uiUxDesign.features.mockupsPreparation,
+          t.uiUxDesign.features.testingIterations,
         ]}
         faq={[
           {
-            question: 'В чем разница между UI и UX дизайном?',
-            answer:
-              'UI (User Interface) — это визуальный дизайн интерфейса: цвета, шрифты, кнопки, иконки. UX (User Experience) — это проектирование пользовательского опыта: удобство использования, логика взаимодействия, пользовательские сценарии. Оба аспекта важны для создания качественного интерфейса.',
+            question: t.uiUxDesign.faq.uiUxDifference.question,
+            answer: t.uiUxDesign.faq.uiUxDifference.answer,
           },
           {
-            question: 'Какая стоимость дизайна интерфейса?',
-            answer:
-              'Стоимость зависит от сложности проекта и количества экранов. Дизайн простого сайта начинается от 80,000 рублей, сложного приложения — от 500,000 рублей. Свяжитесь с нами для получения точного расчета.',
+            question: t.uiUxDesign.faq.cost.question,
+            answer: t.uiUxDesign.faq.cost.answer,
           },
           {
-            question: 'Сколько времени занимает разработка дизайна?',
-            answer:
-              'Сроки зависят от объема работы. Дизайн простого сайта — 2-3 недели, сложного приложения — 1-2 месяца. Мы всегда согласовываем сроки на этапе планирования.',
+            question: t.uiUxDesign.faq.developmentTime.question,
+            answer: t.uiUxDesign.faq.developmentTime.answer,
           },
           {
-            question: 'Предоставляете ли вы дизайн-систему?',
-            answer:
-              'Да, мы создаем дизайн-систему с компонентами, стилями и гайдлайнами, что упрощает дальнейшую разработку и поддержку проекта.',
+            question: t.uiUxDesign.faq.designSystem.question,
+            answer: t.uiUxDesign.faq.designSystem.answer,
           },
         ]}
       />
 
       <DiscussBlock />
 
-      <ServicesBlock but="Дизайн интерфейсов (UI/UX)" />
+      <ServicesBlock but={t.uiUxDesign.serviceButton} />
 
       <OurWorks />
 
