@@ -10,6 +10,7 @@ import ContactUs from '@/components/common/contact-us/contact-us';
 export default function Page() {
   return (
     <MainTemplate>
+      <div className="h-[100px]" />
       <Header />
 
       <PromotionSection />
