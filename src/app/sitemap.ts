@@ -9,7 +9,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const proto = (await headersList.get('x-forwarded-proto')) || 'https';
   const baseUrl = `${proto}://${host}`;
 
-  const now = new Date();
+  // Fixed date - never changes
+  const fixedDate = new Date('2026-01-18T06:55:33.355Z');
 
   // Helper function to generate URLs for all locales
   const generateLocalizedUrls = (path: string): MetadataRoute.Sitemap => {
@@ -18,7 +19,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         locale === defaultLocale
           ? `${baseUrl}${path}`
           : `${baseUrl}/${locale}${path}`,
-      lastModified: now,
+      lastModified: fixedDate,
       alternates: {
         languages: Object.fromEntries(
           locales.map((loc) => [
