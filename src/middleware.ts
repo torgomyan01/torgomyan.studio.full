@@ -43,25 +43,45 @@ export default withAuth(
 
     // Detect locale based on geolocation if no locale in URL
     if (!hasLocale) {
-      // Check if user is switching language (coming from a locale-prefixed URL)
-      const referer = request.headers.get('referer');
-      const isLanguageSwitch =
-        referer &&
-        (referer.includes('/en/') ||
-          referer.includes('/ru/') ||
-          referer.includes('/hy/') ||
-          referer.endsWith('/en') ||
-          referer.endsWith('/ru') ||
-          referer.endsWith('/hy'));
-
-      if (isLanguageSwitch) {
-        // User explicitly switched language - respect their choice
-        // If they're on root path, use default locale (no prefix)
-        // If they're on a non-root path, keep default locale (no prefix)
-        locale = defaultLocale;
+      // Check if user has explicitly set a locale preference via cookie
+      const cookieLocale = request.cookies.get('NEXT_LOCALE')?.value;
+      if (cookieLocale && isValidLocale(cookieLocale)) {
+        locale = cookieLocale as Locale;
+        // If switching to default locale, don't add prefix
+        if (locale === defaultLocale) {
+          // Keep default locale without prefix
+        } else {
+          // For non-default locales, redirect will happen below
+        }
       } else {
-        // First visit: detect locale from geolocation
-        locale = await getLocaleFromGeo(request);
+        // Check if user is switching language (coming from a locale-prefixed URL)
+        const referer = request.headers.get('referer');
+        const isLanguageSwitch =
+          referer &&
+          (referer.includes('/en/') ||
+            referer.includes('/ru/') ||
+            referer.includes('/hy/') ||
+            referer.endsWith('/en') ||
+            referer.endsWith('/ru') ||
+            referer.endsWith('/hy'));
+
+        // Also check if user is switching TO default locale (ru)
+        // by checking if referer has a different locale prefix
+        const isSwitchingToDefault =
+          referer &&
+          (referer.includes('/en/') ||
+            referer.includes('/hy/') ||
+            referer.endsWith('/en') ||
+            referer.endsWith('/hy'));
+
+        if (isLanguageSwitch || isSwitchingToDefault) {
+          // User explicitly switched language - respect their choice
+          // If they're switching to default locale (ru), use default locale (no prefix)
+          locale = defaultLocale;
+        } else {
+          // First visit: detect locale from geolocation
+          locale = await getLocaleFromGeo(request);
+        }
       }
     }
 
@@ -77,6 +97,14 @@ export default withAuth(
       response.headers.set('x-locale', locale);
       response.headers.set('x-pathname', pathname);
       response.headers.set('x-actual-pathname', actualPathname);
+      
+      // Set cookie to remember user's locale preference
+      response.cookies.set('NEXT_LOCALE', locale, {
+        path: '/',
+        maxAge: 31536000, // 1 year
+        sameSite: 'lax',
+      });
+      
       return response;
     }
 
@@ -84,7 +112,16 @@ export default withAuth(
     if (!hasLocale && locale !== defaultLocale) {
       const url = request.nextUrl.clone();
       url.pathname = addLocaleToPath(pathname, locale);
-      return NextResponse.redirect(url);
+      const redirectResponse = NextResponse.redirect(url);
+      
+      // Set cookie to remember user's locale preference
+      redirectResponse.cookies.set('NEXT_LOCALE', locale, {
+        path: '/',
+        maxAge: 31536000, // 1 year
+        sameSite: 'lax',
+      });
+      
+      return redirectResponse;
     }
 
     // Handle regular user routes with NextAuth
@@ -107,6 +144,13 @@ export default withAuth(
     response.headers.set('x-locale', locale);
     response.headers.set('x-pathname', pathname);
     response.headers.set('x-actual-pathname', actualPathname || pathname);
+    
+    // Set cookie to remember user's locale preference (for default locale too)
+    response.cookies.set('NEXT_LOCALE', locale, {
+      path: '/',
+      maxAge: 31536000, // 1 year
+      sameSite: 'lax',
+    });
 
     return response;
   },

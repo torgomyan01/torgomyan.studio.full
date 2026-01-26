@@ -27,12 +27,12 @@ export function addLocaleToPath(pathname: string, locale: Locale): string {
   // Always remove existing locale first
   const pathWithoutLocale = getPathnameWithoutLocale(pathname);
 
-  // Don't add locale to root path if it's default locale
-  if (pathWithoutLocale === '/' && locale === defaultLocale) {
-    return '/';
+  // Don't add locale prefix if it's default locale (for all paths, not just root)
+  if (locale === defaultLocale) {
+    return pathWithoutLocale;
   }
 
-  // Add locale prefix
+  // Add locale prefix for non-default locales
   return `/${locale}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`;
 }
 

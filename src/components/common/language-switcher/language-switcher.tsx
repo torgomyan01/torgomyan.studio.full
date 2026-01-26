@@ -54,8 +54,12 @@ export default function LanguageSwitcher() {
     const pathWithoutLocale = removeLocaleFromPath(actualPathname);
     const newPath = addLocaleToPath(pathWithoutLocale, newLocale);
 
-    // Use window.location for navigation to ensure URL changes
-    window.location.href = newPath;
+    // Set a cookie to indicate language switch (for middleware detection)
+    document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
+
+    // Use window.location.replace to avoid adding to history
+    // This ensures middleware can properly detect the language switch
+    window.location.replace(newPath);
     setIsOpen(false);
   };
 
