@@ -154,6 +154,33 @@ const ciklevkaUrl = [
 ];
 
 export const Works = [
+   {
+    name: 'НАМ ПО ПУТИ',
+    slug: 'nampoputi',
+    imgUrl: 'images/nampoputi-rent.jpg',
+    links: [
+      {
+        name: 'Главная',
+        url: 'https://nampoputi.rent',
+      },
+      {
+        name: 'Каталог автомобилей',
+        url: 'https://nampoputi.rent/catalog',
+      },
+      {
+        name: 'Условия аренды',
+        url: 'https://nampoputi.rent/rental-terms',
+      },
+      {
+        name: 'Контакты',
+        url: 'https://nampoputi.rent/contact',
+      },
+    ],
+    created:
+      'Next.js, Typescript, MySql, Prisma, React JS, TypeScript,Tailwind CSS',
+    description:
+      'НАМ ПО ПУТИ - прокат автомобилей в Москве. В нашем парке представлены автомобили от эконом класса до минивенов. Аренда автомобиля без водителя возможна всего от 1 суток. Взять машину напрокат можно всего по двум документам: паспорт и водительское удостоверение.',
+  },
   {
     name: 'Arakelians Drive',
     slug: 'arakelians-drive',

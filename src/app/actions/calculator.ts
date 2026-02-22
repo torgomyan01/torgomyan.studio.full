@@ -1,6 +1,7 @@
 'use server';
 
 import { prisma } from '@/lib/prisma';
+import { notifyTelegramCalculatorSubmission } from '@/lib/telegram';
 
 export type CalculatorSubmission = {
   id: number;
@@ -162,6 +163,16 @@ export async function saveCalculatorSubmissionAction(data: {
         email: data.email.trim(),
         phone: data.phone.trim(),
       },
+    });
+
+    await notifyTelegramCalculatorSubmission({
+      id: submission.id,
+      name: submission.name,
+      email: submission.email,
+      phone: submission.phone,
+      websiteType: submission.website_type,
+      estimatedPrice: submission.estimated_price,
+      features: submission.features,
     });
 
     return {

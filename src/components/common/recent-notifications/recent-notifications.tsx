@@ -258,10 +258,14 @@ export default function RecentNotifications() {
                   shownIdsRef.current = newSet;
                   saveShownIds(newSet);
 
-                  setNotifications((prevNotifications) => [
-                    notification,
-                    ...prevNotifications.slice(0, 2),
-                  ]);
+                  setNotifications((prevNotifications) => {
+                    if (prevNotifications.some((n) => n.id === notification.id))
+                      return prevNotifications;
+                    return [
+                      notification,
+                      ...prevNotifications.slice(0, 2),
+                    ];
+                  });
 
                   // Auto-remove notification after display time
                   setTimeout(() => {
@@ -317,7 +321,10 @@ export default function RecentNotifications() {
 
             if (timeSinceLastNotification >= MIN_TIME_BETWEEN_NOTIFICATIONS) {
               lastNotificationTimeRef.current = Date.now();
-              setNotifications((prev) => [notification, ...prev.slice(0, 2)]);
+              setNotifications((prev) => {
+                if (prev.some((n) => n.id === notification.id)) return prev;
+                return [notification, ...prev.slice(0, 2)];
+              });
               setShownIds((prev) => {
                 const newSet = new Set(prev);
                 newSet.add(notification.id);

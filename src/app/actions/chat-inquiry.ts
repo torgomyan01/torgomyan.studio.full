@@ -2,6 +2,10 @@
 
 import { prisma } from '@/lib/prisma';
 import { ChatData } from '@/components/common/ai-block/types';
+import {
+  notifyTelegramChatInquiry,
+  notifyTelegramScheduledCall,
+} from '@/lib/telegram';
 
 export type ChatInquiry = {
   id: number;
@@ -134,6 +138,18 @@ export async function saveChatInquiryAction(
       },
     });
 
+    await notifyTelegramChatInquiry({
+      id: inquiry.id,
+      name: inquiry.name,
+      email: inquiry.email,
+      phone: inquiry.phone,
+      selectedService: inquiry.selected_service,
+      websiteType: inquiry.website_type,
+      budget: inquiry.budget,
+      timeline: inquiry.timeline,
+      additionalInfo: inquiry.additional_info,
+    });
+
     return {
       success: true,
       id: inquiry.id,
@@ -198,6 +214,17 @@ export async function scheduleCallAction(data: {
         discount_percentage: data.discountPercentage || null,
         discount_eligible: data.discountEligible || false,
       },
+    });
+
+    await notifyTelegramScheduledCall({
+      id: scheduledCall.id,
+      name: scheduledCall.name,
+      email: scheduledCall.email,
+      phone: scheduledCall.phone,
+      scheduledDate: scheduledCall.scheduled_date,
+      scheduledTime: scheduledCall.scheduled_time,
+      discountEligible: scheduledCall.discount_eligible,
+      discountPercentage: scheduledCall.discount_percentage,
     });
 
     return {

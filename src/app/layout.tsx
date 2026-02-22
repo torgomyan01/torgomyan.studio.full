@@ -24,7 +24,6 @@ import RecentNotifications from '@/components/common/recent-notifications/recent
 import { NotificationProvider } from '@/components/common/recent-notifications/notification-context';
 import { ToastNotifications } from '@/components/common/recent-notifications/toast-notifications';
 import YandexMetrika from '@/components/common/YandexMetrika/YandexMetrika';
-import Smartsupp from '@/components/common/Smartsupp/Smartsupp';
 import AdsConversionTracker from '@/components/common/AdsConversionTracker/AdsConversionTracker';
 import { headers } from 'next/headers';
 import { getTranslations } from '@/i18n';
@@ -99,7 +98,6 @@ export default async function RootLayout({
         </div>
         <YandexMetrika />
         <GoogleAnalytics gaId="G-NZBTEVKW5Z" />
-        <Smartsupp />
         <AdsConversionTracker />
       </body>
     </html>
