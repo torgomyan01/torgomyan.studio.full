@@ -181,6 +181,49 @@ export const Works = [
     description:
       'НАМ ПО ПУТИ - прокат автомобилей в Москве. В нашем парке представлены автомобили от эконом класса до минивенов. Аренда автомобиля без водителя возможна всего от 1 суток. Взять машину напрокат можно всего по двум документам: паспорт и водительское удостоверение.',
   },
+    {
+    name: 'Евро Асфальт',
+    slug: 'euroasfalt',
+    imgUrl: 'images/euro-asfalt.png',
+    links: [
+      {
+        name: 'Главная',
+        url: 'https://euro-asfalt.ru/',
+      },
+      {
+        name: 'Услуги',
+        url: 'https://euro-asfalt.ru/services',
+      },
+      {
+        name: 'Укладка брусчатки',
+        url: 'https://euro-asfalt.ru/services/ukladka-bruschatki',
+      },
+      {
+        name: 'Портфолио',
+        url: 'https://euro-asfalt.ru/portfolio',
+      },
+      {
+        name: 'Калькулятор',
+        url: 'https://euro-asfalt.ru/calculator',
+      },
+      {
+        name: 'Блог',
+        url: 'https://euro-asfalt.ru/blog',
+      },
+      {
+        name: 'Отзывы',
+        url: 'https://euro-asfalt.ru/reviews',
+      },
+      {
+        name: 'Контакты',
+        url: 'https://euro-asfalt.ru/contacts',
+      },
+    ],
+    created:
+      'Next.js, Typescript, React JS, TypeScript,Tailwind CSS',
+    description:
+      'Евро Асфальт - укладка брусчатки в Москве. Мы предлагаем высококачественные услуги по укладке брусчатки, включая проектирование, материалы и монтаж. Наши специалисты работают с использованием современных технологий и материалов, обеспечивая долговечность и эстетический вид укладки.',
+  },
   {
     name: 'Arakelians Drive',
     slug: 'arakelians-drive',
