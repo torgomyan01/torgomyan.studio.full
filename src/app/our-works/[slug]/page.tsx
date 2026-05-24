@@ -151,10 +151,10 @@ export default async function ProjectDetailPage({
               {projectDescription && (
                 <p className="project-description">{projectDescription}</p>
               )}
-              <div className="project-tech">
+              {/* <div className="project-tech">
                 <h3>{t.ourWorks.projectDetail.technologiesTitle}</h3>
                 <p>{project.created}</p>
-              </div>
+              </div> */}
             </div>
           </div>
 

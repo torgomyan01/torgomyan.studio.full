@@ -76,7 +76,7 @@ export default function CalculatorPage() {
 
   return (
     <MainTemplate>
-      <div className="calculator-page-wrapper">
+      <>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
@@ -89,7 +89,7 @@ export default function CalculatorPage() {
         />
         <Calculator />
         <ContactUs />
-      </div>
+      </>
     </MainTemplate>
   );
 }

@@ -283,6 +283,30 @@
   z-index: 1 !important;
 }
 
+.fa-rocket:before {
+  content: '\f135';
+}
+
+.fa-server:before {
+  content: '\f233';
+}
+
+.fa-store:before {
+  content: '\f54e';
+}
+
+.fa-chevron-down:before {
+  content: '\f078';
+}
+
+.fa-circle-check:before {
+  content: '\f058';
+}
+
+.fa-sparkles:before {
+  content: '\f890';
+}
+
 /*---------------------------------*/
 
 @font-face {

@@ -73,6 +73,11 @@ function Navbar() {
       label: getTranslation(locale, 'common.portfolio'),
     },
     {
+      href: SITE_URL.CALCULATOR,
+      key: 'calculator',
+      label: getTranslation(locale, 'common.calculator'),
+    },
+    {
       href: SITE_URL.CONTACT,
       key: 'contact',
       label: getTranslation(locale, 'common.contact'),

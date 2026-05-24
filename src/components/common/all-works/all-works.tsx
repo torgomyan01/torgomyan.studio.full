@@ -66,7 +66,7 @@ function AllWorks() {
                   >
                     <h3 className="work-name">{work.name}</h3>
                   </Link>
-                  <p className="work-tech">{work.created}</p>
+                  {/* <p className="work-tech">{work.created}</p> */}
                   {(() => {
                     const descriptionKey = `ourWorks.descriptions.${work.slug}`;
                     const translatedDescription = getTranslation(

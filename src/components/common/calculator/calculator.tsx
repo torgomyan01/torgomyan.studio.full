@@ -1,12 +1,22 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { CustomInput, CustomPhoneInput } from '@/components/ui';
 import { saveCalculatorSubmissionAction } from '@/app/actions/calculator';
 import { services } from '@/utils/consts';
 import { useServiceQuestions } from '../ai-block/hooks/use-service-questions';
 import { useLocale } from '@/i18n/use-locale';
 import { getTranslation } from '@/i18n';
+import {
+  calculatePriceRange,
+  calculateProjectPrice,
+  getFormDefaultsForService,
+  getServicePricingConfig,
+  needsPaymentSystems,
+  showProjectFeatureOptions,
+  showWebsiteConfigurator,
+} from '@/utils/calculator-pricing';
 import './_calculator.scss';
 
 interface CalculatorFormData {
@@ -70,6 +80,7 @@ export default function Calculator() {
     text: string;
   } | null>(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
   const [formData, setFormData] = useState<CalculatorFormData>({
     selectedService: '',
@@ -92,257 +103,24 @@ export default function Calculator() {
     phone: '',
   });
 
-  useEffect(() => {
-    setStep('calculator');
-    setEstimatedPrice(null);
-    setShowPrice(false);
-    setSubmitMessage(null);
-    setCurrentQuestionIndex(0);
-    setFormData({
-      selectedService: '',
-      websiteType: '',
-      pagesCount: 5,
-      designStyle: '',
-      features: [],
-      cmsRequired: false,
-      ecommerce: false,
-      paymentSystems: '',
-      mobileApp: false,
-      seoOptimization: false,
-      contentManagement: false,
-      serviceAnswers: {},
-    });
-    setContactData({
-      name: '',
-      email: '',
-      phone: '',
-    });
-  }, []);
-
   const selectedServiceQuestions = formData.selectedService
     ? getServiceQuestions(formData.selectedService)
     : [];
 
-  const calculatePrice = () => {
-    let basePrice = 0;
-    const service = formData.selectedService;
-    let complexityMultiplier = 1;
-    let isOngoingService = false; // Для услуг с ежемесячной оплатой
-
-    // Определение базовой цены и типа услуги
-    const serviceConfig = {
-      isWebsite: false,
-      isEcommerce: false,
-      isApp: false,
-      isDesign: false,
-      isOngoing: false,
-    };
-
-    // Base price by service type (в рублях, соответствует FAQ "starts from" ценам)
-    if (service.includes('Лендинг')) {
-      basePrice = 40000;
-      serviceConfig.isWebsite = true;
-      complexityMultiplier = 0.8; // Проще чем корпоративный сайт
-    } else if (service.includes('Корпоративный сайт')) {
-      basePrice = 120000;
-      serviceConfig.isWebsite = true;
-      complexityMultiplier = 1.2;
-    } else if (service.includes('Сайт-визитка')) {
-      basePrice = 50000;
-      serviceConfig.isWebsite = true;
-      complexityMultiplier = 0.7;
-    } else if (service.includes('Интернет-магазин')) {
-      basePrice = 200000;
-      serviceConfig.isWebsite = true;
-      serviceConfig.isEcommerce = true;
-      complexityMultiplier = 1.5;
-    } else if (service.includes('Веб-приложения')) {
-      basePrice = 300000;
-      serviceConfig.isApp = true;
-      complexityMultiplier = 2.0;
-    } else if (service.includes('SEO') || service.includes('Продвижение')) {
-      basePrice = 40000; // Месячная стоимость
-      serviceConfig.isOngoing = true;
-      isOngoingService = true;
-    } else if (service.includes('UI/UX') || service.includes('Дизайн')) {
-      basePrice = 80000;
-      serviceConfig.isDesign = true;
-      complexityMultiplier = 1.1;
-    } else if (service.includes('Техническая поддержка')) {
-      basePrice = 15000; // Месячная стоимость
-      serviceConfig.isOngoing = true;
-      isOngoingService = true;
-    } else if (service.includes('Хостинг') || service.includes('домен')) {
-      basePrice = 500; // Месячная стоимость
-      serviceConfig.isOngoing = true;
-      isOngoingService = true;
-    } else if (service.includes('Интеграция платежных')) {
-      basePrice = 45000;
-      complexityMultiplier = 1.3;
-    } else if (service.includes('Автоматизация')) {
-      basePrice = 150000;
-      complexityMultiplier = 1.8;
-    } else if (service.includes('Разработка Сайтов')) {
-      basePrice = 90000;
-      serviceConfig.isWebsite = true;
-      complexityMultiplier = 1.0;
-    } else {
-      basePrice = 70000;
-      complexityMultiplier = 1.0;
-    }
-
-    // Улучшенный расчет количества страниц (нелинейное масштабирование)
-    if (serviceConfig.isWebsite && formData.pagesCount > 0) {
-      const pages = formData.pagesCount;
-      let pagesCost = 0;
-
-      // Первые 5 страниц включены в базовую цену
-      if (pages <= 5) {
-        pagesCost = 0;
-      } else if (pages <= 10) {
-        // Страницы 6-10: умеренная стоимость
-        pagesCost = basePrice * 0.15 * (pages - 5);
-      } else if (pages <= 20) {
-        // Страницы 11-20: стандартная стоимость
-        pagesCost = basePrice * 0.15 * 5 + basePrice * 0.12 * (pages - 10);
-      } else {
-        // Страницы 21+: сниженная стоимость за счет тиражирования
-        pagesCost =
-          basePrice * 0.15 * 5 +
-          basePrice * 0.12 * 10 +
-          basePrice * 0.08 * (pages - 20);
-      }
-
-      basePrice += pagesCost;
-    }
-
-    // Design style multiplier (более точные коэффициенты)
-    if (formData.designStyle && serviceConfig.isWebsite) {
-      switch (formData.designStyle) {
-        case 'simple':
-          basePrice *= 0.95; // Небольшая скидка за простоту
-          break;
-        case 'standard':
-          basePrice *= 1.0; // Базовая цена
-          break;
-        case 'premium':
-          basePrice *= 1.5; // Премиум дизайн
-          break;
-        case 'luxury':
-          basePrice *= 2.0; // Люкс дизайн с уникальными элементами
-          break;
-      }
-    }
-
-    // Улучшенный расчет функций в зависимости от типа услуги
-    if (serviceConfig.isWebsite || serviceConfig.isApp) {
-      // CMS система управления
-      if (formData.cmsRequired) {
-        if (serviceConfig.isEcommerce) {
-          basePrice += 25000; // Для интернет-магазина дороже
-        } else {
-          basePrice += 22000;
-        }
-      }
-
-      // E-commerce функционал (только если не выбран интернет-магазин как основная услуга)
-      if (formData.ecommerce && !serviceConfig.isEcommerce) {
-        basePrice += 70000; // Полноценный e-commerce модуль
-      }
-
-      // Платежные системы
-      if (formData.paymentSystems && formData.paymentSystems !== 'none') {
-        if (formData.paymentSystems === 'single') {
-          basePrice += 30000;
-        } else if (formData.paymentSystems === 'multiple') {
-          basePrice += 50000; // Интеграция нескольких систем сложнее
-        }
-      }
-
-      // Мобильное приложение
-      if (formData.mobileApp) {
-        if (serviceConfig.isApp) {
-          basePrice += 80000; // Если уже веб-приложение, мобильная версия дешевле
-        } else {
-          basePrice += 140000; // Полноценное мобильное приложение
-        }
-      }
-
-      // SEO оптимизация
-      if (formData.seoOptimization) {
-        basePrice += 30000; // Базовая SEO настройка
-      }
-
-      // Управление контентом
-      if (formData.contentManagement) {
-        basePrice += 18000;
-      }
-
-      // Дополнительные функции с учетом сложности
-      const featureCosts: Record<string, number> = {
-        Многоязычность: 25000,
-        'Интеграция с соцсетями': 15000,
-        'Онлайн-чат': 12000,
-        'Форма обратной связи': 5000,
-        'Галерея изображений': 8000,
-        'Видео интеграция': 15000,
-        Блог: 20000,
-        'Новостная лента': 18000,
-      };
-
-      formData.features.forEach((feature) => {
-        basePrice += featureCosts[feature] || 10000;
-      });
-    }
-
-    // Применение коэффициента сложности
-    basePrice *= complexityMultiplier;
-
-    // Учет ответов на вопросы по услуге (может влиять на сложность)
-    const serviceAnswersCount = Object.keys(formData.serviceAnswers).length;
-    if (serviceAnswersCount > 0) {
-      // Если есть детальные ответы, это может увеличить сложность на 5-15%
-      const answersComplexityMultiplier = 1 + serviceAnswersCount * 0.02;
-      basePrice *= Math.min(answersComplexityMultiplier, 1.15);
-    }
-
-    // Для услуг с ежемесячной оплатой показываем месячную стоимость
-    // (но можно добавить опцию выбора периода)
-    if (isOngoingService) {
-      // Для SEO и поддержки можно умножить на количество месяцев
-      // Пока оставляем месячную стоимость
-    }
-
-    // Округление до ближайшей тысячи для более понятной цены
-    return Math.round(basePrice / 1000) * 1000;
-  };
-
-  // Расчет диапазона цен (минимальная и максимальная оценка)
-  const calculatePriceRange = (basePrice: number) => {
-    // Диапазон ±15% от базовой цены
-    const minPrice = Math.round((basePrice * 0.85) / 1000) * 1000;
-    const maxPrice = Math.round((basePrice * 1.15) / 1000) * 1000;
-    return { min: minPrice, max: maxPrice };
-  };
+  const serviceConfig = formData.selectedService
+    ? getServicePricingConfig(formData.selectedService)
+    : null;
 
   const handleServiceSelect = (service: string) => {
-    // Map service to websiteType for backward compatibility
-    let websiteType = '';
-    if (service.includes('Лендинг')) websiteType = 'landing';
-    else if (service.includes('Корпоративный')) websiteType = 'corporate';
-    else if (service.includes('Интернет-магазин')) websiteType = 'ecommerce';
-    else if (service.includes('Сайт-визитка')) websiteType = 'portfolio';
-    else if (service.includes('Веб-приложения')) websiteType = 'custom';
-    else websiteType = 'custom';
-
     setFormData((prev) => ({
       ...prev,
-      selectedService: service,
-      websiteType: websiteType,
-      serviceAnswers: {},
+      ...getFormDefaultsForService(service, prev),
     }));
     setCurrentQuestionIndex(0);
     setSubmitMessage(null);
+    setEstimatedPrice(null);
+    setPriceRange(null);
+    setShowPrice(false);
   };
 
   const handleQuestionAnswer = (question: string, answer: string) => {
@@ -376,7 +154,7 @@ export default function Calculator() {
       return;
     }
 
-    const price = calculatePrice();
+    const price = calculateProjectPrice(formData);
     const range = calculatePriceRange(price);
     setEstimatedPrice(price);
     setPriceRange(range);
@@ -427,7 +205,7 @@ export default function Calculator() {
     let finalPrice = estimatedPrice;
     let finalPriceRange = priceRange;
     if (finalPrice === null) {
-      finalPrice = calculatePrice();
+      finalPrice = calculateProjectPrice(formData);
       finalPriceRange = calculatePriceRange(finalPrice);
       setEstimatedPrice(finalPrice);
       setPriceRange(finalPriceRange);
@@ -439,10 +217,13 @@ export default function Calculator() {
         .map(([question, answer]) => `${question}: ${answer}`)
         .join('; ');
 
+      const serviceLabel = getServiceTitle(formData.selectedService);
+
       const result = await saveCalculatorSubmissionAction({
         ...formData,
-        websiteType: formData.selectedService || formData.websiteType,
+        websiteType: formData.websiteType || formData.selectedService,
         features: [
+          `Услуга: ${serviceLabel}`,
           ...formData.features,
           ...(serviceAnswersText ? [serviceAnswersText] : []),
         ],
@@ -511,30 +292,253 @@ export default function Calculator() {
     }));
   };
 
+  const localeTag =
+    locale === 'ru' ? 'ru-RU' : locale === 'hy' ? 'hy-AM' : 'en-US';
+
+  const formatPrice = (value: number) =>
+    value.toLocaleString(localeTag);
+
+  const getServiceIconClass = (title: string): string => {
+    if (title.includes('Лендинг')) return 'fas fa-rocket';
+    if (title.includes('Интернет-магазин')) return 'fas fa-shopping-cart';
+    if (title.includes('Корпоративный')) return 'fas fa-building';
+    if (title.includes('Сайт-визитка')) return 'fas fa-briefcase';
+    if (title.includes('Веб-приложения')) return 'fas fa-code';
+    if (title.includes('SEO') || title.includes('Продвижение'))
+      return 'fas fa-chart-line';
+    if (title.includes('UI/UX') || title.includes('Дизайн'))
+      return 'fas fa-palette';
+    if (title.includes('Техническая поддержка')) return 'fas fa-headset';
+    if (title.includes('Хостинг') || title.includes('домен'))
+      return 'fas fa-server';
+    if (title.includes('Интеграция платежных'))
+      return 'fas fa-credit-card';
+    if (title.includes('Автоматизация')) return 'fas fa-cogs';
+    if (title.includes('Разработка Сайтов')) return 'fas fa-laptop-code';
+    return 'fas fa-laptop-code';
+  };
+
+  const designStyleIcons: Record<string, string> = {
+    simple: 'fas fa-file',
+    standard: 'fas fa-pencil',
+    premium: 'fas fa-palette',
+    luxury: 'fas fa-badge-check',
+  };
+
+  const benefitIcons = [
+    'fas fa-money-simple-from-bracket',
+    'fas fa-bolt',
+    'fas fa-bullseye',
+    'fas fa-shield-alt',
+  ];
+
+  const trustIcons = [
+    'fas fa-badge-check',
+    'fas fa-calendar-check',
+    'fas fa-users',
+    'fas fa-headset',
+  ];
+
+  const flowStep = useMemo(() => {
+    if (step === 'contact') return showPrice ? 4 : 3;
+    if (!formData.selectedService) return 1;
+    return 2;
+  }, [step, showPrice, formData.selectedService]);
+
+  const livePreview = useMemo(() => {
+    if (!formData.selectedService) return null;
+    const price = calculateProjectPrice(formData);
+    if (price <= 0) return null;
+    return { price, range: calculatePriceRange(price) };
+  }, [formData]);
+
+  const progressSteps = [
+    getTranslation(locale, 'calculator.progress.step1'),
+    getTranslation(locale, 'calculator.progress.step2'),
+    getTranslation(locale, 'calculator.progress.step3'),
+    getTranslation(locale, 'calculator.progress.step4'),
+  ];
+
+  const faqItems = [
+    {
+      q: getTranslation(locale, 'calculator.faq.howItWorks.question'),
+      a: getTranslation(locale, 'calculator.faq.howItWorks.answer'),
+    },
+    {
+      q: getTranslation(locale, 'calculator.faq.priceAccuracy.question'),
+      a: getTranslation(locale, 'calculator.faq.priceAccuracy.answer'),
+    },
+    {
+      q: getTranslation(locale, 'calculator.faq.developmentTime.question'),
+      a: getTranslation(locale, 'calculator.faq.developmentTime.answer'),
+    },
+    {
+      q: getTranslation(locale, 'calculator.faq.whatIncluded.question'),
+      a: getTranslation(locale, 'calculator.faq.whatIncluded.answer'),
+    },
+  ];
+
+  const showWebsiteFields =
+    serviceConfig !== null && showWebsiteConfigurator(serviceConfig);
+
+  const showFeatureOptions =
+    serviceConfig !== null && showProjectFeatureOptions(serviceConfig);
+
+  const showPaymentFields =
+    serviceConfig !== null &&
+    needsPaymentSystems(serviceConfig, formData.ecommerce);
+
+  const pagesMax = serviceConfig?.maxPages ?? 50;
+
   return (
+    <div className="calculator-page-wrapper">
     <div className="calculator-page">
       <div className="container">
-        {/* Hero Section */}
         <section className="calculator-hero">
+          <div className="calculator-hero__glow" aria-hidden="true" />
+          <span className="calculator-hero__badge">
+            <i className="fas fa-badge-check" aria-hidden="true" />
+            {getTranslation(locale, 'calculator.hero.badge')}
+          </span>
           <h1 className="main-title">
             {getTranslation(locale, 'calculator.hero.title')}
           </h1>
           <p className="main-subtitle">
             {getTranslation(locale, 'calculator.hero.subtitle')}
           </p>
+          <div className="calculator-steps">
+            {progressSteps.map((label, index) => {
+              const stepNum = index + 1;
+              const isActive = flowStep === stepNum;
+              const isDone = flowStep > stepNum;
+              return (
+                <div
+                  key={label}
+                  className={`calculator-step${isActive ? ' active' : ''}${isDone ? ' done' : ''}`}
+                >
+                  <span className="calculator-step__num">
+                    {isDone ? (
+                      <i className="fas fa-circle-check" aria-hidden="true" />
+                    ) : (
+                      stepNum
+                    )}
+                  </span>
+                  <span className="calculator-step__label">{label}</span>
+                </div>
+              );
+            })}
+          </div>
         </section>
 
-        {/* Calculator Form */}
-        <section className="calculator-section">
-          {step === 'calculator' ? (
-            <div className="calculator-form">
+        <div className="calculator-layout">
+          <aside className="calculator-sidebar">
+            <div className="calculator-sidebar__card">
+              <div className="calculator-sidebar__header">
+                <div className="calculator-sidebar__header-icon">
+                  <i className="fas fa-calculator" aria-hidden="true" />
+                </div>
+                <h2 className="calculator-sidebar__title">
+                  {getTranslation(locale, 'calculator.sidebar.title')}
+                </h2>
+              </div>
+              {livePreview ? (
+                <div className="calculator-sidebar__price-block">
+                  <div className="calculator-sidebar__price-ring">
+                    <p className="calculator-sidebar__price-label">
+                      <i className="fas fa-tag" aria-hidden="true" />
+                      {getTranslation(locale, 'calculator.sidebar.from')}
+                    </p>
+                    <div className="calculator-sidebar__price-value">
+                      <span className="calculator-sidebar__currency">₽</span>
+                      {formatPrice(livePreview.price)}
+                    </div>
+                    <p className="calculator-sidebar__price-range">
+                      <i className="fas fa-chart-line" aria-hidden="true" />
+                      {formatPrice(livePreview.range.min)} –{' '}
+                      {formatPrice(livePreview.range.max)} ₽
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div className="calculator-sidebar__empty">
+                  <i className="fas fa-pencil" aria-hidden="true" />
+                  <p className="calculator-sidebar__hint">
+                    {getTranslation(locale, 'calculator.sidebar.hint')}
+                  </p>
+                </div>
+              )}
+              {formData.selectedService && (
+                <dl className="calculator-sidebar__meta">
+                  <div className="calculator-sidebar__meta-item">
+                    <dt>
+                      <i
+                        className={getServiceIconClass(formData.selectedService)}
+                        aria-hidden="true"
+                      />
+                      {getTranslation(locale, 'calculator.sidebar.selected')}
+                    </dt>
+                    <dd>{getServiceTitle(formData.selectedService)}</dd>
+                  </div>
+                  {showWebsiteFields && (
+                    <div className="calculator-sidebar__meta-item">
+                      <dt>
+                        <i className="fas fa-file" aria-hidden="true" />
+                        {getTranslation(locale, 'calculator.sidebar.pages')}
+                      </dt>
+                      <dd>{formData.pagesCount}</dd>
+                    </div>
+                  )}
+                  {formData.designStyle && (
+                    <div className="calculator-sidebar__meta-item">
+                      <dt>
+                        <i
+                          className={
+                            designStyleIcons[formData.designStyle] ||
+                            'fas fa-palette'
+                          }
+                          aria-hidden="true"
+                        />
+                        {getTranslation(locale, 'calculator.sidebar.design')}
+                      </dt>
+                      <dd>
+                        {getTranslation(
+                          locale,
+                          `calculator.designStyles.${formData.designStyle}`
+                        )}
+                      </dd>
+                    </div>
+                  )}
+                </dl>
+              )}
+            </div>
+          </aside>
+
+          <div className="calculator-main">
+            <section className="calculator-panel">
+              <AnimatePresence mode="wait">
+                {step === 'calculator' ? (
+                  <motion.div
+                    key="calculator-step"
+                    className="calculator-form"
+                    initial={{ opacity: 0, x: 16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -16 }}
+                    transition={{ duration: 0.3 }}
+                  >
               <div className="form-section">
                 <h3 className="section-title">
                   {getTranslation(locale, 'calculator.form.selectService')}
                 </h3>
-                <div className="radio-group">
+                <div className="service-grid">
                   {services.map((service) => (
-                    <label key={service.title} className="radio-option">
+                    <label
+                      key={service.title}
+                      className={`service-card${
+                        formData.selectedService === service.title
+                          ? ' selected'
+                          : ''
+                      }`}
+                    >
                       <input
                         type="radio"
                         name="selectedService"
@@ -542,7 +546,15 @@ export default function Calculator() {
                         checked={formData.selectedService === service.title}
                         onChange={() => handleServiceSelect(service.title)}
                       />
-                      <span>{getServiceTitle(service.title)}</span>
+                      <span className="service-card__icon">
+                        <i
+                          className={getServiceIconClass(service.title)}
+                          aria-hidden="true"
+                        />
+                      </span>
+                      <span className="service-card__title">
+                        {getServiceTitle(service.title)}
+                      </span>
                     </label>
                   ))}
                 </div>
@@ -612,13 +624,7 @@ export default function Calculator() {
                   </div>
                 )}
 
-              {/* Показываем дополнительные параметры только для определенных услуг */}
-              {(formData.selectedService.includes('Лендинг') ||
-                formData.selectedService.includes('Корпоративный') ||
-                formData.selectedService.includes('Сайт-визитка') ||
-                formData.selectedService.includes('Интернет-магазин') ||
-                formData.selectedService.includes('Веб-приложения') ||
-                formData.selectedService.includes('Разработка Сайтов')) && (
+              {showWebsiteFields && (
                 <>
                   <div className="form-section">
                     <h3 className="section-title">
@@ -628,12 +634,15 @@ export default function Calculator() {
                       <input
                         type="range"
                         min="1"
-                        max="50"
-                        value={formData.pagesCount}
+                        max={pagesMax}
+                        value={Math.min(formData.pagesCount, pagesMax)}
                         onChange={(e) =>
                           setFormData((prev) => ({
                             ...prev,
-                            pagesCount: parseInt(e.target.value),
+                            pagesCount: Math.min(
+                              parseInt(e.target.value, 10) || 1,
+                              pagesMax
+                            ),
                           }))
                         }
                       />
@@ -649,14 +658,21 @@ export default function Calculator() {
                     <h3 className="section-title">
                       {getTranslation(locale, 'calculator.form.designStyle')}
                     </h3>
-                    <div className="radio-group">
+                    <div className="design-grid">
                       {[
                         { value: 'simple', key: 'simple' },
                         { value: 'standard', key: 'standard' },
                         { value: 'premium', key: 'premium' },
                         { value: 'luxury', key: 'luxury' },
                       ].map((option) => (
-                        <label key={option.value} className="radio-option">
+                        <label
+                          key={option.value}
+                          className={`design-card${
+                            formData.designStyle === option.value
+                              ? ' selected'
+                              : ''
+                          }`}
+                        >
                           <input
                             type="radio"
                             name="designStyle"
@@ -669,7 +685,13 @@ export default function Calculator() {
                               }))
                             }
                           />
-                          <span>
+                          <i
+                            className={
+                              designStyleIcons[option.value] || 'fas fa-palette'
+                            }
+                            aria-hidden="true"
+                          />
+                          <span className="design-card__label">
                             {getTranslation(
                               locale,
                               `calculator.designStyles.${option.key}`
@@ -682,6 +704,7 @@ export default function Calculator() {
                 </>
               )}
 
+              {showFeatureOptions && (
               <div className="form-section">
                 <h3 className="section-title">
                   {getTranslation(locale, 'calculator.form.additionalFeatures')}
@@ -702,6 +725,7 @@ export default function Calculator() {
                       {getTranslation(locale, 'calculator.features.cms')}
                     </span>
                   </label>
+                  {!serviceConfig?.isEcommerce && (
                   <label className="checkbox-option">
                     <input
                       type="checkbox"
@@ -710,6 +734,9 @@ export default function Calculator() {
                         setFormData((prev) => ({
                           ...prev,
                           ecommerce: e.target.checked,
+                          paymentSystems: e.target.checked
+                            ? prev.paymentSystems || 'single'
+                            : '',
                         }))
                       }
                     />
@@ -717,6 +744,7 @@ export default function Calculator() {
                       {getTranslation(locale, 'calculator.features.ecommerce')}
                     </span>
                   </label>
+                  )}
                   <label className="checkbox-option">
                     <input
                       type="checkbox"
@@ -767,8 +795,9 @@ export default function Calculator() {
                   </label>
                 </div>
               </div>
+              )}
 
-              {formData.ecommerce && (
+              {showPaymentFields && (
                 <div className="form-section">
                   <h3 className="section-title">
                     {getTranslation(locale, 'calculator.form.paymentSystems')}
@@ -804,6 +833,7 @@ export default function Calculator() {
                 </div>
               )}
 
+              {showFeatureOptions && (
               <div className="form-section">
                 <h3 className="section-title">
                   {getTranslation(locale, 'calculator.form.additionalOptions')}
@@ -837,6 +867,7 @@ export default function Calculator() {
                   ))}
                 </div>
               </div>
+              )}
 
               {submitMessage && (
                 <div className={`submit-message ${submitMessage.type}`}>
@@ -850,15 +881,25 @@ export default function Calculator() {
                   className="calculate-button"
                   onClick={handleCalculate}
                 >
+                  <i className="fas fa-calculator" aria-hidden="true" />
                   {getTranslation(locale, 'calculator.form.calculatePrice')}
                 </button>
               </div>
-            </div>
-          ) : (
-            <div className="contact-form">
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="contact-step"
+                    className="contact-form"
+                    initial={{ opacity: 0, x: 16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -16 }}
+                    transition={{ duration: 0.3 }}
+                  >
               {!showPrice && estimatedPrice !== null && (
                 <div className="price-info-message">
-                  <div className="info-icon">💰</div>
+                  <div className="info-icon">
+                    <i className="fas fa-badge-check" aria-hidden="true" />
+                  </div>
                   <div className="info-text">
                     <h3>
                       {getTranslation(
@@ -885,14 +926,7 @@ export default function Calculator() {
                     )}
                   </h3>
                   <div className="price-value">
-                    {estimatedPrice.toLocaleString(
-                      locale === 'ru'
-                        ? 'ru-RU'
-                        : locale === 'hy'
-                          ? 'hy-AM'
-                          : 'en-US'
-                    )}{' '}
-                    ₽
+                    {formatPrice(estimatedPrice)} ₽
                   </div>
                   {priceRange && (
                     <div className="price-range">
@@ -900,22 +934,8 @@ export default function Calculator() {
                         {getTranslation(locale, 'calculator.priceInfo.range')}
                       </span>
                       <span className="range-values">
-                        {priceRange.min.toLocaleString(
-                          locale === 'ru'
-                            ? 'ru-RU'
-                            : locale === 'hy'
-                              ? 'hy-AM'
-                              : 'en-US'
-                        )}{' '}
-                        -{' '}
-                        {priceRange.max.toLocaleString(
-                          locale === 'ru'
-                            ? 'ru-RU'
-                            : locale === 'hy'
-                              ? 'hy-AM'
-                              : 'en-US'
-                        )}{' '}
-                        ₽
+                        {formatPrice(priceRange.min)} –{' '}
+                        {formatPrice(priceRange.max)} ₽
                       </span>
                     </div>
                   )}
@@ -992,9 +1012,12 @@ export default function Calculator() {
                   </button>
                 </div>
               </div>
-            </div>
-          )}
-        </section>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </section>
+          </div>
+        </div>
 
         {/* Benefits Section */}
         <section className="calculator-benefits">
@@ -1004,7 +1027,9 @@ export default function Calculator() {
             </h2>
             <div className="benefits-grid">
               <div className="benefit-card">
-                <div className="benefit-icon">💰</div>
+                <div className="benefit-icon">
+                  <i className={benefitIcons[0]} aria-hidden="true" />
+                </div>
                 <h3>
                   {getTranslation(
                     locale,
@@ -1019,7 +1044,9 @@ export default function Calculator() {
                 </p>
               </div>
               <div className="benefit-card">
-                <div className="benefit-icon">⚡</div>
+                <div className="benefit-icon">
+                  <i className={benefitIcons[1]} aria-hidden="true" />
+                </div>
                 <h3>
                   {getTranslation(
                     locale,
@@ -1034,7 +1061,9 @@ export default function Calculator() {
                 </p>
               </div>
               <div className="benefit-card">
-                <div className="benefit-icon">🎯</div>
+                <div className="benefit-icon">
+                  <i className={benefitIcons[2]} aria-hidden="true" />
+                </div>
                 <h3>
                   {getTranslation(
                     locale,
@@ -1049,7 +1078,9 @@ export default function Calculator() {
                 </p>
               </div>
               <div className="benefit-card">
-                <div className="benefit-icon">🛡️</div>
+                <div className="benefit-icon">
+                  <i className={benefitIcons[3]} aria-hidden="true" />
+                </div>
                 <h3>
                   {getTranslation(
                     locale,
@@ -1072,24 +1103,36 @@ export default function Calculator() {
           <div className="container">
             <div className="trust-stats">
               <div className="stat-item">
+                <div className="stat-icon">
+                  <i className={trustIcons[0]} aria-hidden="true" />
+                </div>
                 <div className="stat-number">100+</div>
                 <div className="stat-label">
                   {getTranslation(locale, 'calculator.trust.completedProjects')}
                 </div>
               </div>
               <div className="stat-item">
+                <div className="stat-icon">
+                  <i className={trustIcons[1]} aria-hidden="true" />
+                </div>
                 <div className="stat-number">7+</div>
                 <div className="stat-label">
                   {getTranslation(locale, 'calculator.trust.yearsExperience')}
                 </div>
               </div>
               <div className="stat-item">
+                <div className="stat-icon">
+                  <i className={trustIcons[2]} aria-hidden="true" />
+                </div>
                 <div className="stat-number">98%</div>
                 <div className="stat-label">
                   {getTranslation(locale, 'calculator.trust.satisfiedClients')}
                 </div>
               </div>
               <div className="stat-item">
+                <div className="stat-icon">
+                  <i className={trustIcons[3]} aria-hidden="true" />
+                </div>
                 <div className="stat-number">24/7</div>
                 <div className="stat-label">
                   {getTranslation(locale, 'calculator.trust.support')}
@@ -1099,61 +1142,45 @@ export default function Calculator() {
           </div>
         </section>
 
-        {/* FAQ Section */}
         <section className="calculator-faq">
-          <div className="container">
-            <h2 className="section-title">
-              {getTranslation(locale, 'calculator.faq.title')}
-            </h2>
-            <div className="faq-list">
-              <div className="faq-item">
-                <h3 className="faq-question">
-                  {getTranslation(locale, 'calculator.faq.howItWorks.question')}
-                </h3>
-                <p className="faq-answer">
-                  {getTranslation(locale, 'calculator.faq.howItWorks.answer')}
-                </p>
+          <h2 className="section-title">
+            {getTranslation(locale, 'calculator.faq.title')}
+          </h2>
+          <div className="faq-list">
+            {faqItems.map((item, index) => (
+              <div
+                key={index}
+                className={`faq-item${openFaqIndex === index ? ' open' : ''}`}
+              >
+                <button
+                  type="button"
+                  className="faq-trigger"
+                  onClick={() =>
+                    setOpenFaqIndex(openFaqIndex === index ? null : index)
+                  }
+                  aria-expanded={openFaqIndex === index}
+                >
+                  {item.q}
+                  <i
+                    className="fas fa-chevron-down faq-chevron"
+                    aria-hidden="true"
+                  />
+                </button>
+                <AnimatePresence initial={false}>
+                  {openFaqIndex === index && (
+                    <motion.div
+                      className="faq-answer-wrap"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.25 }}
+                    >
+                      <p className="faq-answer">{item.a}</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
-              <div className="faq-item">
-                <h3 className="faq-question">
-                  {getTranslation(
-                    locale,
-                    'calculator.faq.priceAccuracy.question'
-                  )}
-                </h3>
-                <p className="faq-answer">
-                  {getTranslation(
-                    locale,
-                    'calculator.faq.priceAccuracy.answer'
-                  )}
-                </p>
-              </div>
-              <div className="faq-item">
-                <h3 className="faq-question">
-                  {getTranslation(
-                    locale,
-                    'calculator.faq.developmentTime.question'
-                  )}
-                </h3>
-                <p className="faq-answer">
-                  {getTranslation(
-                    locale,
-                    'calculator.faq.developmentTime.answer'
-                  )}
-                </p>
-              </div>
-              <div className="faq-item">
-                <h3 className="faq-question">
-                  {getTranslation(
-                    locale,
-                    'calculator.faq.whatIncluded.question'
-                  )}
-                </h3>
-                <p className="faq-answer">
-                  {getTranslation(locale, 'calculator.faq.whatIncluded.answer')}
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
         </section>
 
@@ -1169,9 +1196,11 @@ export default function Calculator() {
               </p>
               <div className="cta-buttons">
                 <a href="#contact" className="cta-button-primary">
+                  <i className="fas fa-paper-plane" aria-hidden="true" />
                   {getTranslation(locale, 'calculator.cta.getOffer')}
                 </a>
                 <a href="tel:+37477769668" className="cta-button-secondary">
+                  <i className="fas fa-phone" aria-hidden="true" />
                   {getTranslation(locale, 'calculator.cta.callUs')}
                 </a>
               </div>
@@ -1179,6 +1208,7 @@ export default function Calculator() {
           </div>
         </section>
       </div>
+    </div>
     </div>
   );
 }

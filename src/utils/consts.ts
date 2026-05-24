@@ -154,6 +154,21 @@ const ciklevkaUrl = [
 ];
 
 export const Works = [
+  {
+    name: 'TEND.AM',
+    slug: 'tend',
+    imgUrl: 'images/tend.am.png',
+    links: [
+      {
+        name: 'Главная',
+        url: 'https://tend.am/',
+      },
+    ],
+    created:
+      'Next.js, Typescript, MySql, Prisma, React JS, TypeScript,Tailwind CSS',
+    description:
+      'НАМ ПО ПУТИ - прокат автомобилей в Москве. В нашем парке представлены автомобили от эконом класса до минивенов. Аренда автомобиля без водителя возможна всего от 1 суток. Взять машину напрокат можно всего по двум документам: паспорт и водительское удостоверение.',
+  },
    {
     name: 'НАМ ПО ПУТИ',
     slug: 'nampoputi',

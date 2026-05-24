@@ -155,6 +155,7 @@
       "projectLinksTitle": "Project Links:"
     },
     "descriptions": {
+      "tend": "Tend.am is an online marketplace for services in Armenia where clients post tenders (job requests) for free and verified professionals submit blind bids. Instead of scattered outreach on social media and unclear pricing, a client publishes one request, receives multiple offers, compares them, and picks the best provider. How it works Client — describes the job, attaches photos/documents, sets a deadline and budget. Professional — submits price, timeline, and a cover message. Until the tender closes, they cannot see competitors’ bids (blind bidding). Client — after the deadline, compares offers, awards the winner, and completes the job with a review. Key features Service categories and locations Public specialist profiles (portfolio, credentials, reviews) Email and Telegram verification Wallet (AMD) for participation fees Admin moderation, support chat, notifications",
       "ulibkaprof": "Ulibka Profi — a dental clinic in Ramenskoye offering a full range of services: implantation, prosthetics, therapeutic dentistry, surgery, periodontology, and oral hygiene. Experienced doctors, modern equipment, and a transparent treatment plan with no unnecessary upselling.",
       "nampoputi": "NAM PO PUTI — car rental in Moscow. Our fleet features vehicles from economy class to minivans. Rent a car without a driver from 1 day. You can rent a car with just two documents: passport and driver's license.",
       "arakelians-drive": "Arakelians Drive is one of the most successful driving schools in Armenia, specializing in obtaining driver's licenses. Our driving school offers a comprehensive training program that includes both theoretical and practical classes. 98% of our students successfully pass the driver's license exam on their first attempt thanks to our professional approach and high-quality training. We use an effective methodology that allows students to quickly and reliably master driving skills. Our driving school is equipped with modern cars with dual control systems, ensuring safe training. Our instructors are experienced specialists with many years of experience who use an individual approach and help each student achieve success. We offer flexible schedules, affordable prices, and guaranteed results.",
@@ -262,7 +263,7 @@
   "aiBlock": {
     "letsDiscuss": "Let's Discuss",
     "speechBubble": "Let's discuss together what website you need.",
-    "chatTitle": "AI Assistant",
+    "chatTitle": "Assistant for website creation",
     "initialMessage": "Hello! I will help you choose the most suitable website for your business. Let's start with questions: What type of website do you want to create?",
     "inputPlaceholder": "Enter your answer...",
     "budgetQuestion": "Great! Now let's discuss the budget. What budget are you planning for your project?",
@@ -493,7 +494,22 @@
   "calculator": {
     "hero": {
       "title": "Website Cost Calculator",
-      "subtitle": "Calculate the approximate cost of your project in a few minutes. Get a personalized offer after filling out the form."
+      "subtitle": "Calculate the approximate cost of your project in a few minutes. Get a personalized offer after filling out the form.",
+      "badge": "Free · 2 minutes"
+    },
+    "progress": {
+      "step1": "Service",
+      "step2": "Details",
+      "step3": "Price",
+      "step4": "Contact"
+    },
+    "sidebar": {
+      "title": "Your estimate",
+      "from": "from",
+      "hint": "Fill out the form for a more accurate price",
+      "selected": "Selected",
+      "pages": "Pages",
+      "design": "Design"
     },
     "form": {
       "selectService": "Select a service",
