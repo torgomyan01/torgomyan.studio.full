@@ -62,7 +62,7 @@ export default async function WebApplicationsPage() {
 
       <SEOMarketingBlocks
         stats={[
-          { number: formatPrice(300000, locale), label: t.webApplications.stats.fromPrice },
+          { number: formatPrice(50000, locale), label: t.webApplications.stats.fromPrice },
           { number: '1-6', label: t.webApplications.stats.monthsDevelopment },
           { number: '90+', label: t.webApplications.stats.projects },
           { number: '99.9%', label: t.webApplications.stats.uptime },

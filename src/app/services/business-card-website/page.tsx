@@ -63,7 +63,7 @@ export default async function BusinessCardWebsitePage() {
 
       <SEOMarketingBlocks
         stats={[
-          { number: formatPrice(50000, locale), label: t.businessCardWebsite.stats.fromPrice },
+          { number: formatPrice(8000, locale), label: t.businessCardWebsite.stats.fromPrice },
           { number: '1-2', label: t.businessCardWebsite.stats.weeksToLaunch },
           { number: '3-5', label: t.businessCardWebsite.stats.pagesIncluded },
           { number: '100%', label: t.businessCardWebsite.stats.readyToWork },

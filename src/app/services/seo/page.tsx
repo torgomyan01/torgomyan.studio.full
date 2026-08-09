@@ -62,7 +62,7 @@ export default async function SEOPage() {
 
       <SEOMarketingBlocks
         stats={[
-          { number: formatPrice(40000, locale), label: t.seo.stats.fromPricePerMonth },
+          { number: formatPrice(7000, locale), label: t.seo.stats.fromPricePerMonth },
           { number: '2-3', label: t.seo.stats.monthsToResults },
           { number: '100+', label: t.seo.stats.promotedSites },
           { number: '30%', label: t.seo.stats.trafficGrowth },

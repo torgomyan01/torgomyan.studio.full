@@ -62,7 +62,7 @@ export default async function BusinessAutomationPage() {
 
       <SEOMarketingBlocks
         stats={[
-          { number: formatPrice(150000, locale), label: t.businessAutomation.stats.fromPrice },
+          { number: formatPrice(25000, locale), label: t.businessAutomation.stats.fromPrice },
           { number: '30%', label: t.businessAutomation.stats.timeSavings },
           { number: '1-6', label: t.businessAutomation.stats.monthsImplementation },
           { number: '50+', label: t.businessAutomation.stats.automatedProcesses },

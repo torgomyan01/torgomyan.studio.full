@@ -1,5 +1,6 @@
 /**
  * Calculator pricing logic — single source of truth for service detection and price calculation.
+ * Prices are competitive “starts from” RUB (AI-era, ÷6 vs prior list).
  */
 
 export interface CalculatorPricingInput {
@@ -29,15 +30,22 @@ export interface ServicePricingConfig {
 }
 
 const FEATURE_COSTS: Record<string, number> = {
-  Многоязычность: 25000,
-  'Интеграция с соцсетями': 15000,
-  'Онлайн-чат': 12000,
-  'Форма обратной связи': 5000,
-  'Галерея изображений': 8000,
-  'Видео интеграция': 15000,
-  Блог: 20000,
-  'Новостная лента': 18000,
+  Многоязычность: 4000,
+  'Интеграция с соцсетями': 2500,
+  'Онлайн-чат': 2000,
+  'Форма обратной связи': 1000,
+  'Галерея изображений': 1000,
+  'Видео интеграция': 2500,
+  Блог: 3000,
+  'Новостная лента': 3000,
 };
+
+function roundPrice(price: number): number {
+  if (price <= 0) return 0;
+  if (price < 1000) return Math.round(price / 50) * 50;
+  if (price < 10000) return Math.round(price / 100) * 100;
+  return Math.round(price / 1000) * 1000;
+}
 
 /** Detect service type from Russian canonical title (consts.services) */
 export function getServicePricingConfig(
@@ -57,7 +65,7 @@ export function getServicePricingConfig(
 
   if (service.includes('Интернет-магазин')) {
     return {
-      basePrice: 200000,
+      basePrice: 33000,
       complexityMultiplier: 1.5,
       isWebsite: true,
       isEcommerce: true,
@@ -69,7 +77,7 @@ export function getServicePricingConfig(
 
   if (service.includes('Веб-приложения')) {
     return {
-      basePrice: 300000,
+      basePrice: 50000,
       complexityMultiplier: 2.0,
       isWebsite: false,
       isEcommerce: false,
@@ -81,7 +89,7 @@ export function getServicePricingConfig(
 
   if (service.includes('Корпоративный сайт')) {
     return {
-      basePrice: 120000,
+      basePrice: 20000,
       complexityMultiplier: 1.2,
       isWebsite: true,
       isEcommerce: false,
@@ -93,7 +101,7 @@ export function getServicePricingConfig(
 
   if (service.includes('Сайт-визитка')) {
     return {
-      basePrice: 50000,
+      basePrice: 8000,
       complexityMultiplier: 0.7,
       isWebsite: true,
       isEcommerce: false,
@@ -105,7 +113,7 @@ export function getServicePricingConfig(
 
   if (service.includes('Лендинг')) {
     return {
-      basePrice: 40000,
+      basePrice: 7000,
       complexityMultiplier: 0.8,
       isWebsite: true,
       isEcommerce: false,
@@ -117,7 +125,7 @@ export function getServicePricingConfig(
 
   if (service.includes('Разработка Сайтов')) {
     return {
-      basePrice: 90000,
+      basePrice: 15000,
       complexityMultiplier: 1.0,
       isWebsite: true,
       isEcommerce: false,
@@ -130,7 +138,7 @@ export function getServicePricingConfig(
   // SEO before UI/UX — avoid broad "Дизайн" match on unrelated services
   if (service.includes('SEO') || service.includes('Продвижение')) {
     return {
-      basePrice: 40000,
+      basePrice: 7000,
       complexityMultiplier: 1,
       isWebsite: false,
       isEcommerce: false,
@@ -142,7 +150,7 @@ export function getServicePricingConfig(
 
   if (service.includes('UI/UX')) {
     return {
-      basePrice: 80000,
+      basePrice: 13000,
       complexityMultiplier: 1.1,
       isWebsite: false,
       isEcommerce: false,
@@ -154,7 +162,7 @@ export function getServicePricingConfig(
 
   if (service.includes('Техническая поддержка')) {
     return {
-      basePrice: 15000,
+      basePrice: 2500,
       complexityMultiplier: 1,
       isWebsite: false,
       isEcommerce: false,
@@ -166,7 +174,7 @@ export function getServicePricingConfig(
 
   if (service.includes('Хостинг') || service.includes('домен')) {
     return {
-      basePrice: 500,
+      basePrice: 80,
       complexityMultiplier: 1,
       isWebsite: false,
       isEcommerce: false,
@@ -178,7 +186,7 @@ export function getServicePricingConfig(
 
   if (service.includes('Интеграция платежных')) {
     return {
-      basePrice: 45000,
+      basePrice: 7500,
       complexityMultiplier: 1.3,
       isWebsite: false,
       isEcommerce: false,
@@ -190,7 +198,7 @@ export function getServicePricingConfig(
 
   if (service.includes('Автоматизация')) {
     return {
-      basePrice: 150000,
+      basePrice: 25000,
       complexityMultiplier: 1.8,
       isWebsite: false,
       isEcommerce: false,
@@ -201,7 +209,7 @@ export function getServicePricingConfig(
   }
 
   return {
-    basePrice: 70000,
+    basePrice: 12000,
     complexityMultiplier: 1,
     isWebsite: false,
     isEcommerce: false,
@@ -284,34 +292,34 @@ export function calculateProjectPrice(input: CalculatorPricingInput): number {
   // Flat add-ons — website & web app only
   if (config.isWebsite || config.isApp) {
     if (input.cmsRequired) {
-      price += config.isEcommerce ? 25000 : 22000;
+      price += 4000;
     }
 
     if (input.ecommerce && !config.isEcommerce) {
-      price += 70000;
+      price += 12000;
     }
 
     const includePayments = needsPaymentSystems(config, input.ecommerce);
     const paymentChoice =
       input.paymentSystems || (config.isEcommerce ? 'single' : '');
     if (includePayments && paymentChoice && paymentChoice !== 'none') {
-      price += paymentChoice === 'multiple' ? 50000 : 30000;
+      price += paymentChoice === 'multiple' ? 8000 : 5000;
     }
 
     if (input.mobileApp) {
-      price += config.isApp ? 80000 : 140000;
+      price += config.isApp ? 13000 : 23000;
     }
 
     if (input.seoOptimization) {
-      price += 30000;
+      price += 5000;
     }
 
     if (input.contentManagement) {
-      price += 18000;
+      price += 3000;
     }
 
     input.features.forEach((feature) => {
-      price += FEATURE_COSTS[feature] ?? 10000;
+      price += FEATURE_COSTS[feature] ?? 2000;
     });
   }
 
@@ -320,7 +328,7 @@ export function calculateProjectPrice(input: CalculatorPricingInput): number {
     price *= Math.min(1 + answeredCount * 0.02, 1.15);
   }
 
-  return Math.round(price / 1000) * 1000;
+  return roundPrice(price);
 }
 
 export function calculatePriceRange(basePrice: number): {
@@ -329,8 +337,8 @@ export function calculatePriceRange(basePrice: number): {
 } {
   if (basePrice <= 0) return { min: 0, max: 0 };
   return {
-    min: Math.round((basePrice * 0.85) / 1000) * 1000,
-    max: Math.round((basePrice * 1.15) / 1000) * 1000,
+    min: roundPrice(basePrice * 0.85),
+    max: roundPrice(basePrice * 1.15),
   };
 }
 

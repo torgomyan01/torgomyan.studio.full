@@ -62,7 +62,7 @@ export default async function UIUXDesignPage() {
 
       <SEOMarketingBlocks
         stats={[
-          { number: formatPrice(80000, locale), label: t.uiUxDesign.stats.fromPrice },
+          { number: formatPrice(13000, locale), label: t.uiUxDesign.stats.fromPrice },
           { number: '20-40%', label: t.uiUxDesign.stats.conversionGrowth },
           { number: '2-3', label: t.uiUxDesign.stats.weeksDevelopment },
           { number: '100+', label: t.uiUxDesign.stats.designProjects },

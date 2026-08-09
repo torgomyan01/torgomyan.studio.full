@@ -63,7 +63,7 @@ export default async function CorporateWebsitePage() {
 
       <SEOMarketingBlocks
         stats={[
-          { number: formatPrice(120000, locale), label: t.corporateWebsite.stats.fromPrice },
+          { number: formatPrice(20000, locale), label: t.corporateWebsite.stats.fromPrice },
           { number: '10-30', label: t.corporateWebsite.stats.pagesIncluded },
           { number: '3-6', label: t.corporateWebsite.stats.weeksDevelopment },
           { number: '24/7', label: t.corporateWebsite.stats.support },

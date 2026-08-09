@@ -61,7 +61,7 @@ export default async function HostingDomainsPage() {
 
       <SEOMarketingBlocks
         stats={[
-          { number: '500₽', label: t.hostingDomains.stats.fromPricePerMonth },
+          { number: '80₽', label: t.hostingDomains.stats.fromPricePerMonth },
           { number: '99.9%', label: t.hostingDomains.stats.uptime },
           { number: '24/7', label: t.hostingDomains.stats.support },
           { number: 'SSL', label: t.hostingDomains.stats.free },

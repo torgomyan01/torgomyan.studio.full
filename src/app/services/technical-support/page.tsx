@@ -61,7 +61,7 @@ export default async function TechnicalSupportPage() {
 
       <SEOMarketingBlocks
         stats={[
-          { number: '15,000₽', label: t.technicalSupport.stats.fromPricePerMonth },
+          { number: '2,500₽', label: t.technicalSupport.stats.fromPricePerMonth },
           { number: '24/7', label: t.technicalSupport.stats.support },
           { number: '1-2ч', label: t.technicalSupport.stats.reactionTime },
           { number: '99.9%', label: t.technicalSupport.stats.uptime },

@@ -62,7 +62,7 @@ export default async function LandingPagePage() {
 
       <SEOMarketingBlocks
         stats={[
-          { number: formatPrice(40000, locale), label: t.landingPage.stats.fromPrice },
+          { number: formatPrice(7000, locale), label: t.landingPage.stats.fromPrice },
           { number: '2-3x', label: t.landingPage.stats.higherConversion },
           { number: '1-2', label: t.landingPage.stats.weeksToLaunch },
           { number: '90+', label: t.landingPage.stats.successfulLandings },

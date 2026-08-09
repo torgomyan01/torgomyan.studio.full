@@ -18,7 +18,6 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { UiProviders } from '@/components/common/UIProvider/ui-provider';
 import FloatingCallButton from '@/components/common/floating-call-button/floating-call-button';
-import ExitIntentPopup from '@/components/common/exit-intent-popup/exit-intent-popup';
 import ScrollTriggeredPopup from '@/components/common/scroll-triggered-popup/scroll-triggered-popup';
 import RecentNotifications from '@/components/common/recent-notifications/recent-notifications';
 import { NotificationProvider } from '@/components/common/recent-notifications/notification-context';
@@ -86,7 +85,6 @@ export default async function RootLayout({
                 <NotificationProvider>
                   {children}
                   <FloatingCallButton />
-                  <ExitIntentPopup />
                   <ScrollTriggeredPopup />
                   <RecentNotifications />
                   <ToastNotifications />

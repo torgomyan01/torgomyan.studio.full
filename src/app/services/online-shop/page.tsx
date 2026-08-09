@@ -62,7 +62,7 @@ export default async function OnlineShopPage() {
 
       <SEOMarketingBlocks
         stats={[
-          { number: formatPrice(200000, locale), label: t.onlineShop.stats.fromPrice },
+          { number: formatPrice(33000, locale), label: t.onlineShop.stats.fromPrice },
           { number: '2-3', label: t.onlineShop.stats.monthsDevelopment },
           { number: '50+', label: t.onlineShop.stats.onlineShops },
           { number: '30%', label: t.onlineShop.stats.salesGrowth },

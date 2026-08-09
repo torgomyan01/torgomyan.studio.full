@@ -62,7 +62,7 @@ export default async function PaymentIntegrationPage() {
 
       <SEOMarketingBlocks
         stats={[
-          { number: formatPrice(45000, locale), label: t.paymentIntegration.stats.fromPrice },
+          { number: formatPrice(7500, locale), label: t.paymentIntegration.stats.fromPrice },
           { number: '1-2', label: t.paymentIntegration.stats.weeksIntegration },
           { number: '10+', label: t.paymentIntegration.stats.paymentSystems },
           { number: '100%', label: t.paymentIntegration.stats.security },
