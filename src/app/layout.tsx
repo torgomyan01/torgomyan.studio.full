@@ -13,13 +13,9 @@ import type { Metadata } from 'next';
 import { GoogleAnalytics } from '@next/third-parties/google';
 
 import { Providers } from '@/app/providers';
-import { SesProviders } from '@/components/common/session-provider/session-provider';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
 import { UiProviders } from '@/components/common/UIProvider/ui-provider';
 import FloatingCallButton from '@/components/common/floating-call-button/floating-call-button';
 import ScrollTriggeredPopup from '@/components/common/scroll-triggered-popup/scroll-triggered-popup';
-import RecentNotifications from '@/components/common/recent-notifications/recent-notifications';
 import { NotificationProvider } from '@/components/common/recent-notifications/notification-context';
 import { ToastNotifications } from '@/components/common/recent-notifications/toast-notifications';
 import YandexMetrika from '@/components/common/YandexMetrika/YandexMetrika';
@@ -38,7 +34,6 @@ export async function generateMetadata(): Promise<Metadata> {
 
   const baseUrl = 'https://torgomyan-studio.am';
 
-  // Generate hreflang alternates
   const alternates: Record<string, string> = {};
   locales.forEach((loc) => {
     const localePath =
@@ -70,7 +65,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession(authOptions);
   const headersList = await headers();
   const locale = headersList.get('x-locale') || defaultLocale;
 
@@ -78,21 +72,17 @@ export default async function RootLayout({
     <html lang={locale} suppressHydrationWarning={true} className="light">
       <body className="text-foreground bg-background">
         <div className="overflow-hidden">
-          <SesProviders session={session}>
-            <NextTopLoader />
-            <Providers>
-              <UiProviders>
-                <NotificationProvider>
-                  {children}
-                  <FloatingCallButton />
-                  <ScrollTriggeredPopup />
-                  <RecentNotifications />
-                  <ToastNotifications />
-                  {/* <CookieConsent /> */}
-                </NotificationProvider>
-              </UiProviders>
-            </Providers>
-          </SesProviders>
+          <NextTopLoader />
+          <Providers>
+            <UiProviders>
+              <NotificationProvider>
+                {children}
+                <FloatingCallButton />
+                <ScrollTriggeredPopup />
+                <ToastNotifications />
+              </NotificationProvider>
+            </UiProviders>
+          </Providers>
         </div>
         <YandexMetrika />
         <GoogleAnalytics gaId="G-NZBTEVKW5Z" />

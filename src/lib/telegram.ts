@@ -2,16 +2,13 @@
 
 const TELEGRAM_API = 'https://api.telegram.org';
 
-/**
- * Sends a text message to the configured Telegram chat via Bot API.
- * No-op if TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID are not set.
- */
-export async function sendTelegramMessage(text: string): Promise<void> {
+export async function sendTelegramMessage(text: string): Promise<boolean> {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
 
   if (!token || !chatId) {
-    return;
+    console.error('Telegram is not configured: TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID missing');
+    return false;
   }
 
   try {
@@ -30,9 +27,13 @@ export async function sendTelegramMessage(text: string): Promise<void> {
     if (!res.ok) {
       const err = await res.text();
       console.error('Telegram sendMessage failed:', res.status, err);
+      return false;
     }
+
+    return true;
   } catch (e) {
     console.error('Telegram sendMessage error:', e);
+    return false;
   }
 }
 
@@ -44,34 +45,51 @@ function escapeHtml(s: string | null | undefined): string {
     .replace(/>/g, '&gt;');
 }
 
-/** Notify Telegram about a new calculator submission (order). */
+function boolLabel(value: boolean): string {
+  return value ? 'Այո' : 'Ոչ';
+}
+
 export async function notifyTelegramCalculatorSubmission(data: {
-  id: number;
   name: string;
   email: string;
   phone: string;
   websiteType?: string | null;
-  estimatedPrice?: number | null;
+  pagesCount?: number | null;
+  designStyle?: string | null;
   features?: string | null;
-}): Promise<void> {
+  cmsRequired?: boolean;
+  ecommerce?: boolean;
+  paymentSystems?: string | null;
+  mobileApp?: boolean;
+  seoOptimization?: boolean;
+  contentManagement?: boolean;
+  estimatedPrice?: number | null;
+}): Promise<boolean> {
   const lines = [
     '🖥 <b>Նոր պատվեր — Հաշվիչ</b>',
-    `ID: ${data.id}`,
     `Անուն: ${escapeHtml(data.name)}`,
     `Email: ${escapeHtml(data.email)}`,
     `Հեռախոս: ${escapeHtml(data.phone)}`,
     `Կայքի տեսակ: ${escapeHtml(data.websiteType)}`,
+    `Էջերի քանակ: ${data.pagesCount ?? '—'}`,
+    `Դիզայն: ${escapeHtml(data.designStyle)}`,
     `Գնահատված գին: ${data.estimatedPrice != null ? `${data.estimatedPrice} ₽` : '—'}`,
+    `CMS: ${boolLabel(!!data.cmsRequired)}`,
+    `Ինտերնետ-խանութ: ${boolLabel(!!data.ecommerce)}`,
+    `Վճարային համակարգեր: ${escapeHtml(data.paymentSystems)}`,
+    `Բջջային հավելված: ${boolLabel(!!data.mobileApp)}`,
+    `SEO: ${boolLabel(!!data.seoOptimization)}`,
+    `Կոնտենտի կառավարում: ${boolLabel(!!data.contentManagement)}`,
   ];
+
   if (data.features) {
     lines.push(`Ֆունկցիաներ: ${escapeHtml(data.features)}`);
   }
-  await sendTelegramMessage(lines.join('\n'));
+
+  return sendTelegramMessage(lines.join('\n'));
 }
 
-/** Notify Telegram about a new chat inquiry (order). */
 export async function notifyTelegramChatInquiry(data: {
-  id: number;
   name: string | null;
   email: string | null;
   phone: string | null;
@@ -80,10 +98,11 @@ export async function notifyTelegramChatInquiry(data: {
   budget?: string | null;
   timeline?: string | null;
   additionalInfo?: string | null;
-}): Promise<void> {
+  discountPercentage?: number | null;
+  discountEligible?: boolean;
+}): Promise<boolean> {
   const lines = [
     '💬 <b>Նոր հարցում — Չատ</b>',
-    `ID: ${data.id}`,
     `Անուն: ${escapeHtml(data.name)}`,
     `Email: ${escapeHtml(data.email)}`,
     `Հեռախոս: ${escapeHtml(data.phone)}`,
@@ -92,15 +111,19 @@ export async function notifyTelegramChatInquiry(data: {
     `Բյուջե: ${escapeHtml(data.budget)}`,
     `Ժամկետ: ${escapeHtml(data.timeline)}`,
   ];
+
   if (data.additionalInfo) {
     lines.push(`Լրացուցիչ: ${escapeHtml(data.additionalInfo)}`);
   }
-  await sendTelegramMessage(lines.join('\n'));
+
+  if (data.discountEligible && data.discountPercentage != null) {
+    lines.push(`Զեղչ: ${data.discountPercentage}%`);
+  }
+
+  return sendTelegramMessage(lines.join('\n'));
 }
 
-/** Notify Telegram about a new scheduled call (order). */
 export async function notifyTelegramScheduledCall(data: {
-  id: number;
   name: string;
   email: string;
   phone: string;
@@ -108,18 +131,19 @@ export async function notifyTelegramScheduledCall(data: {
   scheduledTime: string;
   discountEligible?: boolean;
   discountPercentage?: number | null;
-}): Promise<void> {
+}): Promise<boolean> {
   const lines = [
     '📞 <b>Նոր զանգ — Պլանավորված զանգ</b>',
-    `ID: ${data.id}`,
     `Անուն: ${escapeHtml(data.name)}`,
     `Email: ${escapeHtml(data.email)}`,
     `Հեռախոս: ${escapeHtml(data.phone)}`,
     `Ամսաթիվ: ${escapeHtml(data.scheduledDate)}`,
     `Ժամ: ${escapeHtml(data.scheduledTime)}`,
   ];
+
   if (data.discountEligible && data.discountPercentage != null) {
     lines.push(`Զեղչ: ${data.discountPercentage}%`);
   }
-  await sendTelegramMessage(lines.join('\n'));
+
+  return sendTelegramMessage(lines.join('\n'));
 }
