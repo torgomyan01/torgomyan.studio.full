@@ -395,7 +395,11 @@ export default function Calculator() {
   const pagesMax = serviceConfig?.maxPages ?? 50;
 
   return (
-    <div className="calculator-page-wrapper">
+    <div
+      className={`calculator-page-wrapper${
+        livePreview && step === 'calculator' ? ' has-mobile-bar' : ''
+      }`}
+    >
     <div className="calculator-page">
       <div className="container">
         <section className="calculator-hero">
@@ -1215,6 +1219,56 @@ export default function Calculator() {
         </section>
       </div>
     </div>
+
+      <AnimatePresence>
+        {livePreview && step === 'calculator' && (
+          <motion.div
+            className="calculator-mobile-bar"
+            role="status"
+            aria-live="polite"
+            initial={{ y: '100%', opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: '100%', opacity: 0 }}
+            transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+          >
+            <div className="calculator-mobile-bar__glow" aria-hidden="true" />
+            <div className="calculator-mobile-bar__inner">
+              <div className="calculator-mobile-bar__info">
+                <span className="calculator-mobile-bar__icon">
+                  <i
+                    className={getServiceIconClass(formData.selectedService)}
+                    aria-hidden="true"
+                  />
+                </span>
+                <span className="calculator-mobile-bar__service">
+                  {getServiceTitle(formData.selectedService)}
+                </span>
+              </div>
+              <div className="calculator-mobile-bar__price">
+                <span className="calculator-mobile-bar__from">
+                  {getTranslation(locale, 'calculator.sidebar.from')}
+                </span>
+                <motion.span
+                  key={livePreview.price}
+                  className="calculator-mobile-bar__amount"
+                  initial={{ scale: 1.12, opacity: 0.5 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <span className="calculator-mobile-bar__currency">
+                    {getCurrencySymbol(locale)}
+                  </span>
+                  {formatPriceAmount(livePreview.price)}
+                </motion.span>
+                <span className="calculator-mobile-bar__range">
+                  {formatPrice(livePreview.range.min)} –{' '}
+                  {formatPrice(livePreview.range.max)}
+                </span>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

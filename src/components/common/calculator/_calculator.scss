@@ -211,8 +211,7 @@
   z-index: 20;
 
   @media (max-width: 1024px) {
-    order: -1;
-    top: 88px;
+    display: none;
   }
 
   &__card {
@@ -1469,5 +1468,176 @@
       width: 100%;
       text-align: center;
     }
+  }
+}
+
+// ——— Mobile fixed price bar ———
+.calculator-page-wrapper.has-mobile-bar .calculator-page {
+  @media (max-width: 1024px) {
+    padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+.calculator-mobile-bar {
+  display: none;
+
+  @media (max-width: 1024px) {
+    display: block;
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    z-index: 10000;
+    border-radius: 20px;
+    overflow: hidden;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    background: linear-gradient(
+      165deg,
+      rgba(86, 41, 153, 0.92) 0%,
+      rgba(18, 10, 36, 0.96) 55%,
+      rgba(8, 5, 18, 0.98) 100%
+    );
+    border: 1px solid rgba(196, 68, 255, 0.45);
+    box-shadow:
+      0 -8px 40px rgba(196, 68, 255, 0.2),
+      0 16px 48px rgba(0, 0, 0, 0.55),
+      0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+  }
+
+  &__glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      #c444ff 20%,
+      #e879ff 50%,
+      #c444ff 80%,
+      transparent
+    );
+    animation: calculator-bar-glow 3s ease-in-out infinite;
+  }
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px 14px 14px;
+    padding-right: 68px;
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    flex: 1;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #c444ff 0%, #562999 100%);
+    box-shadow: 0 4px 16px rgba(196, 68, 255, 0.4);
+
+    i {
+      font-size: 15px;
+      color: #fff;
+    }
+  }
+
+  &__service {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.3;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  &__price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    flex-shrink: 0;
+    text-align: right;
+  }
+
+  &__from {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+
+  &__amount {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.1;
+    color: #fff;
+    letter-spacing: -0.02em;
+    text-shadow: 0 0 24px rgba(196, 68, 255, 0.5);
+    white-space: nowrap;
+  }
+
+  &__currency {
+    font-size: 14px;
+    font-weight: 700;
+    color: #c444ff;
+    margin-right: 2px;
+  }
+
+  &__range {
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.55);
+    margin-top: 2px;
+    padding: 2px 8px;
+    background: rgba(196, 68, 255, 0.15);
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 380px) {
+    left: 8px;
+    right: 8px;
+
+    &__inner {
+      padding: 12px 60px 12px 12px;
+      gap: 8px;
+    }
+
+    &__amount {
+      font-size: 19px;
+    }
+
+    &__service {
+      font-size: 11px;
+    }
+  }
+}
+
+@keyframes calculator-bar-glow {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
   }
 }
