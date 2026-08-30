@@ -30,6 +30,20 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/services/seo",
+        destination: "/services",
+        permanent: true,
+      },
+      {
+        source: "/:locale(en|hy|ru)/services/seo",
+        destination: "/:locale/services",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

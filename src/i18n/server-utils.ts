@@ -1,17 +1,37 @@
-import { headers } from 'next/headers';
-import { type Locale, isValidLocale } from './config';
+import { cookies, headers } from 'next/headers';
+import { type Locale, isValidLocale, defaultLocale } from './config';
 import { getLocaleFromPathname } from './utils';
 
 /**
- * Server-only utility to get locale from headers
- * This can only be used in Server Components
+ * Server-only utility to get locale from headers / cookie / pathname.
+ * Must be used in Server Components and generateMetadata.
  */
 export async function getLocaleFromHeaders(): Promise<Locale> {
   const headersList = await headers();
-  const locale = headersList.get('x-locale');
-  if (locale && isValidLocale(locale)) {
-    return locale;
+
+  const localeHeader = headersList.get('x-locale');
+  if (localeHeader && isValidLocale(localeHeader)) {
+    return localeHeader;
   }
-  const pathname = headersList.get('x-pathname') || '/';
-  return getLocaleFromPathname(pathname);
+
+  const pathname =
+    headersList.get('x-pathname') ||
+    headersList.get('x-actual-pathname') ||
+    '/';
+  const fromPath = getLocaleFromPathname(pathname);
+  if (fromPath && fromPath !== defaultLocale) {
+    return fromPath;
+  }
+
+  try {
+    const cookieStore = await cookies();
+    const cookieLocale = cookieStore.get('NEXT_LOCALE')?.value;
+    if (cookieLocale && isValidLocale(cookieLocale)) {
+      return cookieLocale;
+    }
+  } catch {
+    // cookies() can throw outside of a request context
+  }
+
+  return fromPath || defaultLocale;
 }

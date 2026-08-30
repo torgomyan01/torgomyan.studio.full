@@ -10,73 +10,142 @@ import { addLocaleToPath } from '@/i18n/utils';
 function ContactUs() {
   const locale = useLocale();
 
+  const channels = [
+    {
+      href: 'tel:+37477769668',
+      icon: 'fas fa-phone',
+      label: getTranslation(locale, 'contact.phoneLabel'),
+      value: '+374 77 76-96-68',
+      external: false,
+    },
+    {
+      href: 'https://wa.me/37477769668',
+      icon: 'fab fa-whatsapp',
+      label: getTranslation(locale, 'contact.whatsappLabel'),
+      value: '+374 77 76-96-68',
+      external: true,
+    },
+    {
+      href: 'https://t.me/torgomyan01',
+      icon: 'fab fa-telegram-plane',
+      label: getTranslation(locale, 'contact.telegramLabel'),
+      value: '@torgomyan01',
+      external: true,
+    },
+    {
+      href: 'https://yandex.ru/maps/?um=constructor%3Af026db7051cfc7952a3361c3d3bf24998f1427bd3b64e28673a2f5ade3b074ab',
+      icon: 'fas fa-location-dot',
+      label: getTranslation(locale, 'contact.addressLabel'),
+      value: getTranslation(locale, 'contact.address'),
+      external: true,
+    },
+  ];
+
   return (
-    <div className="contact-us" id="contact">
+    <section className="contact-us" id="contact">
       <div className="container">
-        <h2 className="main-title">
-          {getTranslation(locale, 'contact.title')}
-        </h2>
-        <p className="main-subtitle">
-          {getTranslation(locale, 'contact.subtitle')}
-        </p>
-        <div className="buttons">
-          <Link href={addLocaleToPath('/schedule-call', locale)}>
-            {getTranslation(locale, 'contact.scheduleCall')}
-            <img src="/images/link-arrow.svg" alt="" />
+        <div className="contact-us__hero">
+          <span className="contact-us__badge">
+            <i className="fas fa-bolt" aria-hidden="true" />
+            {getTranslation(locale, 'contact.badge')}
+          </span>
+          <h2 className="contact-us__title">
+            {getTranslation(locale, 'contact.title')}
+          </h2>
+          <p className="contact-us__subtitle">
+            {getTranslation(locale, 'contact.subtitle')}
+          </p>
+          <p className="contact-us__hint">
+            {getTranslation(locale, 'contact.responseHint')}
+          </p>
+        </div>
+
+        <div className="contact-us__actions">
+          <Link
+            href={addLocaleToPath('/schedule-call', locale)}
+            className="contact-us__action contact-us__action--primary"
+          >
+            <span className="contact-us__action-icon">
+              <i className="fas fa-calendar-check" aria-hidden="true" />
+            </span>
+            <span className="contact-us__action-text">
+              <strong>{getTranslation(locale, 'contact.scheduleCall')}</strong>
+              <small>{getTranslation(locale, 'contact.responseHint')}</small>
+            </span>
+            <i className="fas fa-arrow-right" aria-hidden="true" />
           </Link>
-          <a href="tel:+37477769668">
-            {getTranslation(locale, 'contact.call')}
-            <img src="/images/link-arrow.svg" alt="" />
+          <a
+            href="tel:+37477769668"
+            className="contact-us__action contact-us__action--ghost"
+          >
+            <span className="contact-us__action-icon">
+              <i className="fas fa-phone" aria-hidden="true" />
+            </span>
+            <span className="contact-us__action-text">
+              <strong>{getTranslation(locale, 'contact.call')}</strong>
+              <small>+374 77 76-96-68</small>
+            </span>
+            <i className="fas fa-arrow-right" aria-hidden="true" />
           </a>
         </div>
 
-        <div className="contact-info">
-          <div className="info">
-            <p>
-              <img src="/images/contact-icon1.svg" alt="" />
-              {getTranslation(locale, 'contact.address')}
-            </p>
-            <a href="tel:+37477769668" className="text">
-              <img src="/images/contact-icon2.svg" alt="" />
-              +374 77 76-96-68
-            </a>
-            <a
-              href="https://wa.me/37477769668"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text"
-            >
-              <img src="/images/contact-icon3.svg" alt="" />
-              +374 77 76-96-68
-            </a>
-            <a
-              href="https://t.me/torgomyan01"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text"
-            >
-              <img src="/images/contact-icon4.svg" alt="" />
-              @torgomyan01
-            </a>
+        <div className="contact-us__grid">
+          <div className="contact-us__channels">
+            {channels.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                className="contact-us__card"
+                {...(item.external
+                  ? { target: '_blank', rel: 'noopener noreferrer' }
+                  : {})}
+              >
+                <span className="contact-us__card-icon">
+                  <i className={item.icon} aria-hidden="true" />
+                </span>
+                <span className="contact-us__card-body">
+                  <span className="contact-us__card-label">{item.label}</span>
+                  <span className="contact-us__card-value">{item.value}</span>
+                </span>
+              </a>
+            ))}
             <Link
               href={addLocaleToPath(SITE_URL.CALCULATOR, locale)}
-              className="btn cursor-pointer"
+              className="contact-us__card contact-us__card--cta"
             >
-              <i className="fa-solid fa-calculator mr-2"></i>
-              <span>{getTranslation(locale, 'common.calculator')}</span>
+              <span className="contact-us__card-icon">
+                <i className="fas fa-calculator" aria-hidden="true" />
+              </span>
+              <span className="contact-us__card-body">
+                <span className="contact-us__card-label">
+                  {getTranslation(locale, 'common.calculator')}
+                </span>
+                <span className="contact-us__card-value">
+                  {getTranslation(locale, 'contact.calculatorCta')}
+                </span>
+              </span>
             </Link>
           </div>
-          <div id="map">
-            <iframe
-              src="https://yandex.ru/map-widget/v1/?um=constructor%3Af026db7051cfc7952a3361c3d3bf24998f1427bd3b64e28673a2f5ade3b074ab&amp;source=constructor"
-              width="821"
-              height="500"
-              frameBorder="0"
-            ></iframe>
+
+          <div className="contact-us__map">
+            <p className="contact-us__map-label">
+              <i className="fas fa-map" aria-hidden="true" />
+              {getTranslation(locale, 'contact.mapLabel')}
+            </p>
+            <div className="contact-us__map-frame">
+              <iframe
+                title={getTranslation(locale, 'contact.mapLabel')}
+                src="https://yandex.ru/map-widget/v1/?um=constructor%3Af026db7051cfc7952a3361c3d3bf24998f1427bd3b64e28673a2f5ade3b074ab&amp;source=constructor"
+                width="821"
+                height="500"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

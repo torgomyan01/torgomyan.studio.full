@@ -283,6 +283,18 @@
   z-index: 1 !important;
 }
 
+.fa-whatsapp:before {
+  content: '\f232';
+}
+
+.fa-location-dot:before {
+  content: '\f3c5';
+}
+
+.fa-map:before {
+  content: '\f279';
+}
+
 .fa-rocket:before {
   content: '\f135';
 }

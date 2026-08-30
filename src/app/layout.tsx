@@ -24,12 +24,13 @@ import { headers } from 'next/headers';
 import { getTranslations } from '@/i18n';
 import { locales, defaultLocale } from '@/i18n/config';
 import { getPathnameWithoutLocale } from '@/i18n/utils';
+import { getLocaleFromHeaders } from '@/i18n/server-utils';
 
 export async function generateMetadata(): Promise<Metadata> {
   const headersList = await headers();
   const pathname = headersList.get('x-pathname') || '/';
-  const locale = headersList.get('x-locale') || defaultLocale;
-  const t = getTranslations(locale as any);
+  const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
   const pathWithoutLocale = getPathnameWithoutLocale(pathname);
 
   const baseUrl = 'https://torgomyan-studio.am';
@@ -65,13 +66,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const headersList = await headers();
-  const locale = headersList.get('x-locale') || defaultLocale;
+  const locale = await getLocaleFromHeaders();
 
   return (
     <html lang={locale} suppressHydrationWarning={true} className="light">
       <body className="text-foreground bg-background">
-        <div className="overflow-hidden">
+        <div className="overflow-x-clip">
           <NextTopLoader />
           <Providers>
             <UiProviders>

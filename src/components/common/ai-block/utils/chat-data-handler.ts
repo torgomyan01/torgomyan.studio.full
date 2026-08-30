@@ -38,13 +38,6 @@ export function saveAnswerToChatData(
     else if (currentQuestionStep >= 2) {
       updatedData.features = [...(updatedData.features || []), answer];
     }
-  } else if (service.includes('SEO') || service.includes('Продвижение')) {
-    if (currentQuestionStep === 0) updatedData.currentWebsite = answer;
-    else if (currentQuestionStep === 1) updatedData.additionalInfo = answer;
-    else if (currentQuestionStep >= 2) {
-      updatedData.additionalInfo =
-        (updatedData.additionalInfo || '') + ' | ' + answer;
-    }
   } else if (service.includes('UI/UX') || service.includes('Дизайн')) {
     if (currentQuestionStep === 0) updatedData.additionalInfo = answer;
     else if (currentQuestionStep === 1) updatedData.designStyle = answer;

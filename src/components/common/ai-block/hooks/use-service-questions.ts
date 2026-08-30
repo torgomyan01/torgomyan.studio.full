@@ -44,14 +44,6 @@ function getServiceKey(service: string, locale: string): string {
     return 'webApplications';
   }
   if (
-    serviceLower.includes('seo') ||
-    serviceLower.includes('продвижение') ||
-    serviceLower.includes('promotion') ||
-    serviceLower.includes('առաջխաղացում')
-  ) {
-    return 'seo';
-  }
-  if (
     serviceLower.includes('ui/ux') ||
     serviceLower.includes('дизайн') ||
     serviceLower.includes('design') ||

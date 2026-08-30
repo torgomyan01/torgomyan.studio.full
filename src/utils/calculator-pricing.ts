@@ -135,19 +135,6 @@ export function getServicePricingConfig(
     };
   }
 
-  // SEO before UI/UX — avoid broad "Дизайн" match on unrelated services
-  if (service.includes('SEO') || service.includes('Продвижение')) {
-    return {
-      basePrice: 7000,
-      complexityMultiplier: 1,
-      isWebsite: false,
-      isEcommerce: false,
-      isApp: false,
-      isOngoing: true,
-      maxPages: 1,
-    };
-  }
-
   if (service.includes('UI/UX')) {
     return {
       basePrice: 13000,
@@ -390,7 +377,6 @@ export function getWebsiteTypeSlug(service: string): string {
   if (service.includes('Интернет-магазин')) return 'ecommerce';
   if (service.includes('Сайт-визитка')) return 'portfolio';
   if (service.includes('Веб-приложения')) return 'webapp';
-  if (service.includes('SEO') || service.includes('Продвижение')) return 'seo';
   if (service.includes('UI/UX')) return 'design';
   if (service.includes('Техническая поддержка')) return 'support';
   if (service.includes('Хостинг') || service.includes('домен')) return 'hosting';

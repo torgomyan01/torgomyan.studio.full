@@ -9,6 +9,11 @@ import { useServiceQuestions } from '../ai-block/hooks/use-service-questions';
 import { useLocale } from '@/i18n/use-locale';
 import { getTranslation } from '@/i18n';
 import {
+  convertFromRub,
+  formatPrice as formatLocalePrice,
+  getCurrencySymbol,
+} from '@/i18n/utils';
+import {
   calculatePriceRange,
   calculateProjectPrice,
   getFormDefaultsForService,
@@ -53,7 +58,6 @@ export default function Calculator() {
     'Корпоративный сайт': 'services.corporateWebsite',
     'Интернет-магазин': 'services.onlineShop',
     'Веб-приложения': 'services.webApplications',
-    'Продвижение сайтов (SEO)': 'services.seo',
     'Дизайн интерфейсов (UI/UX)': 'services.uiUxDesign',
     'Техническая поддержка': 'services.technicalSupport',
     'Хостинг и домены': 'services.hostingDomains',
@@ -295,8 +299,10 @@ export default function Calculator() {
   const localeTag =
     locale === 'ru' ? 'ru-RU' : locale === 'hy' ? 'hy-AM' : 'en-US';
 
-  const formatPrice = (value: number) =>
-    value.toLocaleString(localeTag);
+  const formatPrice = (value: number) => formatLocalePrice(value, locale);
+
+  const formatPriceAmount = (value: number) =>
+    convertFromRub(value, locale).toLocaleString(localeTag);
 
   const getServiceIconClass = (title: string): string => {
     if (title.includes('Лендинг')) return 'fas fa-rocket';
@@ -304,8 +310,6 @@ export default function Calculator() {
     if (title.includes('Корпоративный')) return 'fas fa-building';
     if (title.includes('Сайт-визитка')) return 'fas fa-briefcase';
     if (title.includes('Веб-приложения')) return 'fas fa-code';
-    if (title.includes('SEO') || title.includes('Продвижение'))
-      return 'fas fa-chart-line';
     if (title.includes('UI/UX') || title.includes('Дизайн'))
       return 'fas fa-palette';
     if (title.includes('Техническая поддержка')) return 'fas fa-headset';
@@ -449,13 +453,15 @@ export default function Calculator() {
                       {getTranslation(locale, 'calculator.sidebar.from')}
                     </p>
                     <div className="calculator-sidebar__price-value">
-                      <span className="calculator-sidebar__currency">₽</span>
-                      {formatPrice(livePreview.price)}
+                      <span className="calculator-sidebar__currency">
+                        {getCurrencySymbol(locale)}
+                      </span>
+                      {formatPriceAmount(livePreview.price)}
                     </div>
                     <p className="calculator-sidebar__price-range">
                       <i className="fas fa-chart-line" aria-hidden="true" />
                       {formatPrice(livePreview.range.min)} –{' '}
-                      {formatPrice(livePreview.range.max)} ₽
+                      {formatPrice(livePreview.range.max)}
                     </p>
                   </div>
                 </div>
@@ -926,7 +932,7 @@ export default function Calculator() {
                     )}
                   </h3>
                   <div className="price-value">
-                    {formatPrice(estimatedPrice)} ₽
+                    {formatPrice(estimatedPrice)}
                   </div>
                   {priceRange && (
                     <div className="price-range">
@@ -935,7 +941,7 @@ export default function Calculator() {
                       </span>
                       <span className="range-values">
                         {formatPrice(priceRange.min)} –{' '}
-                        {formatPrice(priceRange.max)} ₽
+                        {formatPrice(priceRange.max)}
                       </span>
                     </div>
                   )}

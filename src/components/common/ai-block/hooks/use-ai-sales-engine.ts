@@ -400,7 +400,6 @@ export function analyzeUserAnswer(
   ) {
     suggestedServices.push(
       'Интеграция платежных систем',
-      'SEO продвижение',
       'Маркетинговая стратегия'
     );
   }
@@ -416,11 +415,7 @@ export function analyzeUserAnswer(
     lowerAnswer.includes('посетител') ||
     lowerAnswer.includes('аудитория')
   ) {
-    suggestedServices.push(
-      'SEO продвижение',
-      'Контент-маркетинг',
-      'SMM продвижение'
-    );
+    suggestedServices.push('Контент-маркетинг', 'SMM продвижение');
   }
   if (
     lowerAnswer.includes('мобильн') ||
@@ -699,7 +694,7 @@ export function generateUpsellProposal(
   } else if (analysis.buyingSignals.includes('price_inquiry')) {
     // Если спрашивает о цене, предлагаем что-то с высокой ценностью
     const highValueService = suggestedServices.find(
-      (s) => s.includes('SEO') || s.includes('Маркетинг')
+      (s) => s.includes('Маркетинг')
     );
     if (highValueService) upsellService = highValueService;
   }
@@ -707,8 +702,6 @@ export function generateUpsellProposal(
   const serviceBenefits: Record<string, string> = {
     'Интеграция платежных систем':
       'Оплата на сайте упрощает покупку: клиенту не нужно писать «как оплатить» — меньше потерянных заявок.',
-    'SEO продвижение':
-      'SEO помогает приходить клиентам из поиска без постоянной оплаты за каждый клик — это работа на долгий срок.',
     'CRM интеграция':
       'CRM помогает не терять заявки и быстрее отвечать клиентам — особенно когда обращений много.',
     Автоматизация:

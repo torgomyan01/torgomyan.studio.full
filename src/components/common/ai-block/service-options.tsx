@@ -17,7 +17,6 @@ const serviceTranslationMap: Record<string, string> = {
   'Корпоративный сайт': 'services.corporateWebsite',
   'Интернет-магазин': 'services.onlineShop',
   'Веб-приложения': 'services.webApplications',
-  'Продвижение сайтов (SEO)': 'services.seo',
   'Дизайн интерфейсов (UI/UX)': 'services.uiUxDesign',
   'Техническая поддержка': 'services.technicalSupport',
   'Хостинг и домены': 'services.hostingDomains',

@@ -7,7 +7,6 @@ export const SITE_URL = {
   CORPORATE_WEBSITE: '/services/corporate-website',
   ONLINE_SHOP: '/services/online-shop',
   WEB_APPLICATIONS: '/services/web-applications',
-  SEO: '/services/seo',
   UI_UX_DESIGN: '/services/ui-ux-design',
   TECHNICAL_SUPPORT: '/services/technical-support',
   HOSTING_DOMAINS: '/services/hosting-domains',
@@ -61,10 +60,6 @@ export const services = [
   {
     title: 'Веб-приложения',
     href: SITE_URL.WEB_APPLICATIONS,
-  },
-  {
-    title: 'Продвижение сайтов (SEO)',
-    href: SITE_URL.SEO,
   },
   {
     title: 'Дизайн интерфейсов (UI/UX)',

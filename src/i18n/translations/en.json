@@ -51,7 +51,6 @@
     "corporateWebsite": "Corporate Website",
     "onlineShop": "Online Shop",
     "webApplications": "Web Applications",
-    "seo": "Website Promotion (SEO)",
     "uiUxDesign": "Interface Design (UI/UX)",
     "technicalSupport": "Technical Support",
     "hostingDomains": "Hosting & Domains",
@@ -59,11 +58,11 @@
     "businessAutomation": "Business Process Automation"
   },
   "servicesPage": {
-    "pageTitle": "Web Development Services | Website Development, SEO, Design | Torgomyan.Studio",
-    "pageDescription": "Full range of web development services: full-service website creation, online stores, landing pages, corporate websites. SEO promotion in Yandex and Google. UI/UX design. Technical support and hosting. Over 100 successful projects.",
+    "pageTitle": "Web Development Services | Website Development, Design | Torgomyan.Studio",
+    "pageDescription": "Full range of web development services: full-service website creation, online stores, landing pages, corporate websites. UI/UX design. Technical support and hosting. Over 100 successful projects.",
     "pageKeywords": "web development services, full-service website development, online store creation, landing page, corporate website, SEO website promotion, UI/UX design, web applications, website technical support, hosting and domains, order website, website development cost, web studio services",
-    "openGraphTitle": "Web Development Services | Website Development, SEO, Design",
-    "openGraphDescription": "Full range of web development services: full-service website creation, online stores, landing pages, corporate websites. SEO promotion in Yandex and Google.",
+    "openGraphTitle": "Web Development Services | Website Development, Design",
+    "openGraphDescription": "Full range of web development services: full-service website creation, online stores, landing pages, corporate websites.",
     "title": "Our Services",
     "subtitle": "Full range of web services for your business development. From website creation to promotion and technical support — we provide a comprehensive approach to your digital presence.",
     "stats": {
@@ -202,6 +201,14 @@
     "scheduleCall": "Schedule Call",
     "call": "Call",
     "address": "Armenia, Martuni, Myasnikyan 62",
+    "badge": "We reply fast",
+    "phoneLabel": "Phone",
+    "whatsappLabel": "WhatsApp",
+    "telegramLabel": "Telegram",
+    "addressLabel": "Address",
+    "calculatorCta": "Get a quote",
+    "responseHint": "We usually reply within an hour",
+    "mapLabel": "Find us on the map",
     "pageTitle": "Contacts | Contact Web Studio | Torgomyan.Studio",
     "pageDescription": "Contact us to discuss your project. Free consultation. Phone, WhatsApp, Telegram, Email. We will respond within an hour. Order website development.",
     "pageKeywords": "web studio contacts, contact web studio, website developer contacts, contact us, order website, website development consultation, Torgomyan Studio contacts",
@@ -408,7 +415,6 @@
       "/services/corporate-website": "Corporate Website",
       "/services/online-shop": "Online Shop",
       "/services/web-applications": "Web Applications",
-      "/services/seo": "SEO Promotion",
       "/services/ui-ux-design": "UI/UX Design",
       "/services/technical-support": "Technical Support",
       "/services/hosting-domains": "Hosting & Domains",
@@ -432,6 +438,11 @@
     }
   },
   "calculator": {
+    "pageTitle": "Website Cost Calculator | Estimate Development Price | Torgomyan.Studio",
+    "pageDescription": "Free online website cost calculator. Estimate your project price in about 2 minutes. Transparent pricing.",
+    "pageKeywords": "website cost calculator, website price estimate, web development cost, landing page price, online store cost",
+    "openGraphTitle": "Website Cost Calculator | Estimate Development Price",
+    "openGraphDescription": "Free online website cost calculator. Estimate your project price in about 2 minutes.",
     "hero": {
       "title": "Website Cost Calculator",
       "subtitle": "Calculate the approximate cost of your project in a few minutes. Get a personalized offer after filling out the form.",

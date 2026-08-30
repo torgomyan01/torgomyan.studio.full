@@ -1,13 +1,34 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import * as UAParser from 'ua-parser-js';
 import {
-  locales,
   defaultLocale,
   isValidLocale,
   type Locale,
 } from '@/i18n/config';
 import { addLocaleToPath } from '@/i18n/utils';
 import { getLocaleFromGeo } from '@/i18n/geo-detection';
+
+function createLocaleHeaders(
+  request: NextRequest,
+  locale: Locale,
+  pathname: string,
+  actualPathname: string
+): Headers {
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set('x-locale', locale);
+  requestHeaders.set('x-pathname', pathname);
+  requestHeaders.set('x-actual-pathname', actualPathname);
+  return requestHeaders;
+}
+
+function attachLocaleCookie(response: NextResponse, locale: Locale) {
+  response.cookies.set('NEXT_LOCALE', locale, {
+    path: '/',
+    maxAge: 31536000,
+    sameSite: 'lax',
+  });
+  return response;
+}
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
@@ -65,32 +86,26 @@ export async function middleware(request: NextRequest) {
 
     const url = request.nextUrl.clone();
     url.pathname = actualPathname;
-    const response = NextResponse.rewrite(url);
-    response.headers.set('x-locale', locale);
-    response.headers.set('x-pathname', pathname);
-    response.headers.set('x-actual-pathname', actualPathname);
 
-    response.cookies.set('NEXT_LOCALE', locale, {
-      path: '/',
-      maxAge: 31536000,
-      sameSite: 'lax',
+    const response = NextResponse.rewrite(url, {
+      request: {
+        headers: createLocaleHeaders(
+          request,
+          locale,
+          pathname,
+          actualPathname
+        ),
+      },
     });
 
-    return response;
+    return attachLocaleCookie(response, locale);
   }
 
   if (!hasLocale && locale !== defaultLocale) {
     const url = request.nextUrl.clone();
     url.pathname = addLocaleToPath(pathname, locale);
     const redirectResponse = NextResponse.redirect(url);
-
-    redirectResponse.cookies.set('NEXT_LOCALE', locale, {
-      path: '/',
-      maxAge: 31536000,
-      sameSite: 'lax',
-    });
-
-    return redirectResponse;
+    return attachLocaleCookie(redirectResponse, locale);
   }
 
   const userAgent = request.headers.get('user-agent');
@@ -107,23 +122,21 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  const response = NextResponse.next();
-  response.headers.set('x-locale', locale);
-  response.headers.set('x-pathname', pathname);
-  response.headers.set('x-actual-pathname', actualPathname || pathname);
-
-  response.cookies.set('NEXT_LOCALE', locale, {
-    path: '/',
-    maxAge: 31536000,
-    sameSite: 'lax',
+  const response = NextResponse.next({
+    request: {
+      headers: createLocaleHeaders(
+        request,
+        locale,
+        pathname,
+        actualPathname || pathname
+      ),
+    },
   });
 
-  return response;
+  return attachLocaleCookie(response, locale);
 }
 
 export const config = {
-  matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
-  ],
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
   runtime: 'experimental-edge',
 };

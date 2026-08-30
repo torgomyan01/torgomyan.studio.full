@@ -1,4 +1,9 @@
 
+
+.calculator-page-wrapper {
+  overflow: visible;
+}
+
 .calculator-page {
   position: relative;
   padding: 88px 0 0;
@@ -199,21 +204,19 @@
 }
 
 .calculator-sidebar {
+  position: sticky;
+  top: 96px;
   align-self: start;
+  height: fit-content;
+  z-index: 20;
 
   @media (max-width: 1024px) {
     order: -1;
+    top: 88px;
   }
 
   &__card {
-    position: sticky;
-    top: 100px;
-    z-index: 10;
-
-    @media (max-width: 1024px) {
-      position: static;
-      top: auto;
-    }
+    position: relative;
 
     padding: 28px 24px;
     background: linear-gradient(
@@ -1399,7 +1402,7 @@
 
   .cta-title {
     font-size: clamp(26px, 4vw, 38px);
-    font-weight: 800;
+    font-weight: 700;
     color: #fff;
     margin: 0 0 12px;
   }

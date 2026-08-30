@@ -78,11 +78,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly' as const,
       priority: 0.8,
     })),
-    ...generateLocalizedUrls(SITE_URL.SEO).map((page) => ({
-      ...page,
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
-    })),
     ...generateLocalizedUrls(SITE_URL.UI_UX_DESIGN).map((page) => ({
       ...page,
       changeFrequency: 'weekly' as const,
