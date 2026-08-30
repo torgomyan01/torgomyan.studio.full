@@ -58,6 +58,9 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: 'Torgomyan.Studio',
       url: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
     },
+    verification: {
+      google: 'D-62YNPieIsCe6DP3I8cq_cwieN_lqKEBabjQcgEwyw',
+    },
   };
 }
 
