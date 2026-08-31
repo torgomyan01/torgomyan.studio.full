@@ -6,8 +6,10 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --color-green: #1e4a2f;
-  --color-cream: #f2e9dc;
+  --color-primary: #c444ff;
+  --color-primary-dark: #562999;
+  --color-primary-light: #e8c4ff;
+  --color-cream: #f0e8ff;
 }
 
 @utility flex-jsb-c {

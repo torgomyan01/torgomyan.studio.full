@@ -1,7 +1,7 @@
 .info-block {
-  padding: 150px 0 40px;
+  padding: calc(var(--nav-height) + 48px) 0 40px;
   @media (max-width: 767px) {
-    padding-top: 90px;
+    padding-top: calc(var(--nav-height) + 24px);
   }
   .container {
     display: flex;

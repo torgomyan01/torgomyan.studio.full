@@ -4,6 +4,8 @@ import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CustomInput, CustomPhoneInput } from '@/components/ui';
 import { saveCalculatorSubmissionAction } from '@/app/actions/calculator';
+import { trackConversion } from '@/utils/analytics';
+import PrimaryCtaLink from '@/components/common/primary-cta-link/primary-cta-link';
 import { services } from '@/utils/consts';
 import { useServiceQuestions } from '../ai-block/hooks/use-service-questions';
 import { useLocale } from '@/i18n/use-locale';
@@ -48,7 +50,9 @@ interface ContactFormData {
 export default function Calculator() {
   const locale = useLocale();
   const { getServiceQuestions } = useServiceQuestions();
-  const [step, setStep] = useState<'calculator' | 'contact'>('calculator');
+  const [step, setStep] = useState<'calculator' | 'contact' | 'success'>(
+    'calculator'
+  );
 
   // Map service titles to translation keys
   const serviceTranslationMap: Record<string, string> = {
@@ -238,36 +242,11 @@ export default function Calculator() {
       });
 
       if (result.success) {
-        setShowPrice(true); // Показываем цену после успешной отправки
-        setSubmitMessage({
-          type: 'success',
-          text: getTranslation(locale, 'calculator.success.thankYou'),
-        });
-        setTimeout(() => {
-          // Reset form after success
-          setStep('calculator');
-          setEstimatedPrice(null);
-          setShowPrice(false);
-          setFormData({
-            selectedService: '',
-            websiteType: '',
-            pagesCount: 5,
-            designStyle: '',
-            features: [],
-            cmsRequired: false,
-            ecommerce: false,
-            paymentSystems: '',
-            mobileApp: false,
-            seoOptimization: false,
-            contentManagement: false,
-            serviceAnswers: {},
-          });
-          setContactData({
-            name: '',
-            email: '',
-            phone: '',
-          });
-        }, 15000);
+        setShowPrice(true);
+        trackConversion('calculator', finalPrice || undefined);
+        setStep('success');
+        setSubmitMessage(null);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         setSubmitMessage({
           type: 'error',
@@ -294,6 +273,31 @@ export default function Calculator() {
         ? prev.features.filter((f) => f !== feature)
         : [...prev.features, feature],
     }));
+  };
+
+  const handleNewCalculation = () => {
+    setStep('calculator');
+    setEstimatedPrice(null);
+    setPriceRange(null);
+    setShowPrice(false);
+    setSubmitMessage(null);
+    setCurrentQuestionIndex(0);
+    setFormData({
+      selectedService: '',
+      websiteType: '',
+      pagesCount: 5,
+      designStyle: '',
+      features: [],
+      cmsRequired: false,
+      ecommerce: false,
+      paymentSystems: '',
+      mobileApp: false,
+      seoOptimization: false,
+      contentManagement: false,
+      serviceAnswers: {},
+    });
+    setContactData({ name: '', email: '', phone: '' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const localeTag =
@@ -344,6 +348,7 @@ export default function Calculator() {
   ];
 
   const flowStep = useMemo(() => {
+    if (step === 'success') return 4;
     if (step === 'contact') return showPrice ? 4 : 3;
     if (!formData.selectedService) return 1;
     return 2;
@@ -413,6 +418,10 @@ export default function Calculator() {
           </h1>
           <p className="main-subtitle">
             {getTranslation(locale, 'calculator.hero.subtitle')}
+          </p>
+          <p className="calculator-hero__response">
+            <i className="fas fa-clock" aria-hidden="true" />
+            {getTranslation(locale, 'common.responseTime')}
           </p>
           <div className="calculator-steps">
             {progressSteps.map((label, index) => {
@@ -536,7 +545,7 @@ export default function Calculator() {
                     transition={{ duration: 0.3 }}
                   >
               <div className="form-section">
-                <h3 className="section-title">
+                <h3 className="calculator-section-title">
                   {getTranslation(locale, 'calculator.form.selectService')}
                 </h3>
                 <div className="service-grid">
@@ -573,7 +582,7 @@ export default function Calculator() {
               {formData.selectedService &&
                 selectedServiceQuestions.length > 0 && (
                   <div className="form-section">
-                    <h3 className="section-title">
+                    <h3 className="calculator-section-title">
                       {getTranslation(
                         locale,
                         'calculator.form.serviceQuestions',
@@ -637,7 +646,7 @@ export default function Calculator() {
               {showWebsiteFields && (
                 <>
                   <div className="form-section">
-                    <h3 className="section-title">
+                    <h3 className="calculator-section-title">
                       {getTranslation(locale, 'calculator.form.pagesCount')}
                     </h3>
                     <div className="range-input">
@@ -665,7 +674,7 @@ export default function Calculator() {
                   </div>
 
                   <div className="form-section">
-                    <h3 className="section-title">
+                    <h3 className="calculator-section-title">
                       {getTranslation(locale, 'calculator.form.designStyle')}
                     </h3>
                     <div className="design-grid">
@@ -716,7 +725,7 @@ export default function Calculator() {
 
               {showFeatureOptions && (
               <div className="form-section">
-                <h3 className="section-title">
+                <h3 className="calculator-section-title">
                   {getTranslation(locale, 'calculator.form.additionalFeatures')}
                 </h3>
                 <div className="checkbox-group">
@@ -809,7 +818,7 @@ export default function Calculator() {
 
               {showPaymentFields && (
                 <div className="form-section">
-                  <h3 className="section-title">
+                  <h3 className="calculator-section-title">
                     {getTranslation(locale, 'calculator.form.paymentSystems')}
                   </h3>
                   <div className="radio-group">
@@ -845,7 +854,7 @@ export default function Calculator() {
 
               {showFeatureOptions && (
               <div className="form-section">
-                <h3 className="section-title">
+                <h3 className="calculator-section-title">
                   {getTranslation(locale, 'calculator.form.additionalOptions')}
                 </h3>
                 <div className="checkbox-group">
@@ -896,7 +905,7 @@ export default function Calculator() {
                 </button>
               </div>
                   </motion.div>
-                ) : (
+                ) : step === 'contact' ? (
                   <motion.div
                     key="contact-step"
                     className="contact-form"
@@ -956,7 +965,7 @@ export default function Calculator() {
               )}
 
               <div className="form-section">
-                <h3 className="section-title">
+                <h3 className="calculator-section-title">
                   {getTranslation(locale, 'calculator.form.contactData')}
                 </h3>
                 <CustomInput
@@ -1023,6 +1032,90 @@ export default function Calculator() {
                 </div>
               </div>
                   </motion.div>
+                ) : (
+                  <motion.div
+                    key="success-step"
+                    className="calculator-success"
+                    initial={{ opacity: 0, scale: 0.96 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.96 }}
+                    transition={{ duration: 0.35 }}
+                  >
+                    <div className="calculator-success__icon">
+                      <i className="fas fa-circle-check" aria-hidden="true" />
+                    </div>
+                    <h2 className="calculator-success__title">
+                      {getTranslation(locale, 'calculator.success.title')}
+                    </h2>
+                    <p className="calculator-success__subtitle">
+                      {getTranslation(locale, 'calculator.success.subtitle')}
+                    </p>
+                    {showPrice && estimatedPrice !== null && (
+                      <div className="calculator-success__price">
+                        <span className="calculator-success__price-label">
+                          {getTranslation(
+                            locale,
+                            'calculator.success.estimatedLabel'
+                          )}
+                        </span>
+                        <span className="calculator-success__price-value">
+                          {formatPrice(estimatedPrice)}
+                        </span>
+                        {priceRange && (
+                          <span className="calculator-success__price-range">
+                            {formatPrice(priceRange.min)} –{' '}
+                            {formatPrice(priceRange.max)}
+                          </span>
+                        )}
+                      </div>
+                    )}
+                    <div className="calculator-success__actions">
+                      <a
+                        href="https://t.me/torgomyan01"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="studio-btn studio-btn--lg"
+                      >
+                        <i
+                          className="fab fa-telegram-plane"
+                          aria-hidden="true"
+                        />
+                        {getTranslation(
+                          locale,
+                          'calculator.success.continueTelegram'
+                        )}
+                      </a>
+                      <a
+                        href="https://wa.me/37477769668"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="studio-btn studio-btn--ghost studio-btn--lg"
+                      >
+                        <i className="fab fa-whatsapp" aria-hidden="true" />
+                        {getTranslation(
+                          locale,
+                          'calculator.success.continueWhatsapp'
+                        )}
+                      </a>
+                      <a
+                        href="tel:+37477769668"
+                        className="studio-btn studio-btn--ghost studio-btn--lg"
+                      >
+                        <i className="fas fa-phone" aria-hidden="true" />
+                        {getTranslation(locale, 'calculator.success.callUs')}
+                      </a>
+                      <button
+                        type="button"
+                        className="calculator-success__new"
+                        onClick={handleNewCalculation}
+                      >
+                        {getTranslation(
+                          locale,
+                          'calculator.success.newCalculation'
+                        )}
+                      </button>
+                    </div>
+                  </motion.div>
                 )}
               </AnimatePresence>
             </section>
@@ -1032,7 +1125,7 @@ export default function Calculator() {
         {/* Benefits Section */}
         <section className="calculator-benefits">
           <div className="container">
-            <h2 className="section-title">
+            <h2 className="calculator-section-title">
               {getTranslation(locale, 'calculator.benefits.title')}
             </h2>
             <div className="benefits-grid">
@@ -1153,7 +1246,7 @@ export default function Calculator() {
         </section>
 
         <section className="calculator-faq">
-          <h2 className="section-title">
+          <h2 className="calculator-section-title">
             {getTranslation(locale, 'calculator.faq.title')}
           </h2>
           <div className="faq-list">
@@ -1205,10 +1298,11 @@ export default function Calculator() {
                 {getTranslation(locale, 'calculator.cta.text')}
               </p>
               <div className="cta-buttons">
-                <a href="#contact" className="cta-button-primary">
-                  <i className="fas fa-paper-plane" aria-hidden="true" />
-                  {getTranslation(locale, 'calculator.cta.getOffer')}
-                </a>
+                <PrimaryCtaLink location="calculator_cta" fullWidth />
+                <p className="cta-response-time">
+                  <i className="fas fa-clock" aria-hidden="true" />
+                  {getTranslation(locale, 'common.responseTime')}
+                </p>
                 <a href="tel:+37477769668" className="cta-button-secondary">
                   <i className="fas fa-phone" aria-hidden="true" />
                   {getTranslation(locale, 'calculator.cta.callUs')}

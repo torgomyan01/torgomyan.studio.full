@@ -1,15 +1,20 @@
-import { heroui } from "@heroui/react";
+import { heroui } from '@heroui/react';
+
 export default heroui({
   themes: {
     light: {
       colors: {
         default: {
-          DEFAULT: "#f8f2ea",
-          foreground: "#000",
+          DEFAULT: '#f0e8ff',
+          foreground: '#1a0a2e',
+        },
+        primary: {
+          DEFAULT: '#c444ff',
+          foreground: '#ffffff',
         },
         secondary: {
-          DEFAULT: "#1E4A2F",
-          foreground: "#F8F2EA",
+          DEFAULT: '#562999',
+          foreground: '#ffffff',
         },
       },
     },

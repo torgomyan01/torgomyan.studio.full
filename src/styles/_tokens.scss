@@ -1,0 +1,51 @@
+:root {
+  /* Brand colors */
+  --color-primary: #c444ff;
+  --color-primary-dark: #562999;
+  --color-primary-light: #e8c4ff;
+  --color-primary-muted: #d4a5ff;
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #c444ff 0%, #562999 100%);
+  --gradient-primary-reverse: linear-gradient(-135deg, #c444ff 0%, #562999 100%);
+  --gradient-body: linear-gradient(235deg, #c444ff 0%, #562999 59.78%);
+
+  /* Surfaces */
+  --color-surface: rgba(86, 41, 153, 0.45);
+  --color-surface-dark: rgba(18, 10, 36, 0.96);
+  --color-border: rgba(255, 255, 255, 0.15);
+  --color-border-strong: rgba(196, 68, 255, 0.35);
+  --color-text: #ffffff;
+  --color-text-muted: rgba(255, 255, 255, 0.7);
+  --color-text-subtle: rgba(255, 255, 255, 0.55);
+
+  /* Effects */
+  --blur-sm: 10px;
+  --blur-md: 16px;
+  --blur-lg: 20px;
+  --shadow-card: 0 16px 48px rgba(0, 0, 0, 0.35);
+  --shadow-glow: 0 0 40px rgba(196, 68, 255, 0.25);
+  --glow-line: linear-gradient(
+    90deg,
+    transparent,
+    #c444ff 20%,
+    #e879ff 50%,
+    #c444ff 80%,
+    transparent
+  );
+
+  /* Layout */
+  --container-max: 1300px;
+  --container-padding: 20px;
+  --nav-height: 80px;
+
+  /* Radii */
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --radius-pill: 100px;
+
+  /* Breakpoints (for reference in comments) */
+  /* sm: 480px, md: 768px, lg: 1024px, xl: 1200px */
+}

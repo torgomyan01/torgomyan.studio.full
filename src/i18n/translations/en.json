@@ -36,7 +36,9 @@
     "allRightsReserved": "All rights reserved",
     "whatIncluded": "What's Included",
     "whyChooseUs": "Why Choose Us",
-    "faq": "Frequently Asked Questions"
+    "faq": "Frequently Asked Questions",
+    "primaryCta": "Get a free estimate",
+    "responseTime": "We respond within 2 hours"
   },
   "home": {
     "title": "We create websites for your business",
@@ -207,7 +209,7 @@
     "telegramLabel": "Telegram",
     "addressLabel": "Address",
     "calculatorCta": "Get a quote",
-    "responseHint": "We usually reply within an hour",
+    "responseHint": "We respond within 2 hours",
     "mapLabel": "Find us on the map",
     "pageTitle": "Contacts | Contact Web Studio | Torgomyan.Studio",
     "pageDescription": "Contact us to discuss your project. Free consultation. Phone, WhatsApp, Telegram, Email. We will respond within an hour. Order website development.",
@@ -250,22 +252,76 @@
     "aboutUs": "About Us"
   },
   "popups": {
-    "specialOffer": "Special Offer!",
-    "read70Percent": "You've already read 70% — time to talk",
-    "submitWithin10Minutes": "Submit your request within 10 minutes and get",
-    "discount": "discount",
-    "getFreeConsultation": "Get a free consultation on website creation",
-    "hurrySpecialOffer": "Hurry to take advantage of the special offer! We will help you choose the optimal solution for your business.",
-    "helpChooseSolution": "We will help you choose the optimal solution for your business and answer all your questions",
-    "getDiscount": "Get",
-    "dontLeave": "Don't Leave!",
-    "getFreeConsultationTitle": "Get a free consultation on website creation"
+    "title": "Get in touch",
+    "subtitle": "Free consultation on website development",
+    "description": "We'll help you choose the best solution for your business and answer all your questions",
+    "cta": "Get a free consultation"
+  },
+  "howWeWork": {
+    "badge": "Process",
+    "title": "How we work",
+    "subtitle": "A simple, transparent process with no surprises",
+    "step1": {
+      "title": "Discovery call",
+      "text": "We understand your business, goals, and expectations"
+    },
+    "step2": {
+      "title": "Estimate",
+      "text": "We send a clear estimate within 24 hours"
+    },
+    "step3": {
+      "title": "Design & development",
+      "text": "We build the site and approve each important step with you"
+    },
+    "step4": {
+      "title": "Launch",
+      "text": "We go live and provide ongoing technical support"
+    }
+  },
+  "caseStudies": {
+    "badge": "Results",
+    "title": "What we've built",
+    "subtitle": "Real projects with problem, solution, and outcome",
+    "problemLabel": "Problem",
+    "solutionLabel": "Solution",
+    "viewProject": "View project",
+    "items": {
+      "nampoputi": {
+        "title": "NAM PO PUTI",
+        "metric": "+45%",
+        "metricLabel": "more inquiries",
+        "problem": "The old site didn't support online booking or fast inquiries",
+        "solution": "New site with catalog, filters, SEO, and fast loading",
+        "result": "Customers started contacting and booking much faster"
+      },
+      "euroasfalt": {
+        "title": "Euro Asfalt",
+        "metric": "3x",
+        "metricLabel": "more leads",
+        "problem": "The site didn't communicate the full value of services",
+        "solution": "Corporate site + online calculator and SEO structure",
+        "result": "Lead volume tripled in the first 3 months"
+      },
+      "kettikTravel": {
+        "title": "Kettik Travel",
+        "metric": "+60%",
+        "metricLabel": "more bookings",
+        "problem": "Online booking was difficult and conversion was low",
+        "solution": "Modern UI, simple booking flow, and mobile optimization",
+        "result": "More bookings and fewer support requests"
+      }
+    }
+  },
+  "footer": {
+    "tagline": "We build modern websites that grow your business",
+    "navigation": "Navigation",
+    "contact": "Contact"
   },
   "discussBlock": {
-    "title": "Do you also need such websites?",
-    "socialProof": "clients contacted this month",
-    "discountText": "Free consultation + project estimate",
-    "buttonText": "Let's Discuss"
+    "title": "Need a website like this?",
+    "badge": "Free consultation",
+    "subtitle": "Clear estimate within 24 hours — no obligation",
+    "buttonText": "Let's discuss"
   },
   "aiBlock": {
     "letsDiscuss": "Let's Discuss",
@@ -516,7 +572,14 @@
       "generalError": "An error occurred"
     },
     "success": {
-      "thankYou": "Thank you! We will contact you shortly."
+      "thankYou": "Thank you! We will contact you shortly.",
+      "title": "Your request has been received",
+      "subtitle": "We've received your request and will contact you within 2 hours",
+      "estimatedLabel": "Your estimated price",
+      "continueTelegram": "Continue on Telegram",
+      "continueWhatsapp": "Message on WhatsApp",
+      "callUs": "Call now",
+      "newCalculation": "New calculation"
     },
     "priceInfo": {
       "calculationComplete": "Calculation complete!",

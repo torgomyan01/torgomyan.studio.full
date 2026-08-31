@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { SITE_URL } from '@/utils/consts';
 import './_contact-us.scss';
+import PrimaryCtaLink from '@/components/common/primary-cta-link/primary-cta-link';
 import { useLocale } from '@/i18n/use-locale';
 import { getTranslation } from '@/i18n';
 import { addLocaleToPath } from '@/i18n/utils';
@@ -61,19 +62,7 @@ function ContactUs() {
         </div>
 
         <div className="contact-us__actions">
-          <Link
-            href={addLocaleToPath('/schedule-call', locale)}
-            className="contact-us__action contact-us__action--primary"
-          >
-            <span className="contact-us__action-icon">
-              <i className="fas fa-calendar-check" aria-hidden="true" />
-            </span>
-            <span className="contact-us__action-text">
-              <strong>{getTranslation(locale, 'contact.scheduleCall')}</strong>
-              <small>{getTranslation(locale, 'contact.responseHint')}</small>
-            </span>
-            <i className="fas fa-arrow-right" aria-hidden="true" />
-          </Link>
+          <PrimaryCtaLink location="contact_section" fullWidth />
           <a
             href="tel:+37477769668"
             className="contact-us__action contact-us__action--ghost"

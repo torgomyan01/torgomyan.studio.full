@@ -8,6 +8,7 @@ import 'swiper/css/pagination';
 
 import './tailwind.css';
 
+import { Roboto } from 'next/font/google';
 import NextTopLoader from 'nextjs-toploader';
 import type { Metadata } from 'next';
 import { GoogleAnalytics } from '@next/third-parties/google';
@@ -20,11 +21,18 @@ import { NotificationProvider } from '@/components/common/recent-notifications/n
 import { ToastNotifications } from '@/components/common/recent-notifications/toast-notifications';
 import YandexMetrika from '@/components/common/YandexMetrika/YandexMetrika';
 import AdsConversionTracker from '@/components/common/AdsConversionTracker/AdsConversionTracker';
+import LocalBusinessSchema from '@/components/common/local-business-schema/local-business-schema';
 import { headers } from 'next/headers';
 import { getTranslations } from '@/i18n';
 import { locales, defaultLocale } from '@/i18n/config';
 import { getPathnameWithoutLocale } from '@/i18n/utils';
 import { getLocaleFromHeaders } from '@/i18n/server-utils';
+
+const roboto = Roboto({
+  subsets: ['latin', 'cyrillic'],
+  weight: ['300', '400', '500', '600', '700'],
+  display: 'swap',
+});
 
 export async function generateMetadata(): Promise<Metadata> {
   const headersList = await headers();
@@ -73,7 +81,8 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning={true} className="light">
-      <body className="text-foreground bg-background">
+      <body className={`${roboto.className} text-foreground bg-background`}>
+        <LocalBusinessSchema locale={locale} />
         <div className="overflow-x-clip">
           <NextTopLoader />
           <Providers>

@@ -13,6 +13,7 @@ import { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import LanguageSwitcher from '@/components/common/language-switcher/language-switcher';
+import PrimaryCtaLink from '@/components/common/primary-cta-link/primary-cta-link';
 import { useLocale } from '@/i18n/use-locale';
 import { getTranslation } from '@/i18n';
 import { addLocaleToPath, getPathnameWithoutLocale } from '@/i18n/utils';
@@ -163,6 +164,9 @@ function Navbar() {
 
           {/* Right Actions */}
           <div className="header-actions">
+            <div className="desktop-cta">
+              <PrimaryCtaLink location="navbar" size="md" />
+            </div>
             <div className="desktop-language-switcher">
               <LanguageSwitcher />
             </div>
@@ -259,6 +263,13 @@ function Navbar() {
                   );
                 })}
               </nav>
+
+              <div className="mobile-menu-cta">
+                <PrimaryCtaLink location="mobile_nav" fullWidth />
+                <p className="mobile-menu-response">
+                  {getTranslation(locale, 'common.responseTime')}
+                </p>
+              </div>
 
               {/* Mobile Language Switcher */}
               <div className="mobile-language-switcher-wrapper">

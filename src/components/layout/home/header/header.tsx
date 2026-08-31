@@ -7,6 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import './_info-block.scss';
 import AiBlock from '@/components/common/ai-block/ai-block';
+import PrimaryCtaLink from '@/components/common/primary-cta-link/primary-cta-link';
 import { Works, SITE_URL } from '@/utils/consts';
 import ImageGalleryModal from '@/components/ui/image-gallery-modal';
 import { useLocale } from '@/i18n/use-locale';
@@ -161,21 +162,19 @@ function Header() {
             </div>
           </div>
           <div className="header-actions">
+            <PrimaryCtaLink location="home_hero" fullWidth />
             <Link
               href={addLocaleToPath('/schedule-call', locale)}
-              className="schedule-call-header-btn"
+              className="schedule-call-header-btn studio-btn studio-btn--ghost studio-btn--lg"
             >
-              <i className="fas fa-phone" aria-hidden="true"></i>
-              <span>{getTranslation(locale, 'home.getConsultation')}</span>
-            </Link>
-            <Link
-              href={addLocaleToPath(SITE_URL.CALCULATOR, locale)}
-              className="calculator-header-btn"
-            >
-              <i className="fa-solid fa-calculator" aria-hidden="true"></i>
-              <span>{getTranslation(locale, 'common.calculator')}</span>
+              <i className="fas fa-calendar-check" aria-hidden="true" />
+              <span>{getTranslation(locale, 'common.scheduleCall')}</span>
             </Link>
           </div>
+          <p className="header-response-time">
+            <i className="fas fa-clock" aria-hidden="true" />
+            {getTranslation(locale, 'common.responseTime')}
+          </p>
           <div className="header-contact-info">
             <a href="tel:+37477769668" className="phone-header-link">
               <i className="fas fa-phone" aria-hidden="true"></i>

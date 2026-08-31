@@ -14,6 +14,7 @@ import {
   today,
 } from '@internationalized/date';
 import { scheduleCallAction } from '@/app/actions/chat-inquiry';
+import { trackConversion } from '@/utils/analytics';
 import MainTemplate from '@/components/common/main-template/main-template';
 import { useLocale } from '@/i18n/use-locale';
 import { getTranslations } from '@/i18n';
@@ -98,45 +99,16 @@ export default function ScheduleCallPage() {
         selectedTime.minute
       ).padStart(2, '0')}`;
 
-      // Check for discount eligibility from localStorage
-      let discountPercentage: number | undefined;
-      let discountEligible = false;
-
-      if (typeof window !== 'undefined') {
-        const discountData = localStorage.getItem('discount-eligible');
-        if (discountData) {
-          try {
-            const discount = JSON.parse(discountData);
-            const expiresAt = discount.expiresAt;
-            const now = Date.now();
-
-            // Check if discount is still valid (not expired)
-            if (expiresAt && now < expiresAt && !discount.claimed) {
-              discountPercentage = discount.percentage;
-              discountEligible = true;
-              // Mark as claimed
-              localStorage.setItem(
-                'discount-eligible',
-                JSON.stringify({ ...discount, claimed: true })
-              );
-            }
-          } catch (e) {
-            console.error('Error parsing discount data:', e);
-          }
-        }
-      }
-
       const result = await scheduleCallAction({
         name: name.trim(),
         email: email.trim(),
         phone: phone.trim(),
         scheduledDate: dateStr,
         scheduledTime: timeStr,
-        discountPercentage,
-        discountEligible,
       });
 
       if (result.success) {
+        trackConversion('scheduled_call');
         setSubmitMessage({
           type: 'success',
           text: t.scheduleCallPage.success,

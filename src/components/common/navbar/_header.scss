@@ -22,7 +22,7 @@
   }
 
   .container {
-    max-width: 1400px;
+    max-width: var(--container-max);
     margin: 0 auto;
     padding: 16px 32px;
     display: flex;
@@ -168,6 +168,12 @@
     }
 
     .desktop-language-switcher {
+      @media (max-width: 1023px) {
+        display: none;
+      }
+    }
+
+    .desktop-cta {
       @media (max-width: 1023px) {
         display: none;
       }
@@ -348,6 +354,25 @@
             0 0 20px rgba(190, 62, 249, 0.6);
         }
       }
+    }
+  }
+
+  .mobile-menu-cta {
+    padding: 0 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .mobile-menu-response {
+    margin: 0;
+    text-align: center;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+
+    i {
+      margin-right: 6px;
+      color: var(--color-primary-light);
     }
   }
 
