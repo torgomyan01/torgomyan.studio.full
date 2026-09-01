@@ -105,6 +105,15 @@
 .fa-message:before {
   content: '\f075';
 }
+
+.fa-comments:before {
+  content: '\f086';
+}
+
+.fa-file-invoice-dollar:before {
+  content: '\f571';
+}
+
 .fa-trash:before {
   content: '\f2ed';
 }

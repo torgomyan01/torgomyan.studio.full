@@ -45,10 +45,6 @@ function escapeHtml(s: string | null | undefined): string {
     .replace(/>/g, '&gt;');
 }
 
-function boolLabel(value: boolean): string {
-  return value ? 'Այո' : 'Ոչ';
-}
-
 export async function notifyTelegramCalculatorSubmission(data: {
   name: string;
   email: string;
@@ -57,12 +53,7 @@ export async function notifyTelegramCalculatorSubmission(data: {
   pagesCount?: number | null;
   designStyle?: string | null;
   features?: string | null;
-  cmsRequired?: boolean;
-  ecommerce?: boolean;
   paymentSystems?: string | null;
-  mobileApp?: boolean;
-  seoOptimization?: boolean;
-  contentManagement?: boolean;
   estimatedPrice?: number | null;
 }): Promise<boolean> {
   const lines = [
@@ -74,12 +65,7 @@ export async function notifyTelegramCalculatorSubmission(data: {
     `Էջերի քանակ: ${data.pagesCount ?? '—'}`,
     `Դիզայն: ${escapeHtml(data.designStyle)}`,
     `Գնահատված գին: ${data.estimatedPrice != null ? `${data.estimatedPrice} ₽` : '—'}`,
-    `CMS: ${boolLabel(!!data.cmsRequired)}`,
-    `Ինտերնետ-խանութ: ${boolLabel(!!data.ecommerce)}`,
     `Վճարային համակարգեր: ${escapeHtml(data.paymentSystems)}`,
-    `Բջջային հավելված: ${boolLabel(!!data.mobileApp)}`,
-    `SEO: ${boolLabel(!!data.seoOptimization)}`,
-    `Կոնտենտի կառավարում: ${boolLabel(!!data.contentManagement)}`,
   ];
 
   if (data.features) {

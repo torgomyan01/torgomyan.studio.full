@@ -19,9 +19,10 @@ import {
   calculatePriceRange,
   calculateProjectPrice,
   getFormDefaultsForService,
+  getServiceFeatureOptions,
   getServicePricingConfig,
+  hasServiceFeatureOptions,
   needsPaymentSystems,
-  showProjectFeatureOptions,
   showWebsiteConfigurator,
 } from '@/utils/calculator-pricing';
 import './_calculator.scss';
@@ -32,12 +33,7 @@ interface CalculatorFormData {
   pagesCount: number;
   designStyle: string;
   features: string[];
-  cmsRequired: boolean;
-  ecommerce: boolean;
   paymentSystems: string;
-  mobileApp: boolean;
-  seoOptimization: boolean;
-  contentManagement: boolean;
   serviceAnswers: Record<string, string>;
 }
 
@@ -96,12 +92,7 @@ export default function Calculator() {
     pagesCount: 5,
     designStyle: '',
     features: [],
-    cmsRequired: false,
-    ecommerce: false,
     paymentSystems: '',
-    mobileApp: false,
-    seoOptimization: false,
-    contentManagement: false,
     serviceAnswers: {},
   });
 
@@ -288,12 +279,7 @@ export default function Calculator() {
       pagesCount: 5,
       designStyle: '',
       features: [],
-      cmsRequired: false,
-      ecommerce: false,
       paymentSystems: '',
-      mobileApp: false,
-      seoOptimization: false,
-      contentManagement: false,
       serviceAnswers: {},
     });
     setContactData({ name: '', email: '', phone: '' });
@@ -391,11 +377,15 @@ export default function Calculator() {
     serviceConfig !== null && showWebsiteConfigurator(serviceConfig);
 
   const showFeatureOptions =
-    serviceConfig !== null && showProjectFeatureOptions(serviceConfig);
+    formData.selectedService !== '' &&
+    hasServiceFeatureOptions(formData.selectedService);
+
+  const serviceFeatureOptions = formData.selectedService
+    ? getServiceFeatureOptions(formData.selectedService)
+    : [];
 
   const showPaymentFields =
-    serviceConfig !== null &&
-    needsPaymentSystems(serviceConfig, formData.ecommerce);
+    serviceConfig !== null && needsPaymentSystems(serviceConfig);
 
   const pagesMax = serviceConfig?.maxPages ?? 50;
 
@@ -723,99 +713,6 @@ export default function Calculator() {
                 </>
               )}
 
-              {showFeatureOptions && (
-              <div className="form-section">
-                <h3 className="calculator-section-title">
-                  {getTranslation(locale, 'calculator.form.additionalFeatures')}
-                </h3>
-                <div className="checkbox-group">
-                  <label className="checkbox-option">
-                    <input
-                      type="checkbox"
-                      checked={formData.cmsRequired}
-                      onChange={(e) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          cmsRequired: e.target.checked,
-                        }))
-                      }
-                    />
-                    <span>
-                      {getTranslation(locale, 'calculator.features.cms')}
-                    </span>
-                  </label>
-                  {!serviceConfig?.isEcommerce && (
-                  <label className="checkbox-option">
-                    <input
-                      type="checkbox"
-                      checked={formData.ecommerce}
-                      onChange={(e) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          ecommerce: e.target.checked,
-                          paymentSystems: e.target.checked
-                            ? prev.paymentSystems || 'single'
-                            : '',
-                        }))
-                      }
-                    />
-                    <span>
-                      {getTranslation(locale, 'calculator.features.ecommerce')}
-                    </span>
-                  </label>
-                  )}
-                  <label className="checkbox-option">
-                    <input
-                      type="checkbox"
-                      checked={formData.mobileApp}
-                      onChange={(e) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          mobileApp: e.target.checked,
-                        }))
-                      }
-                    />
-                    <span>
-                      {getTranslation(locale, 'calculator.features.mobileApp')}
-                    </span>
-                  </label>
-                  <label className="checkbox-option">
-                    <input
-                      type="checkbox"
-                      checked={formData.seoOptimization}
-                      onChange={(e) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          seoOptimization: e.target.checked,
-                        }))
-                      }
-                    />
-                    <span>
-                      {getTranslation(locale, 'calculator.features.seo')}
-                    </span>
-                  </label>
-                  <label className="checkbox-option">
-                    <input
-                      type="checkbox"
-                      checked={formData.contentManagement}
-                      onChange={(e) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          contentManagement: e.target.checked,
-                        }))
-                      }
-                    />
-                    <span>
-                      {getTranslation(
-                        locale,
-                        'calculator.features.contentManagement'
-                      )}
-                    </span>
-                  </label>
-                </div>
-              </div>
-              )}
-
               {showPaymentFields && (
                 <div className="form-section">
                   <h3 className="calculator-section-title">
@@ -858,28 +755,17 @@ export default function Calculator() {
                   {getTranslation(locale, 'calculator.form.additionalOptions')}
                 </h3>
                 <div className="checkbox-group">
-                  {[
-                    { key: 'multilingual', original: 'Многоязычность' },
-                    {
-                      key: 'socialIntegration',
-                      original: 'Интеграция с соцсетями',
-                    },
-                    { key: 'onlineChat', original: 'Онлайн-чат' },
-                    { key: 'contactForm', original: 'Форма обратной связи' },
-                    { key: 'imageGallery', original: 'Галерея изображений' },
-                    { key: 'videoIntegration', original: 'Видео интеграция' },
-                    { key: 'newsFeed', original: 'Новостная лента' },
-                  ].map((feature) => (
-                    <label key={feature.original} className="checkbox-option">
+                  {serviceFeatureOptions.map((option) => (
+                    <label key={option.id} className="checkbox-option">
                       <input
                         type="checkbox"
-                        checked={formData.features.includes(feature.original)}
-                        onChange={() => toggleFeature(feature.original)}
+                        checked={formData.features.includes(option.id)}
+                        onChange={() => toggleFeature(option.id)}
                       />
                       <span>
                         {getTranslation(
                           locale,
-                          `calculator.features.${feature.key}`
+                          `calculator.features.${option.translationKey}`
                         )}
                       </span>
                     </label>

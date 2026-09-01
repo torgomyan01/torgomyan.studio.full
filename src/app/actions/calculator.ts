@@ -7,12 +7,7 @@ export async function saveCalculatorSubmissionAction(data: {
   pagesCount: number;
   designStyle: string;
   features: string[];
-  cmsRequired: boolean;
-  ecommerce: boolean;
   paymentSystems: string;
-  mobileApp: boolean;
-  seoOptimization: boolean;
-  contentManagement: boolean;
   estimatedPrice: number;
   name: string;
   email: string;
@@ -45,12 +40,7 @@ export async function saveCalculatorSubmissionAction(data: {
       designStyle: data.designStyle || null,
       features:
         data.features.length > 0 ? data.features.join(', ') : null,
-      cmsRequired: data.cmsRequired,
-      ecommerce: data.ecommerce,
       paymentSystems: data.paymentSystems || null,
-      mobileApp: data.mobileApp,
-      seoOptimization: data.seoOptimization,
-      contentManagement: data.contentManagement,
       estimatedPrice: data.estimatedPrice || null,
     });
 

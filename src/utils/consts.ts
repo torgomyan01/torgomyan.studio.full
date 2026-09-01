@@ -18,24 +18,6 @@ export const SITE_URL = {
   CONTACT: '/contact',
 };
 
-export const caseStudies = [
-  {
-    slug: 'nampoputi',
-    key: 'nampoputi',
-    imgUrl: 'images/nampoputi-rent.jpg',
-  },
-  {
-    slug: 'euroasfalt',
-    key: 'euroasfalt',
-    imgUrl: 'images/euro-asfalt.png',
-  },
-  {
-    slug: 'kettik-travel',
-    key: 'kettikTravel',
-    imgUrl: 'images/kettik-travel.png',
-  },
-] as const;
-
 export const fileHost = 'https://2410924f2b33.hosting.myjino.ru/';
 export const fileHostUpload =
   'https://2410924f2b33.hosting.myjino.ru/save-images.php';

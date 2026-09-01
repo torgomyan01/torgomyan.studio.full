@@ -9,12 +9,7 @@ export interface CalculatorPricingInput {
   pagesCount: number;
   designStyle: string;
   features: string[];
-  cmsRequired: boolean;
-  ecommerce: boolean;
   paymentSystems: string;
-  mobileApp: boolean;
-  seoOptimization: boolean;
-  contentManagement: boolean;
   serviceAnswers: Record<string, string>;
 }
 
@@ -38,7 +33,208 @@ const FEATURE_COSTS: Record<string, number> = {
   'Видео интеграция': 2500,
   Блог: 3000,
   'Новостная лента': 3000,
+  'A/B тестирование': 3500,
+  'Интеграция с рекламой': 3000,
+  'Карта и контакты': 1500,
+  'CRM интеграция': 6000,
+  'Фильтры товаров': 3500,
+  'Скидки и промокоды': 4000,
+  'Интеграция доставки': 5000,
+  'Отзывы и рейтинги': 2500,
+  'Поиск по каталогу': 2000,
+  'Личный кабинет покупателя': 3000,
+  'Интеграция внешних API': 6000,
+  'Роли пользователей': 4000,
+  'Уведомления (email/push)': 3500,
+  'Загрузка файлов': 2500,
+  'Аналитика и дашборды': 5000,
+  'Интерактивный прототип': 5000,
+  'Дизайн-система': 6000,
+  'UX-исследование': 4000,
+  'Мобильная версия': 3500,
+  'Презентация для инвесторов': 2500,
+  'Юзабилити-тестирование': 3500,
+  'Обновления безопасности': 2000,
+  'Обновление контента': 1500,
+  'Резервное копирование': 1500,
+  'Мониторинг производительности': 2500,
+  'Исправление ошибок': 2000,
+  Консультации: 1500,
+  'SSL-сертификат': 500,
+  'Ежедневное резервное копирование': 1000,
+  'Почта на домене': 800,
+  'CDN и ускорение': 2000,
+  'Регистрация домена': 500,
+  'Мониторинг сервера': 1200,
+  'ЮKassa / местные системы': 3000,
+  'Stripe / международные': 4000,
+  'Рекуррентные платежи': 5000,
+  'Оплата по счёту': 2000,
+  Мультивалютность: 3500,
+  'Возвраты и refunds': 2500,
+  'Email-автоматизация': 3500,
+  'Генерация отчётов': 3000,
+  'API интеграция': 5000,
+  'Автоматизация workflow': 4500,
+  'Чат-бот интеграция': 4000,
 };
+
+export interface ServiceFeatureOption {
+  id: string;
+  translationKey: string;
+}
+
+const feature = (id: string, translationKey: string): ServiceFeatureOption => ({
+  id,
+  translationKey,
+});
+
+const SERVICE_FEATURE_GROUPS: Array<{
+  match: (service: string) => boolean;
+  options: ServiceFeatureOption[];
+}> = [
+  {
+    match: (s) => s.includes('Интернет-магазин'),
+    options: [
+      feature('Фильтры товаров', 'productFilters'),
+      feature('Скидки и промокоды', 'discountsPromocodes'),
+      feature('Интеграция доставки', 'deliveryIntegration'),
+      feature('Отзывы и рейтинги', 'reviewsRatings'),
+      feature('Поиск по каталогу', 'catalogSearch'),
+      feature('Личный кабинет покупателя', 'userAccount'),
+      feature('Многоязычность', 'multilingual'),
+      feature('Интеграция с соцсетями', 'socialIntegration'),
+    ],
+  },
+  {
+    match: (s) => s.includes('Веб-приложения'),
+    options: [
+      feature('Интеграция внешних API', 'externalApiIntegration'),
+      feature('Роли пользователей', 'userRoles'),
+      feature('Уведомления (email/push)', 'notifications'),
+      feature('Загрузка файлов', 'fileUpload'),
+      feature('Аналитика и дашборды', 'analyticsDashboard'),
+      feature('Многоязычность', 'multilingual'),
+    ],
+  },
+  {
+    match: (s) => s.includes('Корпоративный сайт'),
+    options: [
+      feature('Многоязычность', 'multilingual'),
+      feature('CRM интеграция', 'crmIntegration'),
+      feature('Форма обратной связи', 'contactForm'),
+      feature('Блог', 'blog'),
+      feature('Новостная лента', 'newsFeed'),
+      feature('Галерея изображений', 'imageGallery'),
+      feature('Онлайн-чат', 'onlineChat'),
+      feature('Интеграция с соцсетями', 'socialIntegration'),
+      feature('Видео интеграция', 'videoIntegration'),
+    ],
+  },
+  {
+    match: (s) => s.includes('Сайт-визитка'),
+    options: [
+      feature('Форма обратной связи', 'contactForm'),
+      feature('Галерея изображений', 'imageGallery'),
+      feature('Карта и контакты', 'mapIntegration'),
+      feature('Интеграция с соцсетями', 'socialIntegration'),
+      feature('Многоязычность', 'multilingual'),
+      feature('Онлайн-чат', 'onlineChat'),
+    ],
+  },
+  {
+    match: (s) => s.includes('Лендинг'),
+    options: [
+      feature('Форма обратной связи', 'contactForm'),
+      feature('Видео интеграция', 'videoIntegration'),
+      feature('Онлайн-чат', 'onlineChat'),
+      feature('Интеграция с соцсетями', 'socialIntegration'),
+      feature('A/B тестирование', 'abTesting'),
+      feature('Интеграция с рекламой', 'adIntegration'),
+      feature('Многоязычность', 'multilingual'),
+    ],
+  },
+  {
+    match: (s) => s.includes('Разработка Сайтов'),
+    options: [
+      feature('Многоязычность', 'multilingual'),
+      feature('Интеграция с соцсетями', 'socialIntegration'),
+      feature('Онлайн-чат', 'onlineChat'),
+      feature('Форма обратной связи', 'contactForm'),
+      feature('Галерея изображений', 'imageGallery'),
+      feature('Видео интеграция', 'videoIntegration'),
+      feature('Блог', 'blog'),
+      feature('Новостная лента', 'newsFeed'),
+    ],
+  },
+  {
+    match: (s) => s.includes('UI/UX'),
+    options: [
+      feature('Интерактивный прототип', 'prototype'),
+      feature('Дизайн-система', 'designSystem'),
+      feature('UX-исследование', 'userResearch'),
+      feature('Мобильная версия', 'mobileDesign'),
+      feature('Презентация для инвесторов', 'presentation'),
+      feature('Юзабилити-тестирование', 'usabilityTesting'),
+    ],
+  },
+  {
+    match: (s) => s.includes('Техническая поддержка'),
+    options: [
+      feature('Обновления безопасности', 'securityUpdates'),
+      feature('Обновление контента', 'contentUpdates'),
+      feature('Резервное копирование', 'backup'),
+      feature('Мониторинг производительности', 'performanceMonitoring'),
+      feature('Исправление ошибок', 'bugFixes'),
+      feature('Консультации', 'consultation'),
+    ],
+  },
+  {
+    match: (s) => s.includes('Хостинг') || s.includes('домен'),
+    options: [
+      feature('SSL-сертификат', 'sslCertificate'),
+      feature('Ежедневное резервное копирование', 'dailyBackup'),
+      feature('Почта на домене', 'emailHosting'),
+      feature('CDN и ускорение', 'cdnSetup'),
+      feature('Регистрация домена', 'domainRegistration'),
+      feature('Мониторинг сервера', 'serverMonitoring'),
+    ],
+  },
+  {
+    match: (s) => s.includes('Интеграция платежных'),
+    options: [
+      feature('ЮKassa / местные системы', 'yookassa'),
+      feature('Stripe / международные', 'stripe'),
+      feature('Рекуррентные платежи', 'recurringPayments'),
+      feature('Оплата по счёту', 'invoicePayments'),
+      feature('Мультивалютность', 'multiCurrency'),
+      feature('Возвраты и refunds', 'refundHandling'),
+    ],
+  },
+  {
+    match: (s) => s.includes('Автоматизация'),
+    options: [
+      feature('CRM интеграция', 'crmIntegration'),
+      feature('Email-автоматизация', 'emailAutomation'),
+      feature('Генерация отчётов', 'reportGeneration'),
+      feature('API интеграция', 'apiIntegration'),
+      feature('Автоматизация workflow', 'workflowAutomation'),
+      feature('Чат-бот интеграция', 'chatbotIntegration'),
+    ],
+  },
+];
+
+export function getServiceFeatureOptions(
+  service: string
+): ServiceFeatureOption[] {
+  if (!service) return [];
+  const group = SERVICE_FEATURE_GROUPS.find((g) => g.match(service));
+  return group?.options ?? [];
+}
+
+function getFeatureCost(featureId: string): number {
+  return FEATURE_COSTS[featureId] ?? 2000;
+}
 
 function roundPrice(price: number): number {
   if (price <= 0) return 0;
@@ -238,19 +434,16 @@ function countAnsweredQuestions(answers: Record<string, string>): number {
 }
 
 /** Whether payment systems block applies in UI and pricing */
-export function needsPaymentSystems(
-  config: ServicePricingConfig,
-  ecommerceChecked: boolean
-): boolean {
-  return config.isEcommerce || ecommerceChecked;
+export function needsPaymentSystems(config: ServicePricingConfig): boolean {
+  return config.isEcommerce;
 }
 
 export function showWebsiteConfigurator(config: ServicePricingConfig): boolean {
   return config.isWebsite;
 }
 
-export function showProjectFeatureOptions(config: ServicePricingConfig): boolean {
-  return config.isWebsite || config.isApp;
+export function hasServiceFeatureOptions(service: string): boolean {
+  return getServiceFeatureOptions(service).length > 0;
 }
 
 export function calculateProjectPrice(input: CalculatorPricingInput): number {
@@ -276,39 +469,22 @@ export function calculateProjectPrice(input: CalculatorPricingInput): number {
   // Complexity applies to base scope (before flat add-ons)
   price *= config.complexityMultiplier;
 
-  // Flat add-ons — website & web app only
-  if (config.isWebsite || config.isApp) {
-    if (input.cmsRequired) {
-      price += 4000;
-    }
-
-    if (input.ecommerce && !config.isEcommerce) {
-      price += 12000;
-    }
-
-    const includePayments = needsPaymentSystems(config, input.ecommerce);
+  if (config.isEcommerce) {
     const paymentChoice =
       input.paymentSystems || (config.isEcommerce ? 'single' : '');
-    if (includePayments && paymentChoice && paymentChoice !== 'none') {
+    if (paymentChoice && paymentChoice !== 'none') {
       price += paymentChoice === 'multiple' ? 8000 : 5000;
     }
-
-    if (input.mobileApp) {
-      price += config.isApp ? 13000 : 23000;
-    }
-
-    if (input.seoOptimization) {
-      price += 5000;
-    }
-
-    if (input.contentManagement) {
-      price += 3000;
-    }
-
-    input.features.forEach((feature) => {
-      price += FEATURE_COSTS[feature] ?? 2000;
-    });
   }
+
+  const allowedFeatures = new Set(
+    getServiceFeatureOptions(service).map((option) => option.id)
+  );
+  input.features.forEach((feature) => {
+    if (allowedFeatures.has(feature)) {
+      price += getFeatureCost(feature);
+    }
+  });
 
   const answeredCount = countAnsweredQuestions(input.serviceAnswers);
   if (answeredCount > 0) {
@@ -342,10 +518,6 @@ export function getFormDefaultsForService(
     websiteType,
     serviceAnswers: {},
     features: [],
-    cmsRequired: false,
-    mobileApp: false,
-    seoOptimization: false,
-    contentManagement: false,
   };
 
   if (!config.isWebsite && !config.isApp) {
@@ -353,7 +525,6 @@ export function getFormDefaultsForService(
       ...base,
       pagesCount: 1,
       designStyle: '',
-      ecommerce: false,
       paymentSystems: '',
     };
   }
@@ -366,7 +537,6 @@ export function getFormDefaultsForService(
     ...base,
     pagesCount: Math.max(1, pagesCount),
     designStyle: config.isWebsite ? prev.designStyle : '',
-    ecommerce: config.isEcommerce,
     paymentSystems: config.isEcommerce ? prev.paymentSystems || 'single' : '',
   };
 }

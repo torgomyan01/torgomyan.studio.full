@@ -42,7 +42,7 @@
   },
   "home": {
     "title": "We create websites for your business",
-    "subtitle": "By working with us, you will get business growth up to <strong>30%</strong>",
+    "subtitle": "Websites that work for your business — clear, fast, and without empty promises",
     "scheduleCall": "Schedule Call",
     "getConsultation": "Get Consultation"
   },
@@ -122,7 +122,7 @@
   },
   "ourWorks": {
     "title": "Our Works",
-    "subtitle": "Full-service website that solves your tasks",
+    "subtitle": "Real projects we've built for our clients",
     "viewAll": "View All",
     "workExample": "Work Example",
     "pageTitle": "Portfolio - Examples of Developed Websites | Our Works | Torgomyan.Studio",
@@ -199,7 +199,7 @@
   },
   "contact": {
     "title": "Contact Us",
-    "subtitle": "Let's discuss your project? I am a website developer",
+    "subtitle": "Let's discuss your project — we'll reply within 2 hours",
     "scheduleCall": "Schedule Call",
     "call": "Call",
     "address": "Armenia, Martuni, Myasnikyan 62",
@@ -212,10 +212,10 @@
     "responseHint": "We respond within 2 hours",
     "mapLabel": "Find us on the map",
     "pageTitle": "Contacts | Contact Web Studio | Torgomyan.Studio",
-    "pageDescription": "Contact us to discuss your project. Free consultation. Phone, WhatsApp, Telegram, Email. We will respond within an hour. Order website development.",
+    "pageDescription": "Contact us to discuss your project. Free consultation. Phone, WhatsApp, Telegram, Email. We reply within 2 hours.",
     "pageKeywords": "web studio contacts, contact web studio, website developer contacts, contact us, order website, website development consultation, Torgomyan Studio contacts",
     "headerTitle": "Contact Us",
-    "headerDescription": "We are always ready to answer your questions and discuss your project. Contact us in a convenient way: by phone, via WhatsApp, Telegram or fill out the contact form. Our team works to help you realize your ideas and achieve your business goals.",
+    "headerDescription": "We're here to answer questions and talk through your project. Message us on Telegram or WhatsApp, call, or fill out the form — we usually reply within 2 hours.",
     "structuredDataName": "Contact - Torgomyan.Studio Contacts",
     "structuredDataDescription": "Contact page of Torgomyan.Studio web studio"
   },
@@ -248,7 +248,7 @@
   },
   "video": {
     "title": "What to Expect from Us",
-    "subtitle": "The result you will see after we create the website",
+    "subtitle": "The result you'll see when working with us",
     "aboutUs": "About Us"
   },
   "popups": {
@@ -276,40 +276,6 @@
     "step4": {
       "title": "Launch",
       "text": "We go live and provide ongoing technical support"
-    }
-  },
-  "caseStudies": {
-    "badge": "Results",
-    "title": "What we've built",
-    "subtitle": "Real projects with problem, solution, and outcome",
-    "problemLabel": "Problem",
-    "solutionLabel": "Solution",
-    "viewProject": "View project",
-    "items": {
-      "nampoputi": {
-        "title": "NAM PO PUTI",
-        "metric": "+45%",
-        "metricLabel": "more inquiries",
-        "problem": "The old site didn't support online booking or fast inquiries",
-        "solution": "New site with catalog, filters, SEO, and fast loading",
-        "result": "Customers started contacting and booking much faster"
-      },
-      "euroasfalt": {
-        "title": "Euro Asfalt",
-        "metric": "3x",
-        "metricLabel": "more leads",
-        "problem": "The site didn't communicate the full value of services",
-        "solution": "Corporate site + online calculator and SEO structure",
-        "result": "Lead volume tripled in the first 3 months"
-      },
-      "kettikTravel": {
-        "title": "Kettik Travel",
-        "metric": "+60%",
-        "metricLabel": "more bookings",
-        "problem": "Online booking was difficult and conversion was low",
-        "solution": "Modern UI, simple booking flow, and mobile optimization",
-        "result": "More bookings and fewer support requests"
-      }
     }
   },
   "footer": {
@@ -555,7 +521,51 @@
       "imageGallery": "Image gallery",
       "videoIntegration": "Video integration",
       "blog": "Blog",
-      "newsFeed": "News feed"
+      "newsFeed": "News feed",
+      "abTesting": "A/B testing",
+      "adIntegration": "Ad platform integration",
+      "mapIntegration": "Map and contacts integration",
+      "crmIntegration": "CRM integration",
+      "productFilters": "Product filters",
+      "discountsPromocodes": "Discounts and promo codes",
+      "deliveryIntegration": "Delivery integration",
+      "reviewsRatings": "Reviews and ratings",
+      "catalogSearch": "Catalog search",
+      "userAccount": "Customer account",
+      "externalApiIntegration": "External API integration",
+      "userRoles": "User roles",
+      "notifications": "Notifications (email/push)",
+      "fileUpload": "File uploads",
+      "analyticsDashboard": "Analytics and dashboards",
+      "prototype": "Interactive prototype",
+      "designSystem": "Design system",
+      "userResearch": "UX research",
+      "mobileDesign": "Mobile version",
+      "presentation": "Investor presentation",
+      "usabilityTesting": "Usability testing",
+      "securityUpdates": "Security updates",
+      "contentUpdates": "Content updates",
+      "backup": "Backup",
+      "performanceMonitoring": "Performance monitoring",
+      "bugFixes": "Bug fixes",
+      "consultation": "Consultation",
+      "sslCertificate": "SSL certificate",
+      "dailyBackup": "Daily backup",
+      "emailHosting": "Email on domain",
+      "cdnSetup": "CDN and acceleration",
+      "domainRegistration": "Domain registration",
+      "serverMonitoring": "Server monitoring",
+      "yookassa": "YooKassa / local systems",
+      "stripe": "Stripe / international",
+      "recurringPayments": "Recurring payments",
+      "invoicePayments": "Invoice payments",
+      "multiCurrency": "Multi-currency",
+      "refundHandling": "Refunds",
+      "emailAutomation": "Email automation",
+      "reportGeneration": "Report generation",
+      "apiIntegration": "API integration",
+      "workflowAutomation": "Workflow automation",
+      "chatbotIntegration": "Chatbot integration"
     },
     "paymentSystems": {
       "none": "Not required",
