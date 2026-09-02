@@ -65,7 +65,7 @@ function ContactUs() {
           <PrimaryCtaLink location="contact_section" fullWidth />
           <a
             href="tel:+37477769668"
-            className="contact-us__action contact-us__action--ghost"
+            className="studio-btn studio-btn--ghost studio-btn--lg studio-btn--full contact-us__phone-btn"
           >
             <span className="contact-us__action-icon">
               <i className="fas fa-phone" aria-hidden="true" />

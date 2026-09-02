@@ -1,12 +1,43 @@
+import { Metadata } from 'next';
 import MainTemplate from '@/components/common/main-template/main-template';
 import './_privacy-policy.scss';
+import JsonLd from '@/components/common/structured-data/json-ld';
+import { getPagePathContext } from '@/i18n/metadata-utils';
+import { getLocaleFromHeaders } from '@/i18n/server-utils';
+import { getTranslations } from '@/i18n';
+import { buildLocalizedUrl, buildPageMetadata, buildWebPageSchema } from '@/utils/seo';
 
-export default function PrivacyPolicyPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const { locale, pathWithoutLocale } = await getPagePathContext('/privacy-policy');
+  const t = getTranslations(locale);
+
+  return buildPageMetadata({
+    locale,
+    pathWithoutLocale,
+    title: t.privacyPolicy.pageTitle,
+    description: t.privacyPolicy.pageDescription,
+    keywords: t.privacyPolicy.pageKeywords,
+    noIndex: true,
+  });
+}
+
+export default async function PrivacyPolicyPage() {
+  const locale = await getLocaleFromHeaders();
+  const t = getTranslations(locale);
+
+  const structuredData = buildWebPageSchema({
+    name: t.privacyPolicy.title,
+    description: t.privacyPolicy.pageDescription,
+    url: buildLocalizedUrl('/privacy-policy', locale),
+    locale,
+  });
+
   return (
     <MainTemplate>
+      <JsonLd data={structuredData} />
       <div className="privacy-policy-page">
         <div className="container">
-          <h1 className="main-title">Политика конфендициальности</h1>
+          <h1 className="main-title">{t.privacyPolicy.title}</h1>
 
           <div className="privacy-content">
             <section className="privacy-section">

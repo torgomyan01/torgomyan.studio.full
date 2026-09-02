@@ -185,6 +185,14 @@
   content: '\f274';
 }
 
+.fa-clock:before {
+  content: '\f017';
+}
+
+.fa-language:before {
+  content: '\f1ab';
+}
+
 .fa-mobile-alt:before {
   content: '\f3cd';
 }
@@ -215,6 +223,10 @@
 
 .fa-palette:before {
   content: '\f53f';
+}
+
+.fa-check:before {
+  content: '\f00c';
 }
 
 .fa-check-circle:before {

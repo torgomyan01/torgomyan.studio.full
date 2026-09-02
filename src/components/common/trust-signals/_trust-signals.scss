@@ -1,0 +1,67 @@
+.trust-signals {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+
+  @media (max-width: 700px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  &__item {
+    text-align: center;
+    padding: 28px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+      border-color: rgba(196, 68, 255, 0.35);
+      box-shadow: 0 12px 32px rgba(196, 68, 255, 0.12);
+
+      .trust-signals__icon {
+        background: linear-gradient(135deg, #c444ff, #562999);
+        border-color: transparent;
+
+        i {
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 14px;
+    border-radius: 14px;
+    background: rgba(196, 68, 255, 0.12);
+    border: 1px solid rgba(196, 68, 255, 0.25);
+    transition: all 0.25s ease;
+
+    i {
+      font-size: 20px;
+      color: #c444ff;
+      transition: color 0.25s ease;
+    }
+  }
+
+  &__value {
+    font-size: 32px;
+    font-weight: 800;
+    color: #c444ff;
+    margin-bottom: 6px;
+    line-height: 1.1;
+  }
+
+  &__label {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+}

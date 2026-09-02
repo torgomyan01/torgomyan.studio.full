@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import './_breadcrumbs.scss';
 import { Works } from '@/utils/consts';
+import { buildBreadcrumbSchema, SITE_BASE_URL } from '@/utils/seo';
 import { useLocale } from '@/i18n/use-locale';
 import { getTranslation } from '@/i18n';
 import { addLocaleToPath, getPathnameWithoutLocale } from '@/i18n/utils';
@@ -86,16 +87,12 @@ export default function Breadcrumbs() {
 
   const breadcrumbs = generateBreadcrumbs();
 
-  const structuredData = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: breadcrumbs.map((item, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
+  const structuredData = buildBreadcrumbSchema(
+    breadcrumbs.map((item) => ({
       name: item.label,
-      item: `https://torgomyan-studio.am${item.href}`,
-    })),
-  };
+      url: `${SITE_BASE_URL}${item.href}`,
+    }))
+  );
 
   return (
     <>

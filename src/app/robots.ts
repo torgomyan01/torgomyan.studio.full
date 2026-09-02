@@ -1,13 +1,11 @@
-import { headers } from "next/headers";
+import { SITE_BASE_URL } from '@/utils/seo';
 
 export default async function robots() {
-  const headersList = await headers();
-  const host = await headersList.get("host");
-  const proto = await headersList.get("x-forwarded-proto");
   return {
     rules: {
-      userAgent: "*",
+      userAgent: '*',
+      allow: '/',
     },
-    sitemap: `${proto}://${host}/sitemap.xml`,
+    sitemap: `${SITE_BASE_URL}/sitemap.xml`,
   };
 }

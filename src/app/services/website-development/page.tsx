@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import { headers } from 'next/headers';
 import MainTemplate from '@/components/common/main-template/main-template';
 import ServicesBlock from '@/components/common/services-block/services-block';
 import ServicesHeaderWithContent from '@/components/common/services-header/services-header-with-content';
@@ -7,46 +6,26 @@ import OurWorks from '@/components/common/our-works/our-works';
 import ContactUs from '@/components/common/contact-us/contact-us';
 import DiscussBlock from '@/components/layout/services/discuss-block/discuss-block';
 import SEOMarketingBlocks from '@/components/common/seo-marketing-blocks/seo-marketing-blocks';
+import { getPagePathContext } from '@/i18n/metadata-utils';
 import { getLocaleFromHeaders } from '@/i18n/server-utils';
 import { getTranslations, getTranslation } from '@/i18n';
-import { getPathnameWithoutLocale } from '@/i18n/utils';
-import { locales, defaultLocale } from '@/i18n/config';
+import { buildPageMetadata } from '@/utils/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const headersList = await headers();
-  const pathname =
-    headersList.get('x-pathname') || '/services/website-development';
-  const locale = await getLocaleFromHeaders();
+  const { locale, pathWithoutLocale } = await getPagePathContext(
+    '/services/website-development'
+  );
   const t = getTranslations(locale);
-  const pathWithoutLocale = getPathnameWithoutLocale(pathname);
 
-  const baseUrl = 'https://torgomyan-studio.am';
-
-  // Generate hreflang alternates
-  const alternates: Record<string, string> = {};
-  locales.forEach((loc) => {
-    const localePath =
-      loc === defaultLocale ? pathWithoutLocale : `/${loc}${pathWithoutLocale}`;
-    alternates[loc] = `${baseUrl}${localePath === '/' ? '' : localePath}`;
-  });
-
-  return {
+  return buildPageMetadata({
+    locale,
+    pathWithoutLocale,
     title: t.websiteDevelopment.pageTitle,
     description: t.websiteDevelopment.pageDescription,
     keywords: t.websiteDevelopment.pageKeywords,
-    alternates: {
-      canonical: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
-      languages: alternates,
-    },
-    openGraph: {
-      title: t.websiteDevelopment.openGraphTitle,
-      description: t.websiteDevelopment.openGraphDescription,
-      type: 'website',
-      locale: locale === 'hy' ? 'hy_AM' : locale === 'ru' ? 'ru_RU' : 'en_US',
-      siteName: 'Torgomyan.Studio',
-      url: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
-    },
-  };
+    openGraphTitle: t.websiteDevelopment.openGraphTitle,
+    openGraphDescription: t.websiteDevelopment.openGraphDescription,
+  });
 }
 
 export default async function WebsiteDevelopmentPage() {
@@ -62,13 +41,10 @@ export default async function WebsiteDevelopmentPage() {
 
       <SEOMarketingBlocks
         stats={[
-          {
-            number: '100+',
-            label: t.websiteDevelopment.stats.successfulProjects,
-          },
-          { number: '50+', label: t.websiteDevelopment.stats.satisfiedClients },
-          { number: '5+', label: t.websiteDevelopment.stats.yearsExperience },
-          { number: '30%', label: t.websiteDevelopment.stats.businessGrowth },
+          { number: '2-8', label: t.websiteDevelopment.stats.weeksToLaunch },
+          { number: 'Next.js', label: t.websiteDevelopment.stats.modernStack },
+          { number: '3', label: t.websiteDevelopment.stats.languages },
+          { number: '2h', label: t.websiteDevelopment.stats.responseTime },
         ]}
         benefits={[
           {

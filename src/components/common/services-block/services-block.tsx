@@ -6,54 +6,75 @@ import { services } from '@/utils/consts';
 import { useLocale } from '@/i18n/use-locale';
 import { getTranslation } from '@/i18n';
 import { addLocaleToPath } from '@/i18n/utils';
+import ServiceCardVisual from './service-card-visual';
 
 interface IThisProps {
   but?: string;
 }
 
+const serviceTranslationMap: Record<
+  string,
+  { title: string; description: string }
+> = {
+  'Разработка Сайтов': {
+    title: 'services.websiteDevelopment',
+    description: 'services.cardDescriptions.websiteDevelopment',
+  },
+  Лендинг: {
+    title: 'services.landingPage',
+    description: 'services.cardDescriptions.landingPage',
+  },
+  'Сайт-визитка': {
+    title: 'services.businessCardWebsite',
+    description: 'services.cardDescriptions.businessCardWebsite',
+  },
+  'Корпоративный сайт': {
+    title: 'services.corporateWebsite',
+    description: 'services.cardDescriptions.corporateWebsite',
+  },
+  'Интернет-магазин': {
+    title: 'services.onlineShop',
+    description: 'services.cardDescriptions.onlineShop',
+  },
+  'Веб-приложения': {
+    title: 'services.webApplications',
+    description: 'services.cardDescriptions.webApplications',
+  },
+  'Дизайн интерфейсов (UI/UX)': {
+    title: 'services.uiUxDesign',
+    description: 'services.cardDescriptions.uiUxDesign',
+  },
+  'Техническая поддержка': {
+    title: 'services.technicalSupport',
+    description: 'services.cardDescriptions.technicalSupport',
+  },
+  'Хостинг и домены': {
+    title: 'services.hostingDomains',
+    description: 'services.cardDescriptions.hostingDomains',
+  },
+  'Интеграция платежных систем': {
+    title: 'services.paymentIntegration',
+    description: 'services.cardDescriptions.paymentIntegration',
+  },
+  'Автоматизация бизнес-процессов': {
+    title: 'services.businessAutomation',
+    description: 'services.cardDescriptions.businessAutomation',
+  },
+};
+
 function ServicesBlock({ but = '' }: IThisProps) {
   const locale = useLocale();
 
-  // Map service titles to translation keys
-  const serviceTranslationMap: Record<string, string> = {
-    'Разработка Сайтов': 'services.websiteDevelopment',
-    Лендинг: 'services.landingPage',
-    'Сайт-визитка': 'services.businessCardWebsite',
-    'Корпоративный сайт': 'services.corporateWebsite',
-    'Интернет-магазин': 'services.onlineShop',
-    'Веб-приложения': 'services.webApplications',
-    'Дизайн интерфейсов (UI/UX)': 'services.uiUxDesign',
-    'Техническая поддержка': 'services.technicalSupport',
-    'Хостинг и домены': 'services.hostingDomains',
-    'Интеграция платежных систем': 'services.paymentIntegration',
-    'Автоматизация бизнес-процессов': 'services.businessAutomation',
-  };
-
-  const getServiceTitle = (originalTitle: string): string => {
-    const translationKey = serviceTranslationMap[originalTitle];
-    if (translationKey) {
-      return getTranslation(locale, translationKey);
+  const getServiceContent = (originalTitle: string) => {
+    const keys = serviceTranslationMap[originalTitle];
+    if (!keys) {
+      return { title: originalTitle, description: '' };
     }
-    return originalTitle;
-  };
 
-  // Map services to FontAwesome icons
-  const serviceIconMap: Record<string, string> = {
-    'Разработка Сайтов': 'fa-code',
-    Лендинг: 'fa-bolt',
-    'Сайт-визитка': 'fa-briefcase',
-    'Корпоративный сайт': 'fa-building',
-    'Интернет-магазин': 'fa-shopping-cart',
-    'Веб-приложения': 'fa-laptop-code',
-    'Дизайн интерфейсов (UI/UX)': 'fa-palette',
-    'Техническая поддержка': 'fa-headset',
-    'Хостинг и домены': 'fa-globe',
-    'Интеграция платежных систем': 'fa-credit-card',
-    'Автоматизация бизнес-процессов': 'fa-cogs',
-  };
-
-  const getServiceIcon = (originalTitle: string): string => {
-    return serviceIconMap[originalTitle] || 'fa-globe';
+    return {
+      title: getTranslation(locale, keys.title),
+      description: getTranslation(locale, keys.description),
+    };
   };
 
   return (
@@ -70,7 +91,7 @@ function ServicesBlock({ but = '' }: IThisProps) {
             (service) =>
               service.title !== but && (
                 <motion.a
-                  whileHover={{ scale: 1.05, y: -5 }}
+                  whileHover={{ y: -6 }}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
@@ -82,14 +103,19 @@ function ServicesBlock({ but = '' }: IThisProps) {
                   href={addLocaleToPath(service.href, locale)}
                   className="services-card"
                 >
-                  <div className="services-card-icon">
-                    <i className={`fas ${getServiceIcon(service.title)}`}></i>
+                  <div className="services-card-visual">
+                    <ServiceCardVisual serviceHref={service.href} />
                   </div>
-                  <h3 className="services-card-title">
-                    {getServiceTitle(service.title)}
-                  </h3>
-                  <div className="services-card-arrow">
-                    <i className="fas fa-arrow-right"></i>
+                  <div className="services-card-body">
+                    <h3 className="services-card-title">
+                      {getServiceContent(service.title).title}
+                    </h3>
+                    <p className="services-card-description">
+                      {getServiceContent(service.title).description}
+                    </p>
+                    <span className="services-card-arrow" aria-hidden="true">
+                      <i className="fas fa-arrow-right" />
+                    </span>
                   </div>
                 </motion.a>
               )

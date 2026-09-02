@@ -1,10 +1,18 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { Swiper } from 'swiper';
 import { Navigation, Autoplay } from 'swiper/modules';
 import './_info-block.scss';
 import AiBlock from '@/components/common/ai-block/ai-block';
+import JsonLd from '@/components/common/structured-data/json-ld';
+import { useLocale } from '@/i18n/use-locale';
+import {
+  buildLocalizedUrl,
+  buildServiceSchema,
+} from '@/utils/seo';
+import { getPathnameWithoutLocale } from '@/i18n/utils';
 
 interface ServicesHeaderWithContentProps {
   title: string;
@@ -19,6 +27,9 @@ function ServicesHeaderWithContent({
 }: ServicesHeaderWithContentProps) {
   const [isLoading, setIsLoading] = useState(true);
   const swiperRef = useRef<HTMLDivElement>(null);
+  const locale = useLocale();
+  const pathname = usePathname();
+  const pathWithoutLocale = getPathnameWithoutLocale(pathname);
 
   useEffect(() => {
     if (!swiperRef.current) {
@@ -56,43 +67,22 @@ function ServicesHeaderWithContent({
     };
   }, []);
 
-  const defaultStructuredData = {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
+  const defaultStructuredData = buildServiceSchema({
     name: title,
-    description: description,
-    provider: {
-      '@type': 'Organization',
-      name: 'Torgomyan.Studio',
-    },
-    areaServed: {
-      '@type': 'Country',
-      name: 'Armenia',
-    },
-  };
+    description,
+    url: buildLocalizedUrl(pathWithoutLocale, locale),
+    locale,
+  });
 
   const finalStructuredData = structuredData || defaultStructuredData;
 
   return (
-    <header
-      className="info-block"
-      itemScope
-      itemType="https://schema.org/Service"
-    >
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(finalStructuredData),
-        }}
-      />
+    <header className="info-block">
+      <JsonLd data={finalStructuredData as Record<string, unknown>} />
       <div className="container">
         <div className="info">
-          <h1 className="main-title" itemProp="name">
-            {title}
-          </h1>
-          <h2 className="main-subtitle" itemProp="description">
-            {description}
-          </h2>
+          <h1 className="main-title">{title}</h1>
+          <p className="main-subtitle">{description}</p>
         </div>
         <AiBlock />
       </div>

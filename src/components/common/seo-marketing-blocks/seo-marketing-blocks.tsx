@@ -3,6 +3,8 @@
 import './_seo-marketing-blocks.scss';
 import { useLocale } from '@/i18n/use-locale';
 import { getTranslation } from '@/i18n';
+import JsonLd from '@/components/common/structured-data/json-ld';
+import { buildFaqPageSchema } from '@/utils/seo';
 
 interface SEOMarketingBlocksProps {
   benefits?: Array<{ title: string; description: string; icon: string }>;
@@ -43,6 +45,7 @@ function SEOMarketingBlocks({
 
   return (
     <>
+      {faq && faq.length > 0 && <JsonLd data={buildFaqPageSchema(faq)} />}
       {/* Stats Section */}
       {stats && stats.length > 0 && (
         <section className="seo-stats-section">

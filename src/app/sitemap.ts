@@ -1,16 +1,11 @@
 import { SITE_URL, Works } from '@/utils/consts';
-import { headers } from 'next/headers';
 import { MetadataRoute } from 'next';
 import { locales, defaultLocale } from '@/i18n/config';
+import { SITE_BASE_URL } from '@/utils/seo';
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const headersList = await headers();
-  const host = await headersList.get('host');
-  const proto = (await headersList.get('x-forwarded-proto')) || 'https';
-  const baseUrl = `${proto}://${host}`;
-
-  // Fixed date - never changes
-  const fixedDate = new Date('2026-01-18T06:55:33.355Z');
+export default function sitemap(): MetadataRoute.Sitemap {
+  const baseUrl = SITE_BASE_URL;
+  const lastModified = new Date();
 
   // Helper function to generate URLs for all locales
   const generateLocalizedUrls = (path: string): MetadataRoute.Sitemap => {
@@ -19,16 +14,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         locale === defaultLocale
           ? `${baseUrl}${path}`
           : `${baseUrl}/${locale}${path}`,
-      lastModified: fixedDate,
+      lastModified: lastModified,
       alternates: {
-        languages: Object.fromEntries(
-          locales.map((loc) => [
-            loc,
-            loc === defaultLocale
+        languages: {
+          ...Object.fromEntries(
+            locales.map((loc) => [
+              loc,
+              loc === defaultLocale
+                ? `${baseUrl}${path}`
+                : `${baseUrl}/${loc}${path}`,
+            ])
+          ),
+          'x-default':
+            defaultLocale === 'ru'
               ? `${baseUrl}${path}`
-              : `${baseUrl}/${loc}${path}`,
-          ])
-        ),
+              : `${baseUrl}/${defaultLocale}${path}`,
+        },
       },
     }));
   };
@@ -117,11 +118,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.6,
       }))
     ),
-    // Calculator page
     ...generateLocalizedUrls(SITE_URL.CALCULATOR).map((page) => ({
       ...page,
       changeFrequency: 'monthly' as const,
       priority: 0.7,
+    })),
+    ...generateLocalizedUrls(SITE_URL.CONTACT).map((page) => ({
+      ...page,
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    })),
+    ...generateLocalizedUrls('/schedule-call').map((page) => ({
+      ...page,
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
     })),
     // Privacy policy - lower priority
     ...generateLocalizedUrls(SITE_URL.PRIVACY_POLICY).map((page) => ({

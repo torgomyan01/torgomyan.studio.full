@@ -38,7 +38,17 @@
     "whyChooseUs": "Why Choose Us",
     "faq": "Frequently Asked Questions",
     "primaryCta": "Get a free estimate",
-    "responseTime": "We respond within 2 hours"
+    "responseTime": "We respond within 2 hours",
+    "trustSignals": {
+      "responseValue": "2h",
+      "responseLabel": "Response to inquiry",
+      "fromPriceValue": "30,000 AMD",
+      "fromPriceLabel": "Your site from",
+      "launchValue": "1-2",
+      "launchLabel": "Weeks to launch",
+      "servicesValue": "11",
+      "servicesLabel": "Service types"
+    }
   },
   "home": {
     "title": "We create websites for your business",
@@ -57,11 +67,24 @@
     "technicalSupport": "Technical Support",
     "hostingDomains": "Hosting & Domains",
     "paymentIntegration": "Payment System Integration",
-    "businessAutomation": "Business Process Automation"
+    "businessAutomation": "Business Process Automation",
+    "cardDescriptions": {
+      "websiteDevelopment": "Modern websites with React and Next.js",
+      "landingPage": "High-converting single-page sites",
+      "businessCardWebsite": "Simple and professional business card site",
+      "corporateWebsite": "Corporate websites for growing businesses",
+      "onlineShop": "Online store with payments and admin panel",
+      "webApplications": "Web apps built for your business goals",
+      "uiUxDesign": "UI/UX design for clear, usable interfaces",
+      "technicalSupport": "Technical support and maintenance",
+      "hostingDomains": "Hosting, domain and SSL setup",
+      "paymentIntegration": "Payment system integration",
+      "businessAutomation": "Workflow automation and integrations"
+    }
   },
   "servicesPage": {
     "pageTitle": "Web Development Services | Website Development, Design | Torgomyan.Studio",
-    "pageDescription": "Full range of web development services: full-service website creation, online stores, landing pages, corporate websites. UI/UX design. Technical support and hosting. Over 100 successful projects.",
+    "pageDescription": "Full range of web development services: full-service website creation, online stores, landing pages, corporate websites. UI/UX design. Technical support and hosting. Transparent pricing and fast response.",
     "pageKeywords": "web development services, full-service website development, online store creation, landing page, corporate website, SEO website promotion, UI/UX design, web applications, website technical support, hosting and domains, order website, website development cost, web studio services",
     "openGraphTitle": "Web Development Services | Website Development, Design",
     "openGraphDescription": "Full range of web development services: full-service website creation, online stores, landing pages, corporate websites.",
@@ -101,7 +124,7 @@
     },
     "structuredData": {
       "name": "Website and Web Application Development Services",
-      "description": "Professional services for website development, web applications, SEO promotion, interface design and technical support",
+      "description": "Professional services for website development, web applications, UI/UX design and technical support",
       "catalogName": "Web Services"
     }
   },
@@ -126,12 +149,12 @@
     "viewAll": "View All",
     "workExample": "Work Example",
     "pageTitle": "Portfolio - Examples of Developed Websites | Our Works | Torgomyan.Studio",
-    "pageDescription": "Our portfolio: over 100 successfully completed projects. Examples of websites, online stores, landing pages and web applications. View case studies and results of our clients.",
+    "pageDescription": "Our portfolio: websites, online stores, landing pages and web applications. See real projects and results.",
     "pageKeywords": "web studio portfolio, website examples, our works, developed websites, website development portfolio, online store examples, web development cases, landing page examples, created website examples, web application portfolio",
     "openGraphTitle": "Portfolio - Examples of Developed Websites | Our Works",
-    "openGraphDescription": "Our portfolio: over 100 successfully completed projects. Examples of websites, online stores, landing pages and web applications.",
+    "openGraphDescription": "Our portfolio: websites, online stores, landing pages and web applications.",
     "pageHeaderTitle": "Our Works",
-    "pageHeaderDescription": "We are proud of every project we have created. Our portfolio features over 100+ successfully completed projects: from simple landing pages to complex web applications and online stores. Each project is the result of meticulous work, attention to detail and pursuit of excellence. We create not just websites, but digital solutions that help businesses grow and develop.",
+    "pageHeaderDescription": "Our work spans landing pages, online stores and web applications. Each project was built for a specific business goal, not from a template.",
     "structuredData": {
       "name": "Our Works - Portfolio",
       "description": "Portfolio of developed websites and web applications by Torgomyan.Studio",
@@ -277,6 +300,18 @@
       "title": "Launch",
       "text": "We go live and provide ongoing technical support"
     }
+  },
+  "personalIntro": {
+    "badge": "In person",
+    "title": "We'll discuss your project together",
+    "description": "Torgomyan.Studio, you work directly with me — no account managers, sales reps, or middlemen. I listen, ask questions, understand your business, and propose a solution that actually works.",
+    "name": "Andranik Torgomyan",
+    "role": "Founder, Torgomyan.Studio",
+    "imageAlt": "Founder of Torgomyan.Studio",
+    "point1": "I personally respond to every inquiry",
+    "point2": "Every project matters to me",
+    "point3": "A transparent process with no hidden terms",
+    "cta": "Schedule a call"
   },
   "footer": {
     "tagline": "We build modern websites that grow your business",
@@ -650,23 +685,25 @@
     }
   },
   "meta": {
-    "title": "Full-Service Website Development | Torgomyan.Studio - Web Studio",
-    "description": "Professional full-service website development. Creation of websites, online stores, landing pages and web applications. SEO promotion, UI/UX design. Over 100 successful projects. Order a website.",
-    "keywords": "full-service website development, website creation Armenia, web studio Yerevan, website development, online store creation, landing page, corporate website, SEO promotion, web design, web application development, order website, website development cost, professional website development"
+    "title": "Website Development in Armenia | Web Studio | Torgomyan.Studio",
+    "description": "Website development and creation in Armenia: landing page, online store, corporate website. React, Next.js. Transparent pricing, 2-hour response. Free estimate.",
+    "keywords": "website development, create website, web studio Armenia, website design, online store, landing page, corporate website, order website, website cost, web development Yerevan",
+    "openGraphTitle": "Website Development in Armenia | Torgomyan.Studio",
+    "openGraphDescription": "Web studio for websites, online stores, landing pages and web applications. From 30,000 AMD."
   },
   "websiteDevelopment": {
     "pageTitle": "Full-Service Website Development in Armenia | Website Creation | Torgomyan.Studio",
-    "pageDescription": "Professional full-service website development in Armenia. Modern technologies (React, Next.js), responsive design, SEO optimization. We create websites that bring customers. Over 100 successful projects. Calculate cost.",
+    "pageDescription": "Professional full-service website development in Armenia. Modern technologies (React, Next.js), responsive design, SEO optimization. Calculate cost.",
     "pageKeywords": "full-service website development, website creation Armenia, website development Yerevan, full-service web development, website creation price, order website development, professional website development, modern websites, responsive website, React website development, Next.js development, website development cost, business website development, corporate website creation",
     "openGraphTitle": "Full-Service Website Development in Armenia | Website Creation",
-    "openGraphDescription": "Professional full-service website development in Armenia. Modern technologies (React, Next.js), responsive design, SEO optimization. Over 100 successful projects.",
+    "openGraphDescription": "Professional full-service website development in Armenia. Modern technologies (React, Next.js), responsive design, SEO optimization.",
     "title": "Full-Service Website Development",
     "description": "Professional website development using modern technologies. Individual approach to each project to achieve maximum results. In the modern world, having a quality website is not just a necessity, but a key factor in your business success. We offer a full cycle of full-service website development, from concept to launch and support. Our team specializes in creating modern, functional and effective websites that not only attract attention but also convert visitors into customers.",
     "stats": {
-      "successfulProjects": "Successful Projects",
-      "satisfiedClients": "Satisfied Clients",
-      "yearsExperience": "Years of Experience",
-      "businessGrowth": "Business Growth"
+      "weeksToLaunch": "Weeks to build",
+      "modernStack": "Modern stack",
+      "languages": "Languages",
+      "responseTime": "Response"
     },
     "benefits": {
       "individualApproach": {
@@ -735,10 +772,9 @@
     "description": "We create high-converting single-page sites. Landing pages that turn visitors into customers. A landing page (landing page) is a specialized single-page site created to achieve a specific goal: selling a product, collecting leads, event registration, or other targeted actions. We create landing pages that are not just beautiful, but effectively convert visitors into customers.",
     "stats": {
       "fromPrice": "From Price",
-      "higherConversion": "Higher Conversion",
-      "weeksToLaunch": "Weeks to Launch",
-      "successfulLandings": "Successful Landings",
-      "satisfaction": "Satisfaction"
+      "weeksToLaunch": "Weeks to launch",
+      "abTesting": "A/B testing",
+      "mobileOptimization": "Mobile optimization"
     },
     "benefits": {
       "highConversion": {
@@ -951,8 +987,9 @@
     "stats": {
       "fromPrice": "From Price",
       "monthsDevelopment": "Months Development",
-      "onlineShops": "Online Stores",
-      "salesGrowth": "Sales Growth"
+      "securePayments": "Secure payments",
+      "adminPanel": "Admin panel",
+      "mobileReady": "Mobile-ready"
     },
     "benefits": {
       "fullFunctionality": {
@@ -1024,8 +1061,9 @@
     "stats": {
       "fromPrice": "From Price",
       "monthsDevelopment": "Months Development",
-      "projects": "Projects",
-      "uptime": "Uptime"
+      "modernStack": "Modern stack",
+      "apiIntegration": "API integration",
+      "support": "Technical support"
     },
     "benefits": {
       "customDevelopment": {
@@ -1159,17 +1197,18 @@
   },
   "uiUxDesign": {
     "pageTitle": "UI/UX Interface Design | Website and Application Design | Torgomyan.Studio",
-    "pageDescription": "Professional UI/UX interface design. Creating convenient and beautiful interfaces for websites and applications. Conversion increase by 20-40%. From 13,000₽. Order interface design.",
+    "pageDescription": "Professional UI/UX interface design. Creating convenient and beautiful interfaces for websites and applications. From 13,000₽. Order interface design.",
     "pageKeywords": "UI UX design, interface design, UI design, UX design, website design, application design, user interface, interface design price, order UI design, web design, website design, interface design creation",
     "openGraphTitle": "UI/UX Interface Design | Website and Application Design",
-    "openGraphDescription": "Professional UI/UX design for creating convenient and beautiful interfaces. Conversion increase by 20-40%.",
+    "openGraphDescription": "Professional UI/UX design for creating convenient and beautiful interfaces.",
     "title": "UI/UX Interface Design",
     "description": "We create convenient and beautiful interfaces that users love and increase conversion. Professional design for websites and applications. UI/UX design is the creation of interfaces that are not only beautiful but also convenient to use. UI (User Interface) is responsible for the visual part, while UX (User Experience) is responsible for user experience and usability.",
     "stats": {
       "fromPrice": "From Price",
-      "conversionGrowth": "Conversion Growth",
       "weeksDevelopment": "Weeks Development",
-      "designProjects": "Design Projects"
+      "designTools": "Design tools",
+      "userResearch": "User research",
+      "languages": "Languages"
     },
     "benefits": {
       "conversionIncrease": {
@@ -1447,17 +1486,18 @@
   },
   "businessAutomation": {
     "pageTitle": "Business Process Automation | Company Automation | Torgomyan.Studio",
-    "pageDescription": "Business process automation for companies. Implementation of automation systems to improve work efficiency. Time savings up to 30%. From 25,000₽. Order automation.",
+    "pageDescription": "Business process automation for companies. Implementation of automation systems to improve work efficiency. From 25,000₽. Order automation.",
     "pageKeywords": "business process automation, company automation, work automation, automation implementation, automation systems, automation price, order automation, business automation, process automation cost",
     "openGraphTitle": "Business Process Automation | Company Automation",
-    "openGraphDescription": "Implementation of automation systems to improve your company's work efficiency. Time savings up to 30%.",
+    "openGraphDescription": "Implementation of automation systems to improve your company's work efficiency.",
     "title": "Business Process Automation",
     "description": "We implement automation systems to improve your company's work efficiency. We reduce time and resource costs for routine operations. Business process automation is the implementation of technological solutions for automatic execution of routine tasks, which allows to improve company efficiency and reduce operational costs.",
     "stats": {
       "fromPrice": "From Price",
-      "timeSavings": "Time Savings",
       "monthsImplementation": "Months Implementation",
-      "automatedProcesses": "Automated Processes"
+      "integrations": "Integrations",
+      "workflowAutomation": "Workflow automation",
+      "responseTime": "Response"
     },
     "benefits": {
       "efficiencyIncrease": {
@@ -1516,5 +1556,11 @@
       }
     },
     "serviceButton": "Business Process Automation"
+  },
+  "privacyPolicy": {
+    "pageTitle": "Privacy Policy | Torgomyan.Studio",
+    "pageDescription": "Torgomyan.Studio privacy policy. How we process and protect your personal data.",
+    "pageKeywords": "privacy policy, personal data, cookies, Torgomyan Studio",
+    "title": "Privacy Policy"
   }
 }

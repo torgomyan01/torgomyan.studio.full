@@ -6,6 +6,7 @@ import { CustomInput, CustomPhoneInput } from '@/components/ui';
 import { saveCalculatorSubmissionAction } from '@/app/actions/calculator';
 import { trackConversion } from '@/utils/analytics';
 import PrimaryCtaLink from '@/components/common/primary-cta-link/primary-cta-link';
+import TrustSignals from '@/components/common/trust-signals/trust-signals';
 import { services } from '@/utils/consts';
 import { useServiceQuestions } from '../ai-block/hooks/use-service-questions';
 import { useLocale } from '@/i18n/use-locale';
@@ -326,12 +327,6 @@ export default function Calculator() {
     'fas fa-shield-alt',
   ];
 
-  const trustIcons = [
-    'fas fa-badge-check',
-    'fas fa-calendar-check',
-    'fas fa-users',
-    'fas fa-headset',
-  ];
 
   const flowStep = useMemo(() => {
     if (step === 'success') return 4;
@@ -783,7 +778,7 @@ export default function Calculator() {
               <div className="form-actions">
                 <button
                   type="button"
-                  className="calculate-button"
+                  className="studio-btn studio-btn--primary studio-btn--lg studio-btn--full"
                   onClick={handleCalculate}
                 >
                   <i className="fas fa-calculator" aria-hidden="true" />
@@ -907,7 +902,7 @@ export default function Calculator() {
                   </button>
                   <button
                     type="button"
-                    className="submit-button"
+                    className="studio-btn studio-btn--primary studio-btn--lg"
                     onClick={handleSubmit}
                     disabled={isSubmitting}
                   >
@@ -1090,44 +1085,7 @@ export default function Calculator() {
         {/* Trust Signals */}
         <section className="calculator-trust">
           <div className="container">
-            <div className="trust-stats">
-              <div className="stat-item">
-                <div className="stat-icon">
-                  <i className={trustIcons[0]} aria-hidden="true" />
-                </div>
-                <div className="stat-number">100+</div>
-                <div className="stat-label">
-                  {getTranslation(locale, 'calculator.trust.completedProjects')}
-                </div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-icon">
-                  <i className={trustIcons[1]} aria-hidden="true" />
-                </div>
-                <div className="stat-number">7+</div>
-                <div className="stat-label">
-                  {getTranslation(locale, 'calculator.trust.yearsExperience')}
-                </div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-icon">
-                  <i className={trustIcons[2]} aria-hidden="true" />
-                </div>
-                <div className="stat-number">98%</div>
-                <div className="stat-label">
-                  {getTranslation(locale, 'calculator.trust.satisfiedClients')}
-                </div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-icon">
-                  <i className={trustIcons[3]} aria-hidden="true" />
-                </div>
-                <div className="stat-number">24/7</div>
-                <div className="stat-label">
-                  {getTranslation(locale, 'calculator.trust.support')}
-                </div>
-              </div>
-            </div>
+            <TrustSignals />
           </div>
         </section>
 

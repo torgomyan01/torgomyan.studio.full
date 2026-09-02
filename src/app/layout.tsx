@@ -22,11 +22,10 @@ import { ToastNotifications } from '@/components/common/recent-notifications/toa
 import YandexMetrika from '@/components/common/YandexMetrika/YandexMetrika';
 import AdsConversionTracker from '@/components/common/AdsConversionTracker/AdsConversionTracker';
 import LocalBusinessSchema from '@/components/common/local-business-schema/local-business-schema';
-import { headers } from 'next/headers';
+import { getPagePathContext } from '@/i18n/metadata-utils';
 import { getTranslations } from '@/i18n';
-import { locales, defaultLocale } from '@/i18n/config';
-import { getPathnameWithoutLocale } from '@/i18n/utils';
 import { getLocaleFromHeaders } from '@/i18n/server-utils';
+import { buildPageMetadata } from '@/utils/seo';
 
 const roboto = Roboto({
   subsets: ['latin', 'cyrillic'],
@@ -35,37 +34,19 @@ const roboto = Roboto({
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const headersList = await headers();
-  const pathname = headersList.get('x-pathname') || '/';
-  const locale = await getLocaleFromHeaders();
+  const { locale, pathWithoutLocale } = await getPagePathContext('/');
   const t = getTranslations(locale);
-  const pathWithoutLocale = getPathnameWithoutLocale(pathname);
-
-  const baseUrl = 'https://torgomyan-studio.am';
-
-  const alternates: Record<string, string> = {};
-  locales.forEach((loc) => {
-    const localePath =
-      loc === defaultLocale ? pathWithoutLocale : `/${loc}${pathWithoutLocale}`;
-    alternates[loc] = `${baseUrl}${localePath === '/' ? '' : localePath}`;
-  });
 
   return {
-    title: t.meta.title,
-    description: t.meta.description,
-    keywords: t.meta.keywords,
-    alternates: {
-      canonical: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
-      languages: alternates,
-    },
-    openGraph: {
+    ...buildPageMetadata({
+      locale,
+      pathWithoutLocale,
       title: t.meta.title,
       description: t.meta.description,
-      type: 'website',
-      locale: locale === 'hy' ? 'hy_AM' : locale === 'ru' ? 'ru_RU' : 'en_US',
-      siteName: 'Torgomyan.Studio',
-      url: `${baseUrl}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`,
-    },
+      keywords: t.meta.keywords,
+      openGraphTitle: t.meta.openGraphTitle,
+      openGraphDescription: t.meta.openGraphDescription,
+    }),
     verification: {
       google: 'D-62YNPieIsCe6DP3I8cq_cwieN_lqKEBabjQcgEwyw',
     },

@@ -77,46 +77,15 @@ function Header() {
     );
   };
 
-  // Structured data for SEO (JSON-LD)
-  const baseUrl = 'https://torgomyan-studio.am';
-  const structuredData = {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: getTranslation(locale, 'home.title'),
-    description: getTranslation(locale, 'home.subtitle').replace(
-      /<[^>]*>/g,
-      ''
-    ),
-    url: baseUrl,
-    inLanguage: locale,
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: {
-        '@type': 'EntryPoint',
-        urlTemplate: `${baseUrl}/search?q={search_term_string}`,
-      },
-      'query-input': 'required name=search_term_string',
-    },
-  };
-
   return (
-    <header
-      className="info-block relative!"
-      itemScope
-      itemType="https://schema.org/WebSite"
-    >
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
+    <header className="info-block relative!">
       <div className="container">
         <div className="info">
-          <h1 className="main-title" itemProp="name">
+          <h1 className="main-title">
             {getTranslation(locale, 'home.title')}
           </h1>
-          <h2
+          <p
             className="main-subtitle"
-            itemProp="description"
             dangerouslySetInnerHTML={{
               __html: getTranslation(locale, 'home.subtitle'),
             }}
@@ -162,10 +131,14 @@ function Header() {
             </div>
           </div>
           <div className="header-actions">
-            <PrimaryCtaLink location="home_hero" fullWidth />
+            <PrimaryCtaLink
+              location="home_hero"
+              variant="white"
+              fullWidth
+            />
             <Link
               href={addLocaleToPath('/schedule-call', locale)}
-              className="schedule-call-header-btn studio-btn studio-btn--ghost studio-btn--lg"
+              className="studio-btn studio-btn--ghost studio-btn--lg"
             >
               <i className="fas fa-calendar-check" aria-hidden="true" />
               <span>{getTranslation(locale, 'common.scheduleCall')}</span>
@@ -175,21 +148,6 @@ function Header() {
             <i className="fas fa-clock" aria-hidden="true" />
             {getTranslation(locale, 'common.responseTime')}
           </p>
-          <div className="header-contact-info">
-            <a href="tel:+37477769668" className="phone-header-link">
-              <i className="fas fa-phone" aria-hidden="true"></i>
-              <span>+374 77 76-96-68</span>
-            </a>
-            <a
-              href="https://t.me/torgomyan01"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="telegram-header-link"
-            >
-              <i className="fab fa-telegram-plane" aria-hidden="true"></i>
-              <span>@torgomyan01</span>
-            </a>
-          </div>
         </div>
         <AiBlock />
       </div>

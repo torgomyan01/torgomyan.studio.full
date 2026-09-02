@@ -6,10 +6,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { SITE_URL } from '@/utils/consts';
 import './_project-detail.scss';
+import { getPagePathContext } from '@/i18n/metadata-utils';
+import { defaultLocale } from '@/i18n/config';
 import { getLocaleFromHeaders } from '@/i18n/server-utils';
 import { getTranslation, getTranslations } from '@/i18n';
-import { locales, defaultLocale } from '@/i18n/config';
 import { addLocaleToPath } from '@/i18n/utils';
+import { buildLocalizedUrl, buildPageMetadata } from '@/utils/seo';
 
 interface ProjectDetailPageProps {
   params: Promise<{
@@ -28,8 +30,9 @@ export async function generateMetadata({
 }: ProjectDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
   const project = Works.find((w) => w.slug === slug);
-
-  const locale = await getLocaleFromHeaders();
+  const { locale, pathWithoutLocale } = await getPagePathContext(
+    `/our-works/${slug}`
+  );
   const t = getTranslations(locale);
 
   if (!project) {
@@ -51,48 +54,21 @@ export async function generateMetadata({
     project.name
   );
 
-  const alternates: Metadata['alternates'] = {
-    canonical: `https://torgomyan-studio.am/${locale === defaultLocale ? '' : `${locale}/`}our-works/${slug}`,
-    languages: {},
-  };
-
-  for (const loc of locales) {
-    alternates.languages![loc] =
-      `https://torgomyan-studio.am/${loc === defaultLocale ? '' : `${loc}/`}our-works/${slug}`;
-  }
-
   const keywords = t.ourWorks.projectDetail.keywordsTemplate
     .replace('{{projectName}}', project.name)
     .replace('{{technologies}}', project.created);
 
-  return {
+  const image = buildLocalizedUrl(`/${project.imgUrl}`, defaultLocale);
+
+  return buildPageMetadata({
+    locale,
+    pathWithoutLocale,
     title,
     description,
     keywords,
-    alternates,
-    openGraph: {
-      title,
-      description,
-      type: 'website',
-      locale: locale === 'hy' ? 'hy_AM' : locale === 'ru' ? 'ru_RU' : 'en_US',
-      siteName: 'Torgomyan.Studio',
-      url: `https://torgomyan-studio.am/${locale === defaultLocale ? '' : `${locale}/`}our-works/${slug}`,
-      images: [
-        {
-          url: `/${project.imgUrl}`,
-          width: 1200,
-          height: 630,
-          alt: project.name,
-        },
-      ],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: [`/${project.imgUrl}`],
-    },
-  };
+    image,
+    imageAlt: project.name,
+  });
 }
 
 export default async function ProjectDetailPage({
