@@ -1,21 +1,77 @@
 'use client';
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import './_our-works.scss';
-import { SITE_URL, Works } from '@/utils/consts';
+import { useEffect, useRef, useState } from 'react';
+import { Swiper } from 'swiper';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import Image from 'next/image';
 import Link from 'next/link';
+import { SITE_URL, Works } from '@/utils/consts';
 import ImageGalleryModal from '@/components/ui/image-gallery-modal';
 import { useLocale } from '@/i18n/use-locale';
 import { getTranslation } from '@/i18n';
 import { addLocaleToPath } from '@/i18n/utils';
+import './_our-works.scss';
+
+function getWorkDescription(
+  locale: ReturnType<typeof useLocale>,
+  slug: string,
+  fallback?: string
+) {
+  const key = `ourWorks.descriptions.${slug}`;
+  const translated = getTranslation(locale, key);
+
+  return translated !== key ? translated : fallback || '';
+}
 
 function OurWorks() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const displayedWorks = Works.slice(0, 6);
+  const [isLoading, setIsLoading] = useState(true);
+  const swiperRef = useRef<HTMLDivElement>(null);
+  const prevRef = useRef<HTMLButtonElement>(null);
+  const nextRef = useRef<HTMLButtonElement>(null);
+  const paginationRef = useRef<HTMLDivElement>(null);
+  const displayedWorks = Works;
   const locale = useLocale();
+
+  useEffect(() => {
+    if (!swiperRef.current || !prevRef.current || !nextRef.current || !paginationRef.current) {
+      return;
+    }
+
+    const slider = new Swiper(swiperRef.current, {
+      modules: [Navigation, Pagination, Autoplay],
+      slidesPerView: 1,
+      spaceBetween: 24,
+      speed: 700,
+      loop: true,
+      grabCursor: true,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true,
+      },
+      navigation: {
+        prevEl: prevRef.current,
+        nextEl: nextRef.current,
+      },
+      pagination: {
+        el: paginationRef.current,
+        type: 'fraction',
+        formatFractionCurrent: (number) => String(number).padStart(2, '0'),
+        formatFractionTotal: (number) => String(number).padStart(2, '0'),
+      },
+      on: {
+        init: () => {
+          setIsLoading(false);
+        },
+      },
+    });
+
+    return () => {
+      slider.destroy(true, true);
+    };
+  }, []);
 
   const handleImageClick = (index: number) => {
     setSelectedImageIndex(index);
@@ -37,125 +93,121 @@ function OurWorks() {
   };
 
   return (
-    <div className="our-works">
-      <div className="container">
-        <h2 className="main-title">
+    <section className="our-works" aria-labelledby="our-works-title">
+      <div className="our-works__glow" aria-hidden="true" />
+
+      <div className="container our-works__header">
+        <span className="our-works__badge">
+          {getTranslation(locale, 'ourWorks.sliderBadge')}
+        </span>
+        <h2 id="our-works-title" className="main-title">
           {getTranslation(locale, 'ourWorks.title')}
         </h2>
         <p className="main-subtitle">
           {getTranslation(locale, 'ourWorks.subtitle')}
         </p>
-        <div className="our-works-items">
-          {displayedWorks.map((work, index) => (
-            <motion.div
-              key={work.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{
-                duration: 0.5,
-                delay: index * 0.1,
-                ease: [0.25, 0.46, 0.45, 0.94],
-              }}
-            >
-              <Link
-                href={addLocaleToPath(`/our-works/${work.slug}`, locale)}
-                className="our-works-item"
-              >
-                <motion.div
-                  className="img-wrap"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleImageClick(index);
-                  }}
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Image
-                    src={`/${work.imgUrl}`}
-                    alt={`${getTranslation(locale, 'ourWorks.workExample')} - ${work.name}`}
-                    width={400}
-                    height={400}
-                    className="work-image"
-                  />
-                  <div className="img-overlay">
-                    <svg
-                      width="48"
-                      height="48"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M2.458 12C3.732 7.943 7.523 5 12 5C16.478 5 20.268 7.943 21.542 12C20.268 16.057 16.478 19 12 19C7.523 19 3.732 16.057 2.458 12Z"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </div>
-                </motion.div>
-                <div className="work-content">
-                  <h3 className="work-title">{work.name}</h3>
-                  <div className="work-arrow">
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M13 7L18 12L13 17M6 7L11 12L6 17"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-        >
-          <Link
-            href={addLocaleToPath(SITE_URL.OUR_WORKS, locale)}
-            className="show-all"
-          >
-            <span>{getTranslation(locale, 'ourWorks.viewAll')}</span>
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M13 7L18 12L13 17M6 7L11 12L6 17"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </Link>
-        </motion.div>
       </div>
+
+      <div className="our-works__slider-shell">
+        <div className="container our-works__slider-container">
+          <div
+            ref={swiperRef}
+            className={`our-works-slider swiper${isLoading ? ' is-loading' : ''}`}
+            role="region"
+            aria-label={getTranslation(locale, 'ourWorks.title')}
+          >
+            <div className="swiper-wrapper">
+              {displayedWorks.map((work, index) => {
+                const description = getWorkDescription(
+                  locale,
+                  work.slug,
+                  work.description
+                );
+
+                return (
+                  <div key={work.slug} className="swiper-slide">
+                    <article className="our-works-slide">
+                      <button
+                        type="button"
+                        className="our-works-slide__media"
+                        onClick={() => handleImageClick(index)}
+                        aria-label={`${getTranslation(locale, 'ourWorks.workExample')} - ${work.name}`}
+                      >
+                        <Image
+                          src={`/${work.imgUrl}`}
+                          alt={`${getTranslation(locale, 'ourWorks.workExample')} - ${work.name}`}
+                          width={720}
+                          height={420}
+                          className="our-works-slide__image"
+                          sizes="(max-width: 767px) 100vw, 720px"
+                          priority={index === 0}
+                        />
+                        <span className="our-works-slide__overlay" aria-hidden="true">
+                          <i className="fas fa-eye" />
+                          <span>{getTranslation(locale, 'ourWorks.preview')}</span>
+                        </span>
+                      </button>
+
+                      <div className="our-works-slide__content">
+                        <p className="our-works-slide__index">
+                          {String(index + 1).padStart(2, '0')}
+                        </p>
+                        <h3 className="our-works-slide__title">{work.name}</h3>
+                        {description ? (
+                          <p className="our-works-slide__description">{description}</p>
+                        ) : null}
+                        {work.created ? (
+                          <p className="our-works-slide__tech">{work.created}</p>
+                        ) : null}
+                        <Link
+                          href={addLocaleToPath(`/our-works/${work.slug}`, locale)}
+                          className="our-works-slide__link"
+                        >
+                          {getTranslation(locale, 'common.learnMore')}
+                          <i className="fas fa-arrow-right" aria-hidden="true" />
+                        </Link>
+                      </div>
+                    </article>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="our-works__controls">
+            <button
+              ref={prevRef}
+              type="button"
+              className="our-works__nav our-works__nav--prev"
+              aria-label={getTranslation(locale, 'ourWorks.prevSlide')}
+            >
+              <i className="fas fa-chevron-left" aria-hidden="true" />
+            </button>
+
+            <div ref={paginationRef} className="our-works__pagination" />
+
+            <button
+              ref={nextRef}
+              type="button"
+              className="our-works__nav our-works__nav--next"
+              aria-label={getTranslation(locale, 'ourWorks.nextSlide')}
+            >
+              <i className="fas fa-chevron-right" aria-hidden="true" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="container our-works__footer">
+        <Link
+          href={addLocaleToPath(SITE_URL.OUR_WORKS, locale)}
+          className="our-works__view-all"
+        >
+          <span>{getTranslation(locale, 'ourWorks.viewAll')}</span>
+          <i className="fas fa-arrow-right" aria-hidden="true" />
+        </Link>
+      </div>
+
       <ImageGalleryModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
@@ -164,7 +216,7 @@ function OurWorks() {
         onNext={handleNextImage}
         onPrev={handlePrevImage}
       />
-    </div>
+    </section>
   );
 }
 

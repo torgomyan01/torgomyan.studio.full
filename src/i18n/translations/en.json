@@ -146,6 +146,10 @@
   "ourWorks": {
     "title": "Our Works",
     "subtitle": "Real projects we've built for our clients",
+    "sliderBadge": "Portfolio",
+    "preview": "Preview",
+    "prevSlide": "Previous project",
+    "nextSlide": "Next project",
     "viewAll": "View All",
     "workExample": "Work Example",
     "pageTitle": "Portfolio - Examples of Developed Websites | Our Works | Torgomyan.Studio",

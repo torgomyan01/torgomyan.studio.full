@@ -70,6 +70,30 @@ export default function PersonalIntro() {
                 <i className="fas fa-phone" aria-hidden="true" />
                 {getTranslation(locale, 'personalIntro.cta')}
               </Link>
+
+              <div className="personal-intro__messengers">
+                <a
+                  href="https://wa.me/37477769668"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="personal-intro__messenger personal-intro__messenger--whatsapp"
+                  onClick={() => trackButtonClick('personal_intro_whatsapp', 'personal_intro')}
+                >
+                  <i className="fab fa-whatsapp" aria-hidden="true" />
+                  {getTranslation(locale, 'contact.whatsappLabel')}
+                </a>
+                <a
+                  href="https://t.me/torgomyan01"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="personal-intro__messenger personal-intro__messenger--telegram"
+                  onClick={() => trackButtonClick('personal_intro_telegram', 'personal_intro')}
+                >
+                  <i className="fab fa-telegram-plane" aria-hidden="true" />
+                  {getTranslation(locale, 'contact.telegramLabel')}
+                </a>
+              </div>
+
               <p className="personal-intro__hint">
                 <i className="fas fa-clock" aria-hidden="true" />
                 {getTranslation(locale, 'common.responseTime')}
