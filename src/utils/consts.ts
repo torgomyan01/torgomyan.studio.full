@@ -150,6 +150,44 @@ const ciklevkaUrl = [
 
 export const Works = [
   {
+    name: 'GoCinema',
+    slug: 'gocinema',
+    imgUrl: 'images/gocinema.jpg',
+    links: [
+      {
+        name: 'Home',
+        url: 'https://gocinema.am/',
+      },
+      {
+        name: 'Movies',
+        url: 'https://gocinema.am/',
+      },
+    ],
+    created:
+      'Next.js 16, React 19, TypeScript, Prisma, MySQL, NextAuth, Tailwind CSS 4, HeroUI, Framer Motion, Redux Toolkit, Resend, Dexatel, vPost/ITF, Telcell, HDM agent',
+    description:
+      'GoCinema — полноценная цифровая платформа кинотеатра: онлайн-бронирование билетов, касса, фискализация, QR-сканирование, бонусная программа и отчёты для продюсеров.',
+  },
+  {
+    name: 'Денисов',
+    slug: 'cafedenisov',
+    imgUrl: 'images/cafedenisov.jpg',
+    links: [
+      {
+        name: 'Home',
+        url: 'https://cafedenisov.ru/',
+      },
+      {
+        name: 'Меню',
+        url: 'https://cafedenisov.ru/',
+      },
+    ],
+    created:
+      'Next.js App Router, TypeScript, Prisma, MySQL, Redux Toolkit, Tailwind CSS, Zod, Yandex Maps, Yandex ID, Yandex Metrika, iiko API, Web Push',
+    description:
+      'Кафе «Денисов» — официальный сайт и система онлайн-заказов в Санкт-Петербурге. Меню, доставка и самовывоз, личный кабинет, админ CMS, аналитика и глубокая интеграция с iiko Cloud.',
+  },
+  {
     name: 'TEND.AM',
     slug: 'tend',
     imgUrl: 'images/tend.am.png',

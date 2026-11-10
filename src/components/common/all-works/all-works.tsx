@@ -10,6 +10,21 @@ import { useLocale } from '@/i18n/use-locale';
 import { getTranslation, getTranslations } from '@/i18n';
 import { addLocaleToPath } from '@/i18n/utils';
 
+const DESCRIPTION_MAX_LENGTH = 500;
+
+function truncateDescription(text: string, maxLength = DESCRIPTION_MAX_LENGTH) {
+  const normalized = text.trim().replace(/\s+/g, ' ');
+  if (normalized.length <= maxLength) {
+    return normalized;
+  }
+
+  const sliced = normalized.slice(0, maxLength);
+  const lastSpace = sliced.lastIndexOf(' ');
+  const cut = lastSpace > maxLength * 0.6 ? sliced.slice(0, lastSpace) : sliced;
+
+  return `${cut.trimEnd()}…`;
+}
+
 function AllWorks() {
   const [selectedWork, setSelectedWork] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -76,7 +91,9 @@ function AllWorks() {
                     const workDescription =
                       translatedDescription || work.description || '';
                     return workDescription ? (
-                      <p className="work-description">{workDescription}</p>
+                      <p className="work-description">
+                        {truncateDescription(workDescription)}
+                      </p>
                     ) : null;
                   })()}
                   <span className="work-toggle">

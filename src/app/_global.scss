@@ -35,6 +35,12 @@ body {
   background: var(--gradient-body);
   min-height: 100dvh;
   background-attachment: fixed;
+  font-family:
+    var(--font-roboto),
+    var(--font-armenian),
+    var(--font-noto),
+    system-ui,
+    sans-serif;
 }
 
 body,

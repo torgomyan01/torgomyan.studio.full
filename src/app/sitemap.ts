@@ -1,54 +1,53 @@
 import { SITE_URL, Works } from '@/utils/consts';
 import { MetadataRoute } from 'next';
-import { locales, defaultLocale } from '@/i18n/config';
-import { SITE_BASE_URL } from '@/utils/seo';
+import { locales, defaultLocale, type Locale } from '@/i18n/config';
+import {
+  SITE_BASE_URL,
+  HREFLANG_BY_LOCALE,
+  buildLocalizedUrl,
+} from '@/utils/seo';
+
+function buildSitemapLanguages(path: string): Record<string, string> {
+  const languages: Record<string, string> = {};
+
+  locales.forEach((locale) => {
+    const url = buildLocalizedUrl(path === '/' ? '/' : path, locale);
+    languages[HREFLANG_BY_LOCALE[locale]] = url;
+    languages[locale] = url;
+  });
+
+  languages['x-default'] = buildLocalizedUrl(
+    path === '/' ? '/' : path,
+    defaultLocale
+  );
+
+  return languages;
+}
+
+function generateLocalizedUrls(path: string): MetadataRoute.Sitemap {
+  const normalizedPath = path === '/' ? '/' : path;
+
+  return locales.map((locale: Locale) => ({
+    url: buildLocalizedUrl(normalizedPath, locale),
+    lastModified: new Date(),
+    alternates: {
+      languages: buildSitemapLanguages(normalizedPath),
+    },
+  }));
+}
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = SITE_BASE_URL;
-  const lastModified = new Date();
-
-  // Helper function to generate URLs for all locales
-  const generateLocalizedUrls = (path: string): MetadataRoute.Sitemap => {
-    return locales.map((locale) => ({
-      url:
-        locale === defaultLocale
-          ? `${baseUrl}${path}`
-          : `${baseUrl}/${locale}${path}`,
-      lastModified: lastModified,
-      alternates: {
-        languages: {
-          ...Object.fromEntries(
-            locales.map((loc) => [
-              loc,
-              loc === defaultLocale
-                ? `${baseUrl}${path}`
-                : `${baseUrl}/${loc}${path}`,
-            ])
-          ),
-          'x-default':
-            defaultLocale === 'ru'
-              ? `${baseUrl}${path}`
-              : `${baseUrl}/${defaultLocale}${path}`,
-        },
-      },
-    }));
-  };
-
-  // Main pages with priorities - generate for all locales
   const mainPages: MetadataRoute.Sitemap = [
-    // Homepage - highest priority
     ...generateLocalizedUrls('/').map((page) => ({
       ...page,
       changeFrequency: 'daily' as const,
       priority: 1.0,
     })),
-    // Main services page
     ...generateLocalizedUrls(SITE_URL.SERVICES).map((page) => ({
       ...page,
       changeFrequency: 'weekly' as const,
       priority: 0.9,
     })),
-    // Individual service pages - high priority
     ...generateLocalizedUrls(SITE_URL.WEBSITE_DEVELOPMENT).map((page) => ({
       ...page,
       changeFrequency: 'weekly' as const,
@@ -104,13 +103,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly' as const,
       priority: 0.8,
     })),
-    // Portfolio page
     ...generateLocalizedUrls(SITE_URL.OUR_WORKS).map((page) => ({
       ...page,
       changeFrequency: 'weekly' as const,
       priority: 0.7,
     })),
-    // Project detail pages - medium priority
     ...Works.flatMap((work) =>
       generateLocalizedUrls(`/our-works/${work.slug}`).map((page) => ({
         ...page,
@@ -133,7 +130,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     })),
-    // Privacy policy - lower priority
     ...generateLocalizedUrls(SITE_URL.PRIVACY_POLICY).map((page) => ({
       ...page,
       changeFrequency: 'yearly' as const,

@@ -33,6 +33,12 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.torgomyan-studio.am" }],
+        destination: "https://torgomyan-studio.am/:path*",
+        permanent: true,
+      },
+      {
         source: "/services/seo",
         destination: "/services",
         permanent: true,

@@ -7,6 +7,7 @@ import {
 } from '@/i18n/config';
 import { addLocaleToPath } from '@/i18n/utils';
 import { getLocaleFromGeo } from '@/i18n/geo-detection';
+import { isSearchBot } from '@/i18n/bot-detection';
 
 function createLocaleHeaders(
   request: NextRequest,
@@ -49,8 +50,12 @@ export async function middleware(request: NextRequest) {
   const hasLocale = isValidLocale(firstSegment);
   let locale: Locale = hasLocale ? firstSegment : defaultLocale;
   let actualPathname = pathname;
+  const userAgent = request.headers.get('user-agent');
+  const botRequest = isSearchBot(userAgent);
 
-  if (!hasLocale) {
+  // Crawlers must always follow the URL language (no geo redirect).
+  // Unprefixed URLs stay on defaultLocale (ru) so /ru and /hy remain crawlable.
+  if (!hasLocale && !botRequest) {
     const cookieLocale = request.cookies.get('NEXT_LOCALE')?.value;
     if (cookieLocale && isValidLocale(cookieLocale)) {
       locale = cookieLocale as Locale;
@@ -101,14 +106,12 @@ export async function middleware(request: NextRequest) {
     return attachLocaleCookie(response, locale);
   }
 
-  if (!hasLocale && locale !== defaultLocale) {
+  if (!hasLocale && !botRequest && locale !== defaultLocale) {
     const url = request.nextUrl.clone();
     url.pathname = addLocaleToPath(pathname, locale);
     const redirectResponse = NextResponse.redirect(url);
     return attachLocaleCookie(redirectResponse, locale);
   }
-
-  const userAgent = request.headers.get('user-agent');
 
   if (userAgent) {
     const parser = UAParser.UAParser(userAgent);
