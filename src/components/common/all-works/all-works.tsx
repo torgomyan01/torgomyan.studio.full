@@ -75,6 +75,7 @@ function AllWorks() {
                     height={400}
                   />
                 </Link>
+                
                 <div className="work-info">
                   <Link
                     href={addLocaleToPath(`/our-works/${work.slug}`, locale)}
