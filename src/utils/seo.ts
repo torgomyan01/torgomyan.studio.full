@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { locales, defaultLocale, type Locale } from '@/i18n/config';
 
-export const SITE_BASE_URL = 'https://torgomyan-studio.am';
+// Canonical host must match Vercel primary domain (www) to avoid redirect loops.
+export const SITE_BASE_URL = 'https://www.torgomyan-studio.am';
 export const SITE_NAME = 'Torgomyan.Studio';
 export const DEFAULT_OG_IMAGE = `${SITE_BASE_URL}/images/tend.am.png`;
 

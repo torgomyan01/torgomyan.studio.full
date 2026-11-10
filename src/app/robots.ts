@@ -20,6 +20,6 @@ export default async function robots() {
       },
     ],
     sitemap: `${SITE_BASE_URL}/sitemap.xml`,
-    host: SITE_BASE_URL,
+    host: 'www.torgomyan-studio.am',
   };
 }
